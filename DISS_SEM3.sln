@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33502.453
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DISS_SEM3", "DISS_SEM3\DISS_SEM3.csproj", "{F9CB1808-EE86-47A9-8D02-2994136D8B44}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F9CB1808-EE86-47A9-8D02-2994136D8B44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9CB1808-EE86-47A9-8D02-2994136D8B44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9CB1808-EE86-47A9-8D02-2994136D8B44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9CB1808-EE86-47A9-8D02-2994136D8B44}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5AFB447C-3CA2-431B-9AC8-5002A7D02AD8}
+	EndGlobalSection
+EndGlobal
