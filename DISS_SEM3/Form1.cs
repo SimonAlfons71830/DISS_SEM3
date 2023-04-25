@@ -15,6 +15,7 @@ namespace DISS_SEM3
 {
     public partial class Form1 : Form, ISimDelegate
     {
+        private Thread thread1;
         private DateTime _simtime;
         private MySimulation simulation;
         private double oldtime;
@@ -37,13 +38,15 @@ namespace DISS_SEM3
             thread1 = new Thread(new ThreadStart(this.startSimulation));
             thread1.IsBackground = true;
             thread1.Start();
-
-            double timeOfReplication = (double)this.numericUpDown4.Value*3600;
-            //this.simulation.SetSimSpeed(1,(double)this.numericUpDown1.Value);
-            this.simulation.SetSimSpeed(1, 0.001);
-            this.simulation.Simulate(1,timeOfReplication);
         }
 
+        private void startSimulation()
+        {
+            double timeOfReplication = (double)this.numericUpDown4.Value * 3600;
+            //this.simulation.SetSimSpeed(1,(double)this.numericUpDown1.Value);
+            this.simulation.SetSimSpeed(1, 0.001);
+            this.simulation.Simulate(1, timeOfReplication);
+        }
 
         public void SimStateChanged(Simulation sim, SimState state)
         {
@@ -57,7 +60,7 @@ namespace DISS_SEM3
             _simtime = _simtime.AddSeconds(time);
             this.Invoke((MethodInvoker)delegate
             {
-                sim_time_label.Text = "AJOKJ";
+                sim_time_label.Text = _simtime.ToString("hh:mm:ss tt");
             });
         }
 
@@ -69,6 +72,16 @@ namespace DISS_SEM3
         private void tabPage1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.simulation.PauseSimulation();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.simulation.ResumeSimulation();
         }
     }
 }
