@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -33,6 +34,10 @@ namespace DISS_SEM3
 
         private void button1_Click(object sender, EventArgs e)
         {
+            thread1 = new Thread(new ThreadStart(this.startSimulation));
+            thread1.IsBackground = true;
+            thread1.Start();
+
             double timeOfReplication = (double)this.numericUpDown4.Value*3600;
             //this.simulation.SetSimSpeed(1,(double)this.numericUpDown1.Value);
             this.simulation.SetSimSpeed(1, 0.001);
@@ -46,13 +51,22 @@ namespace DISS_SEM3
 
         public void Refresh(Simulation sim)
         {
+
             var time = sim.CurrentTime - oldtime;
             this.oldtime = sim.CurrentTime;
             _simtime = _simtime.AddSeconds(time);
-            sim_time_label.Text = _simtime.ToString();
+            this.Invoke((MethodInvoker)delegate
+            {
+                sim_time_label.Text = "AJOKJ";
+            });
         }
 
         private void sim_time_label_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabPage1_Click(object sender, EventArgs e)
         {
 
         }
