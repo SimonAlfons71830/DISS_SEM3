@@ -27,6 +27,7 @@ namespace managers
 		//meta! sender="AgentModelu", id="18", type="Request"
 		public void ProcessCustomerService(MessageForm message)
 		{
+			//prisiel request ze chcem obsluzit zakaznika
 		}
 
 		//meta! sender="AgentService", id="53", type="Response"

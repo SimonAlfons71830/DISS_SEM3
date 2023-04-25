@@ -7,7 +7,6 @@ namespace agents
 	//meta! id="2"
 	public class AgentOkolia : Agent
 	{
-        public PlanerCustomerArrival AssistentArrival { get; private set; }
         public AgentOkolia(int id, Simulation mySim, Agent parent) :
 			base(id, mySim, parent)
 		{

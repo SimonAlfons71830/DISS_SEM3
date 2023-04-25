@@ -1,16 +1,19 @@
 using OSPABA;
 using simulation;
 using agents;
+using DISS_SEM2.Generators;
 
 namespace continualAssistants
 {
 	//meta! id="50"
 	public class ProcessTakeOver : Process
 	{
-		public ProcessTakeOver(int id, Simulation mySim, CommonAgent myAgent) :
+        public Triangular takeOverTimeGenerator { get; set; }
+        public ProcessTakeOver(int id, Simulation mySim, CommonAgent myAgent) :
 			base(id, mySim, myAgent)
 		{
-		}
+            this.takeOverTimeGenerator = new Triangular(((MySimulation)mySim).seedGenerator, 180, 695, 431);
+        }
 
 		override public void PrepareReplication()
 		{
@@ -22,15 +25,18 @@ namespace continualAssistants
 		public void ProcessStart(MessageForm message)
 		{
             //pojde do default switchu
-            Hold(((MySimulation)MySim).paymentTimeGenerator.Next(), message);
+            Hold(this.takeOverTimeGenerator.Next(), message);
         }
 
 		//meta! userInfo="Process messages defined in code", id="0"
 		public void ProcessDefault(MessageForm message)
 		{
-            message.Code = Mc.Finish;
-            message.Addressee = MyAgent;
-            AssistantFinished(message);
+            switch (message.Code)
+            {
+                default:
+                    AssistantFinished(message);
+                    break;
+            }
         }
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"

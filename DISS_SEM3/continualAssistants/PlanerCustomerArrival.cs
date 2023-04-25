@@ -1,16 +1,19 @@
 using OSPABA;
 using simulation;
 using agents;
+using DISS_SEM2.Generators;
 
 namespace continualAssistants
 {
     //meta! id="38"
     public class PlanerCustomerArrival : Scheduler
 	{
-		public PlanerCustomerArrival(int id, Simulation mySim, CommonAgent myAgent) :
+		private Exponential customerArrivalTimeGenerator { get; set; }
+        public PlanerCustomerArrival(int id, Simulation mySim, CommonAgent myAgent) :
 			base(id, mySim, myAgent)
 		{
-            MyAgent.AddOwnMessage(Mc.CustomerArrival);
+            double _mi = 3600.0 / 23.0;
+            customerArrivalTimeGenerator = new Exponential(((MySimulation)mySim).seedGenerator,_mi);
         }
 
 		override public void PrepareReplication()
@@ -22,17 +25,17 @@ namespace continualAssistants
 		//meta! sender="AgentOkolia", id="39", type="Start"
 		public void ProcessStart(MessageForm message)
 		{
-            //message.Code = Mc.CustomerArrival;
-            Hold(((MySimulation)MySim).customerArrivalTimeGenerator.Next(), message);
+            message.Code = Mc.Finish;
+            Hold(this.customerArrivalTimeGenerator.Next(), message);
         }
 
 		//meta! userInfo="Process messages defined in code", id="0"
 		public void ProcessDefault(MessageForm message)
 		{
             //customer arrival message after hold
-            message.Code = Mc.Finish;
-            message.Addressee = MyAgent;
-            Notice(message);
+            
+            AssistantFinished(message);
+            
         }
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"

@@ -27,6 +27,7 @@ namespace managers
 		//meta! sender="AgentSTK", id="18", type="Response"
 		public void ProcessCustomerService(MessageForm message)
 		{
+
 		}
 
 		//meta! sender="AgentOkolia", id="16", type="Notice"

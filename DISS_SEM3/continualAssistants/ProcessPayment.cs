@@ -1,16 +1,19 @@
 using OSPABA;
 using simulation;
 using agents;
+using DISS_SEM2.Generators;
 
 namespace continualAssistants
 {
 	//meta! id="66"
 	public class ProcessPayment : Process
 	{
-		public ProcessPayment(int id, Simulation mySim, CommonAgent myAgent) :
+        public ContinuousEven paymentTimeGenerator { get; set; }
+        public ProcessPayment(int id, Simulation mySim, CommonAgent myAgent) :
 			base(id, mySim, myAgent)
 		{
-		}
+            paymentTimeGenerator = new ContinuousEven(65, 177, ((MySimulation)mySim).seedGenerator); //<65,177)
+        }
 
 		override public void PrepareReplication()
 		{
@@ -22,15 +25,18 @@ namespace continualAssistants
 		public void ProcessStart(MessageForm message)
 		{
 			message.Code = Mc.Payment;
-            Hold(((MySimulation)MySim).paymentTimeGenerator.Next(), message);
+            Hold(this.paymentTimeGenerator.Next(), message);
         }
 
 		//meta! userInfo="Process messages defined in code", id="0"
 		public void ProcessDefault(MessageForm message)
 		{
-            message.Code = Mc.Finish;
-            message.Addressee = MyAgent;
-            AssistantFinished(message);
+            switch (message.Code)
+            {
+                default:
+                    AssistantFinished(message);
+                    break;
+            }
         }
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"

@@ -2,16 +2,19 @@ using OSPABA;
 using simulation;
 using agents;
 using DISS_SEM2;
+using DISS_SEM2.Generators;
 
 namespace managers
 {
 	//meta! id="2"
 	public class ManagerOkolia : Manager
 	{
-		public ManagerOkolia(int id, Simulation mySim, Agent myAgent) :
+        public CarGenerator carTypeGenerator { get; set; }
+        public ManagerOkolia(int id, Simulation mySim, Agent myAgent) :
 			base(id, mySim, myAgent)
 		{
 			Init();
+			carTypeGenerator = new CarGenerator(((MySimulation)mySim).seedGenerator); 
 		}
 
 		override public void PrepareReplication()
@@ -33,21 +36,24 @@ namespace managers
 		//meta! sender="PlanerCustomerArrival", id="39", type="Finish"
 		public void ProcessFinish(MessageForm message)
 		{
-			//vygenerovany zakaznik sa posle do agenta modelu
-            message.Addressee = MySim.FindAgent(SimId.AgentModelu);
-            message.Code = Mc.CustomerArrival;
-			//generacia noveho zakaznika s casom ktory prisiel po ukonceni assistenta
-			((MyMessage)message).customer = new Customer(MySim.CurrentTime, new Car(((MySimulation)MySim).carTypeGenerator.Next()));
-            Notice(new MyMessage((MyMessage)message));
+            //vygenerovany zakaznik sa posle do agenta modelu
+            var newMessage = new MyMessage(MySim)
+            {
+                Addressee = MySim.FindAgent(SimId.AgentModelu),
+				Code = Mc.CustomerArrival,
+                //generacia noveho zakaznika s casom ktory prisiel po ukonceni assistenta
+                customer = new Customer(MySim.CurrentTime, new Car(this.carTypeGenerator.Next()))
+			};
+            Notice(newMessage);
 
-            message.Addressee = ((AgentOkolia)MyAgent).AssistentArrival;
+            message.Addressee = MyAgent.FindAssistant(SimId.PlanerCustomerArrival);
             StartContinualAssistant(message);
         }
 
 		//meta! sender="AgentModelu", id="15", type="Notice"
 		public void ProcessInicialization(MessageForm message)
 		{
-            message.Addressee = ((AgentOkolia)MyAgent).AssistentArrival;
+            message.Addressee = MyAgent.FindAssistant(SimId.PlanerCustomerArrival);
             StartContinualAssistant(message);
         }
 
