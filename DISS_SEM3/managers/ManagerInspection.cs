@@ -2,6 +2,8 @@ using OSPABA;
 using simulation;
 using agents;
 using continualAssistants;
+using System.Diagnostics.CodeAnalysis;
+
 namespace managers
 {
 	//meta! id="6"
@@ -27,11 +29,17 @@ namespace managers
 		//meta! sender="AgentSTK", id="52", type="Request"
 		public void ProcessInspection(MessageForm message)
 		{
-		}
+            message.Addressee = MyAgent.FindAssistant(SimId.ProcessInspection);
+            StartContinualAssistant(message);
+        }
 
 		//meta! sender="ProcessInspection", id="61", type="Finish"
 		public void ProcessFinish(MessageForm message)
 		{
+			//vratit agentovi stk o ukonceni inspekcie
+			message.Code = Mc.Inspection;
+			message.Addressee = MySim.FindAgent(SimId.AgentSTK);
+			Response(message);
 		}
 
 		//meta! userInfo="Process messages defined in code", id="0"

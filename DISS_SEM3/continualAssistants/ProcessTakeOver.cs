@@ -24,7 +24,8 @@ namespace continualAssistants
 		//meta! sender="AgentService", id="51", type="Start"
 		public void ProcessStart(MessageForm message)
 		{
-            //pojde do default switchu
+			//pojde do default switchu
+			message.Code = Mc.Finish;
             Hold(this.takeOverTimeGenerator.Next(), message);
         }
 

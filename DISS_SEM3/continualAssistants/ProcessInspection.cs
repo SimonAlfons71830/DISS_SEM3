@@ -47,7 +47,7 @@ namespace continualAssistants
 		{
 			//TODO: zistit ako sa da posielat v message zakaznik, ktory ma typ auta
 			//do myMessage sa da pridat pridat referencia na objekt
-			message.Code = Mc.Inspection;
+			message.Code = Mc.Finish;
 			//case car type
 			switch (((MyMessage)message).customer.getCar().type)
 			{

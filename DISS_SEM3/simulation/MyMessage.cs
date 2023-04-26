@@ -5,6 +5,9 @@ namespace simulation
 	public class MyMessage : MessageForm
 	{
 		public Customer customer { get; set; }
+		public Technician technician { get; set; }
+		public Automechanic automechanic { get; set; }
+
 		public MyMessage(Simulation sim) :
 			base(sim)
 		{

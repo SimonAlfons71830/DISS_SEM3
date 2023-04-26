@@ -2,21 +2,27 @@ using OSPABA;
 using simulation;
 using managers;
 using continualAssistants;
+using DISS_SEM2;
+using Priority_Queue;
+
 namespace agents
 {
 	//meta! id="5"
 	public class AgentService : Agent
 	{
-		public AgentService(int id, Simulation mySim, Agent parent) :
+        public SimplePriorityQueue<Customer, double> garageParkingSpace;
+        public AgentService(int id, Simulation mySim, Agent parent) :
 			base(id, mySim, parent)
 		{
 			Init();
+			garageParkingSpace = new SimplePriorityQueue<Customer, double>();
 		}
 
 		override public void PrepareReplication()
 		{
 			base.PrepareReplication();
 			// Setup component for the next replication
+			garageParkingSpace.Clear();
 		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"

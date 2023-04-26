@@ -24,7 +24,7 @@ namespace continualAssistants
 		//meta! sender="AgentService", id="67", type="Start"
 		public void ProcessStart(MessageForm message)
 		{
-			message.Code = Mc.Payment;
+			message.Code = Mc.Finish;
             Hold(this.paymentTimeGenerator.Next(), message);
         }
 

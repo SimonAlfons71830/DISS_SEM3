@@ -35,6 +35,9 @@ namespace DISS_SEM3
 
         private void button1_Click(object sender, EventArgs e)
         {
+            this.simulation.AgentSTK.createAutomechanics((int)numericUpDown3.Value);
+            this.simulation.AgentSTK.createTechnicians((int)numericUpDown2.Value);
+
             thread1 = new Thread(new ThreadStart(this.startSimulation));
             thread1.IsBackground = true;
             thread1.Start();
@@ -61,6 +64,11 @@ namespace DISS_SEM3
             this.Invoke((MethodInvoker)delegate
             {
                 sim_time_label.Text = _simtime.ToString("hh:mm:ss tt");
+                customers_in_line_label.Text = this.simulation.AgentSTK.customersLine.Count.ToString();
+                customers_in_paymentline_label.Text = this.simulation.AgentSTK.paymentLine.Count.ToString();
+                var man = this.simulation.AgentSTK.FindAssistant(SimId.ManagerSTK);//nenajde ho
+                free_technicians_label.Text = "X/" + numericUpDown2.Value.ToString();
+                free_automechanics_label.Text = "X/" + numericUpDown3.Value.ToString();
             });
         }
 
@@ -82,6 +90,11 @@ namespace DISS_SEM3
         private void button3_Click(object sender, EventArgs e)
         {
             this.simulation.ResumeSimulation();
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

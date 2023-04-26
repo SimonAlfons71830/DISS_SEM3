@@ -27,7 +27,10 @@ namespace managers
 		//meta! sender="AgentSTK", id="18", type="Response"
 		public void ProcessCustomerService(MessageForm message)
 		{
-
+			//vyvola odchod zakaznika
+			message.Code = Mc.CustomerDeparture;
+			message.Addressee = MySim.FindAgent(SimId.AgentOkolia);
+			Notice(message);
 		}
 
 		//meta! sender="AgentOkolia", id="16", type="Notice"

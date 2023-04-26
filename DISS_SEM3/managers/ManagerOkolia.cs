@@ -31,6 +31,7 @@ namespace managers
 		//meta! sender="AgentModelu", id="17", type="Notice"
 		public void ProcessCustomerDeparture(MessageForm message)
 		{
+			//ZAKAZNIK ODISIEL
 		}
 
 		//meta! sender="PlanerCustomerArrival", id="39", type="Finish"
@@ -53,6 +54,17 @@ namespace managers
 		//meta! sender="AgentModelu", id="15", type="Notice"
 		public void ProcessInicialization(MessageForm message)
 		{
+            //posle sa prvy zakaznik
+            var newMessage = new MyMessage(MySim)
+            {
+                Addressee = MySim.FindAgent(SimId.AgentModelu),
+                Code = Mc.CustomerArrival,
+                //generacia noveho zakaznika s casom ktory prisiel po ukonceni assistenta
+                customer = new Customer(0, new Car(this.carTypeGenerator.Next()))
+            };
+            Notice(newMessage);
+
+
             message.Addressee = MyAgent.FindAssistant(SimId.PlanerCustomerArrival);
             StartContinualAssistant(message);
         }
