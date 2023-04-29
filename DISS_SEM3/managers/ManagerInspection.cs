@@ -59,12 +59,12 @@ namespace managers
 		{
 			switch (message.Code)
 			{
-			case Mc.Finish:
-				ProcessFinish(message);
-			break;
-
 			case Mc.Inspection:
 				ProcessInspection(message);
+			break;
+
+			case Mc.Finish:
+				ProcessFinish(message);
 			break;
 
 			default:

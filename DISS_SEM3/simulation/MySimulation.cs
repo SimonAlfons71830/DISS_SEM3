@@ -41,12 +41,11 @@ namespace simulation
 		//meta! userInfo="Generated code: do not modify", tag="begin"
 		private void Init()
 		{
-            AgentModelu = new AgentModelu(SimId.AgentModelu, this, null);
+			AgentModelu = new AgentModelu(SimId.AgentModelu, this, null);
 			AgentOkolia = new AgentOkolia(SimId.AgentOkolia, this, AgentModelu);
 			AgentSTK = new AgentSTK(SimId.AgentSTK, this, AgentModelu);
 			AgentService = new AgentService(SimId.AgentService, this, AgentSTK);
 			AgentInspection = new AgentInspection(SimId.AgentInspection, this, AgentSTK);
-			
 		}
 		public AgentModelu AgentModelu
 		{ get; set; }
@@ -58,7 +57,7 @@ namespace simulation
 		{ get; set; }
 		public AgentInspection AgentInspection
 		{ get; set; }
-        //meta! tag="end"
+		//meta! tag="end"
 
     }
 }

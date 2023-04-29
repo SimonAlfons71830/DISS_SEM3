@@ -15,8 +15,8 @@ namespace simulation
 		public const int ManagerService = 105;
 		public const int ManagerInspection = 106;
 		public const int SchedulerLunchBreak = 1005;
-		public const int ProcessTakeOver = 1002;
 		public const int ProcessPayment = 1006;
+		public const int ProcessTakeOver = 1002;
 		public const int PlanerCustomerArrival = 1001;
 		public const int ProcessInspection = 1004;
 		//meta! tag="end"

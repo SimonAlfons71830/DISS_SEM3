@@ -156,6 +156,11 @@ namespace managers
 			}
 		}
 
+		//meta! sender="AgentService", id="34", type="Response"
+		public void ProcessFreeParkingSpace(MessageForm message)
+		{
+		}
+
 		//meta! userInfo="Generated code: do not modify", tag="begin"
 		public void Init()
 		{
@@ -165,32 +170,36 @@ namespace managers
 		{
 			switch (message.Code)
 			{
-			case Mc.CustomerService:
-				ProcessCustomerService(message);
-			break;
-
-			case Mc.CarTakeover:
-				ProcessCarTakeover(message);
-			break;
-
 			case Mc.Inicialization:
 				ProcessInicialization(message);
 			break;
 
-			case Mc.Finish:
-				ProcessFinish(message);
-			break;
-
-			case Mc.Inspection:
-				ProcessInspection(message);
+			case Mc.FreeParkingSpace:
+				ProcessFreeParkingSpace(message);
 			break;
 
 			case Mc.Payment:
 				ProcessPayment(message);
 			break;
 
+			case Mc.Inspection:
+				ProcessInspection(message);
+			break;
+
+			case Mc.CarTakeover:
+				ProcessCarTakeover(message);
+			break;
+
 			case Mc.AssignParkingSpace:
 				ProcessAssignParkingSpace(message);
+			break;
+
+			case Mc.Finish:
+				ProcessFinish(message);
+			break;
+
+			case Mc.CustomerService:
+				ProcessCustomerService(message);
 			break;
 
 			default:

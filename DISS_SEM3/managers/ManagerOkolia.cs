@@ -86,12 +86,12 @@ namespace managers
 		{
 			switch (message.Code)
 			{
-			case Mc.CustomerDeparture:
-				ProcessCustomerDeparture(message);
-			break;
-
 			case Mc.Inicialization:
 				ProcessInicialization(message);
+			break;
+
+			case Mc.CustomerDeparture:
+				ProcessCustomerDeparture(message);
 			break;
 
 			case Mc.Finish:

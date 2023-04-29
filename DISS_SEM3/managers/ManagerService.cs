@@ -54,7 +54,7 @@ namespace managers
 			Response(message);
 		}
 
-		//meta! sender="AgentSTK", id="34", type="Notice"
+		//meta! sender="AgentSTK", id="34", type="Request"
 		public void ProcessFreeParkingSpace(MessageForm message)
 		{
 			//moze zacat prijimat noveho zakaznika z frontu
@@ -105,29 +105,29 @@ namespace managers
 		{
 			switch (message.Code)
 			{
-			case Mc.Finish:
-				switch (message.Sender.Id)
-				{
-				case SimId.ProcessPayment:
-					ProcessFinishProcessPayment(message);
-				break;
-
-				case SimId.ProcessTakeOver:
-					ProcessFinishProcessTakeOver(message);
-				break;
-				}
-			break;
-
-			case Mc.CarTakeover:
-				ProcessCarTakeover(message);
+			case Mc.FreeParkingSpace:
+				ProcessFreeParkingSpace(message);
 			break;
 
 			case Mc.Payment:
 				ProcessPayment(message);
 			break;
 
-			case Mc.FreeParkingSpace:
-				ProcessFreeParkingSpace(message);
+			case Mc.CarTakeover:
+				ProcessCarTakeover(message);
+			break;
+
+			case Mc.Finish:
+				switch (message.Sender.Id)
+				{
+				case SimId.ProcessTakeOver:
+					ProcessFinishProcessTakeOver(message);
+				break;
+
+				case SimId.ProcessPayment:
+					ProcessFinishProcessPayment(message);
+				break;
+				}
 			break;
 
 			case Mc.AssignParkingSpace:

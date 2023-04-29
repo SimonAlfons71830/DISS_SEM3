@@ -41,14 +41,15 @@ namespace agents
 		{
 			new ManagerSTK(SimId.ManagerSTK, MySim, this);
 			new SchedulerLunchBreak(SimId.SchedulerLunchBreak, MySim, this);
-			AddOwnMessage(Mc.CustomerService);
 			AddOwnMessage(Mc.Payment);
+			AddOwnMessage(Mc.CustomerService);
 			AddOwnMessage(Mc.Inspection);
+			AddOwnMessage(Mc.FreeParkingSpace);
 			AddOwnMessage(Mc.CarTakeover);
 			AddOwnMessage(Mc.AssignParkingSpace);
 			AddOwnMessage(Mc.Inicialization);
 		}
-        //meta! tag="end"
+		//meta! tag="end"
 
         public void createTechnicians(int number)
         {
