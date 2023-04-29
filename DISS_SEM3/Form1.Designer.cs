@@ -32,13 +32,13 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.label11 = new System.Windows.Forms.Label();
-            this.dataGridView5 = new System.Windows.Forms.DataGridView();
+            this.dataGridGarage = new System.Windows.Forms.DataGridView();
             this.label9 = new System.Windows.Forms.Label();
             this.dataGridView4 = new System.Windows.Forms.DataGridView();
             this.label7 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.dataGridView3 = new System.Windows.Forms.DataGridView();
+            this.dataGridWaitingLine = new System.Windows.Forms.DataGridView();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label19 = new System.Windows.Forms.Label();
             this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
@@ -64,8 +64,8 @@
             this.average_customer_time_in_stk_label = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridAutomechanics = new System.Windows.Forms.DataGridView();
+            this.dataGridTechnicians = new System.Windows.Forms.DataGridView();
             this.sim_time_label = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -73,17 +73,17 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridGarage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridWaitingLine)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridAutomechanics)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridTechnicians)).BeginInit();
             this.SuspendLayout();
             // 
             // tabPage2
@@ -110,20 +110,20 @@
             // 
             this.tabPage1.BackColor = System.Drawing.Color.Transparent;
             this.tabPage1.Controls.Add(this.label11);
-            this.tabPage1.Controls.Add(this.dataGridView5);
+            this.tabPage1.Controls.Add(this.dataGridGarage);
             this.tabPage1.Controls.Add(this.label9);
             this.tabPage1.Controls.Add(this.dataGridView4);
             this.tabPage1.Controls.Add(this.label7);
             this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Controls.Add(this.label4);
-            this.tabPage1.Controls.Add(this.dataGridView3);
+            this.tabPage1.Controls.Add(this.dataGridWaitingLine);
             this.tabPage1.Controls.Add(this.groupBox2);
             this.tabPage1.Controls.Add(this.groupBox1);
             this.tabPage1.Controls.Add(this.average_customer_time_in_stk_label);
             this.tabPage1.Controls.Add(this.label21);
             this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.dataGridView2);
-            this.tabPage1.Controls.Add(this.dataGridView1);
+            this.tabPage1.Controls.Add(this.dataGridAutomechanics);
+            this.tabPage1.Controls.Add(this.dataGridTechnicians);
             this.tabPage1.Controls.Add(this.sim_time_label);
             this.tabPage1.Controls.Add(this.button3);
             this.tabPage1.Controls.Add(this.button2);
@@ -146,24 +146,24 @@
             this.label11.TabIndex = 101;
             this.label11.Text = "Garage";
             // 
-            // dataGridView5
+            // dataGridGarage
             // 
-            this.dataGridView5.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView5.Location = new System.Drawing.Point(980, 93);
-            this.dataGridView5.Name = "dataGridView5";
-            this.dataGridView5.RowHeadersWidth = 51;
-            this.dataGridView5.RowTemplate.Height = 24;
-            this.dataGridView5.Size = new System.Drawing.Size(270, 221);
-            this.dataGridView5.TabIndex = 100;
+            this.dataGridGarage.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridGarage.Location = new System.Drawing.Point(980, 93);
+            this.dataGridGarage.Name = "dataGridGarage";
+            this.dataGridGarage.RowHeadersWidth = 51;
+            this.dataGridGarage.RowTemplate.Height = 24;
+            this.dataGridGarage.Size = new System.Drawing.Size(270, 221);
+            this.dataGridGarage.TabIndex = 100;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(1358, 422);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(94, 16);
+            this.label9.Size = new System.Drawing.Size(88, 16);
             this.label9.TabIndex = 99;
-            this.label9.Text = "Payment Time";
+            this.label9.Text = "Payment Line";
             // 
             // dataGridView4
             // 
@@ -180,9 +180,9 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(1070, 422);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(84, 16);
+            this.label7.Size = new System.Drawing.Size(80, 16);
             this.label7.TabIndex = 97;
-            this.label7.Text = "Waiting Lime";
+            this.label7.Text = "Waiting Line";
             // 
             // label5
             // 
@@ -202,15 +202,15 @@
             this.label4.TabIndex = 95;
             this.label4.Text = "Technicians";
             // 
-            // dataGridView3
+            // dataGridWaitingLine
             // 
-            this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView3.Location = new System.Drawing.Point(980, 441);
-            this.dataGridView3.Name = "dataGridView3";
-            this.dataGridView3.RowHeadersWidth = 51;
-            this.dataGridView3.RowTemplate.Height = 24;
-            this.dataGridView3.Size = new System.Drawing.Size(270, 221);
-            this.dataGridView3.TabIndex = 93;
+            this.dataGridWaitingLine.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridWaitingLine.Location = new System.Drawing.Point(980, 441);
+            this.dataGridWaitingLine.Name = "dataGridWaitingLine";
+            this.dataGridWaitingLine.RowHeadersWidth = 51;
+            this.dataGridWaitingLine.RowTemplate.Height = 24;
+            this.dataGridWaitingLine.Size = new System.Drawing.Size(270, 221);
+            this.dataGridWaitingLine.TabIndex = 93;
             // 
             // groupBox2
             // 
@@ -372,6 +372,7 @@
             this.cars_parked_in_garage_label.Size = new System.Drawing.Size(31, 16);
             this.cars_parked_in_garage_label.TabIndex = 66;
             this.cars_parked_in_garage_label.Text = "XXX";
+            this.cars_parked_in_garage_label.Click += new System.EventHandler(this.cars_parked_in_garage_label_Click);
             // 
             // label15
             // 
@@ -500,25 +501,26 @@
             this.label1.TabIndex = 88;
             this.label1.Text = "SLOW MODE";
             // 
-            // dataGridView2
+            // dataGridAutomechanics
             // 
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(490, 441);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.RowHeadersWidth = 51;
-            this.dataGridView2.RowTemplate.Height = 24;
-            this.dataGridView2.Size = new System.Drawing.Size(463, 221);
-            this.dataGridView2.TabIndex = 87;
+            this.dataGridAutomechanics.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridAutomechanics.Location = new System.Drawing.Point(490, 441);
+            this.dataGridAutomechanics.Name = "dataGridAutomechanics";
+            this.dataGridAutomechanics.RowHeadersWidth = 51;
+            this.dataGridAutomechanics.RowTemplate.Height = 24;
+            this.dataGridAutomechanics.Size = new System.Drawing.Size(463, 221);
+            this.dataGridAutomechanics.TabIndex = 87;
             // 
-            // dataGridView1
+            // dataGridTechnicians
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(13, 441);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(463, 221);
-            this.dataGridView1.TabIndex = 86;
+            this.dataGridTechnicians.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridTechnicians.Location = new System.Drawing.Point(13, 441);
+            this.dataGridTechnicians.Name = "dataGridTechnicians";
+            this.dataGridTechnicians.RowHeadersWidth = 51;
+            this.dataGridTechnicians.RowTemplate.Height = 24;
+            this.dataGridTechnicians.Size = new System.Drawing.Size(463, 221);
+            this.dataGridTechnicians.TabIndex = 86;
+            this.dataGridTechnicians.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // sim_time_label
             // 
@@ -580,7 +582,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1576, 731);
+            this.ClientSize = new System.Drawing.Size(1603, 731);
             this.Controls.Add(this.tabControl1);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -588,9 +590,9 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridGarage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridWaitingLine)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
@@ -599,8 +601,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridAutomechanics)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridTechnicians)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -611,13 +613,13 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.DataGridView dataGridView5;
+        private System.Windows.Forms.DataGridView dataGridGarage;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.DataGridView dataGridView4;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.DataGridView dataGridView3;
+        private System.Windows.Forms.DataGridView dataGridWaitingLine;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.NumericUpDown numericUpDown4;
@@ -643,8 +645,8 @@
         private System.Windows.Forms.Label average_customer_time_in_stk_label;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DataGridView dataGridView2;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dataGridAutomechanics;
+        private System.Windows.Forms.DataGridView dataGridTechnicians;
         private System.Windows.Forms.Label sim_time_label;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;

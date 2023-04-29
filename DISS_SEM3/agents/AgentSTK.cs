@@ -11,8 +11,8 @@ namespace agents
 	//meta! id="3"
 	public class AgentSTK : Agent
 	{
-        public SimplePriorityQueue<Customer, double> customersLine;
-		public SimplePriorityQueue<Customer, double> paymentLine;
+        public SimplePriorityQueue<MyMessage, double> customersLine;
+		public SimplePriorityQueue<MyMessage, double> paymentLine;
 
         public List<Technician> technicians;
         public List<Automechanic> automechanics;
@@ -21,8 +21,8 @@ namespace agents
 			base(id, mySim, parent)
 		{
 			Init();
-			customersLine = new SimplePriorityQueue<Customer, double>();
-			paymentLine = new SimplePriorityQueue<Customer, double>();
+			customersLine = new SimplePriorityQueue<MyMessage, double>();
+			paymentLine = new SimplePriorityQueue<MyMessage, double>();
             this.technicians = new List<Technician>();
 			this.automechanics = new List<Automechanic>();
         }
@@ -67,5 +67,30 @@ namespace agents
                 this.automechanics.Add(mechanic);
             }
         }
+        public int getAvailableTechniciansCount()
+        {
+            var pom = 0;
+            for (int i = 0; i < this.technicians.Count; i++)
+            {
+                if (!this.technicians[i].obsluhuje)
+                {
+                    pom++;
+                }
+            }
+            return pom;
+        }
+        public int getAvailableAutomechanicsCount()
+        {
+            var pom = 0;
+            for (int i = 0; i < this.automechanics.Count; i++)
+            {
+                if (!this.automechanics[i].obsluhuje)
+                {
+                    pom++;
+                }
+            }
+            return pom;
+        }
+        
     }
 }

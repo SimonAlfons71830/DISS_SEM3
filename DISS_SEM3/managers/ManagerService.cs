@@ -12,27 +12,17 @@ namespace managers
 	//meta! id="5"
 	public class ManagerService : Manager
 	{
-		public List<ParkingSpace> garage { get; set; }
-		public ManagerService(int id, Simulation mySim, Agent myAgent) :
+        public ManagerService(int id, Simulation mySim, Agent myAgent) :
 			base(id, mySim, myAgent)
 		{
 			Init();
 
-            this.garage = new List<ParkingSpace>();
-            for (int i = 0; i < 5; i++)
-            {
-                var parking = new ParkingSpace();
-                parking._id = i + 1;
-                this.garage.Add(parking);
-            }
         }
 
 		override public void PrepareReplication()
 		{
 			base.PrepareReplication();
 			// Setup component for the next replication
-			this.garage.Clear();
-
 			if (PetriNet != null)
 			{
 				PetriNet.Clear();
@@ -67,6 +57,8 @@ namespace managers
 		//meta! sender="AgentSTK", id="34", type="Notice"
 		public void ProcessFreeParkingSpace(MessageForm message)
 		{
+			//moze zacat prijimat noveho zakaznika z frontu
+			
 			this.freeParking();
 		}
 
@@ -84,12 +76,16 @@ namespace managers
 			//chcem ziskat volne parkovacie miesto pre zakaznika
 			if (this.reserveParking())
 			{
-				//do message priradit parkovacie miesto ?
+				//rezervovalo sa parking space
                 message.Code = Mc.AssignParkingSpace;
                 message.Addressee = MySim.FindAgent(SimId.AgentSTK);
                 Response(message);
+			}
+			else
+			{
+                this.MyAgent.waitingForAssigningFront.Enqueue(((MyMessage)message), ((MyMessage)message).DeliveryTime);
             }
-			
+
 		}
 
 		//meta! userInfo="Process messages defined in code", id="0"
@@ -154,11 +150,11 @@ namespace managers
 
         public bool reserveParking()
         {
-            for (int i = 0; i < this.garage.Count; i++)
+            for (int i = 0; i < this.MyAgent.garageCounter.Count; i++)
             {
-                if (this.garage[i].free)
+                if (this.MyAgent.garageCounter[i].free)
                 {
-                    this.garage[i].free = false;
+                    this.MyAgent.garageCounter[i].free = false;
                     return true;
                 }
             }
@@ -167,11 +163,11 @@ namespace managers
 
 		private void freeParking()
 		{
-            for (int i = 0; i < this.garage.Count; i++)
+            for (int i = 0; i < this.MyAgent.garageCounter.Count; i++)
             {
-                if (!this.garage[i].free)
+                if (!this.MyAgent.garageCounter[i].free)
                 {
-                    this.garage[i].free = true;
+                    this.MyAgent.garageCounter[i].free = true;
                 }
             }
         }

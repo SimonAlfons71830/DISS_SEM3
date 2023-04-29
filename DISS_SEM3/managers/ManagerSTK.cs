@@ -35,13 +35,13 @@ namespace managers
 			//priradim ho do frontu
 			//zavolam si request ci mam volne miesto
 			var technic = this.getAvailableTechnician();
-		
-			if (technic != null)
+
+            MyAgent.customersLine.Enqueue(((MyMessage)message), ((MyMessage)message).DeliveryTime);
+            if (technic != null)
 			{
 				((MyMessage)message).technician = technic;
                 technic.obsluhuje = true;
 
-                MyAgent.customersLine.Enqueue(((MyMessage)message).customer, ((MyMessage)message).customer.getArrivalTime());
                 message.Addressee = MySim.FindAgent(SimId.AgentService);
                 message.Code = Mc.AssignParkingSpace;
                 //opyta sa agenta obsluhy ci ma volne parkovacie miesto
@@ -79,7 +79,7 @@ namespace managers
 			}
 			else
 			{
-				MyAgent.paymentLine.Enqueue(((MyMessage)message).customer, ((MyMessage)message).customer.getArrivalTime());
+				MyAgent.paymentLine.Enqueue(((MyMessage)message), ((MyMessage)message).DeliveryTime);
 			}
 		}
 
@@ -114,9 +114,13 @@ namespace managers
 		//meta! sender="AgentService", id="19", type="Response"
 		public void ProcessAssignParkingSpace(MessageForm message)
 		{
-			//response o tom ze ma pridelene parking space
-			//mame technika, parking space, mozeme poslat na takeover
+            //response o tom ze ma pridelene parking space
+            //mame technika, parking space, mozeme poslat na takeover
 
+
+
+            MyAgent.customersLine.Dequeue();
+            
 			message.Code = Mc.CarTakeover;
 			message.Addressee = MySim.FindAgent(SimId.AgentService);
 			Request(message);
@@ -209,29 +213,6 @@ namespace managers
             }
             return null;
         }
-		public int getAvailableTechniciansCount()
-		{
-			var pom = 0;
-			for (int i = 0; i < MyAgent.technicians.Count; i++)
-			{
-				if (!MyAgent.technicians[i].obsluhuje)
-				{
-					pom++;
-				}
-			}
-			return pom;
-		}
-        public int getAvailableAutomechanicsCount()
-        {
-            var pom = 0;
-            for (int i = 0; i < MyAgent.automechanics.Count; i++)
-            {
-                if (!MyAgent.automechanics[i].obsluhuje)
-                {
-                    pom++;
-                }
-            }
-            return pom;
-        }
+		
     }
 }
