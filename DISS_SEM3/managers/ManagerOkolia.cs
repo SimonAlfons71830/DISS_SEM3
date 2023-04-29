@@ -10,11 +10,14 @@ namespace managers
 	public class ManagerOkolia : Manager
 	{
         public CarGenerator carTypeGenerator { get; set; }
+		private int id;
+
         public ManagerOkolia(int id, Simulation mySim, Agent myAgent) :
 			base(id, mySim, myAgent)
 		{
 			Init();
-			carTypeGenerator = new CarGenerator(((MySimulation)mySim).seedGenerator); 
+			carTypeGenerator = new CarGenerator(((MySimulation)mySim).seedGenerator);
+			this.id = 0;
 		}
 
 		override public void PrepareReplication()
@@ -45,6 +48,8 @@ namespace managers
                 //generacia noveho zakaznika s casom ktory prisiel po ukonceni assistenta
                 customer = new Customer(MySim.CurrentTime, new Car(this.carTypeGenerator.Next()))
 			};
+			((MyMessage)newMessage).customer._id = this.id;
+			this.id++;
             Notice(newMessage);
 
             message.Addressee = MyAgent.FindAssistant(SimId.PlanerCustomerArrival);
@@ -61,7 +66,10 @@ namespace managers
                 Code = Mc.CustomerArrival,
                 //generacia noveho zakaznika s casom ktory prisiel po ukonceni assistenta
                 customer = new Customer(0, new Car(this.carTypeGenerator.Next()))
+				
             };
+			((MyMessage)newMessage).customer._id = this.id;
+			this.id++;
             Notice(newMessage);
 
 

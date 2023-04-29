@@ -272,5 +272,10 @@ namespace DISS_SEM3
         {
 
         }
+
+        private void dataGridGarage_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

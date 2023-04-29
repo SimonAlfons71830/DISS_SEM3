@@ -54,12 +54,18 @@ namespace managers
 			Response(message);
 		}
 
-		//meta! sender="AgentSTK", id="34", type="Request"
+		//meta! sender="AgentSTK", id="34", type="Notice"
 		public void ProcessFreeParkingSpace(MessageForm message)
 		{
-			//moze zacat prijimat noveho zakaznika z frontu
-			
-			this.freeParking();
+            this.freeParking();
+			//da vediet o uvolneni - z radu na response o priradeni parkovacieho miesta 
+			if (this.MyAgent.waitingForAssigningFront.Count > 0)
+			{
+				var assignMessage = this.MyAgent.waitingForAssigningFront.Dequeue();
+				assignMessage.Code = Mc.AssignParkingSpace;
+				assignMessage.Addressee = MySim.FindAgent(SimId.AgentSTK);
+				Response(assignMessage);
+			}
 		}
 
 		//meta! sender="AgentSTK", id="33", type="Request"
@@ -105,18 +111,6 @@ namespace managers
 		{
 			switch (message.Code)
 			{
-			case Mc.FreeParkingSpace:
-				ProcessFreeParkingSpace(message);
-			break;
-
-			case Mc.Payment:
-				ProcessPayment(message);
-			break;
-
-			case Mc.CarTakeover:
-				ProcessCarTakeover(message);
-			break;
-
 			case Mc.Finish:
 				switch (message.Sender.Id)
 				{
@@ -128,6 +122,18 @@ namespace managers
 					ProcessFinishProcessPayment(message);
 				break;
 				}
+			break;
+
+			case Mc.Payment:
+				ProcessPayment(message);
+			break;
+
+			case Mc.FreeParkingSpace:
+				ProcessFreeParkingSpace(message);
+			break;
+
+			case Mc.CarTakeover:
+				ProcessCarTakeover(message);
 			break;
 
 			case Mc.AssignParkingSpace:

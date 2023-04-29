@@ -44,7 +44,6 @@ namespace agents
 			AddOwnMessage(Mc.Payment);
 			AddOwnMessage(Mc.CustomerService);
 			AddOwnMessage(Mc.Inspection);
-			AddOwnMessage(Mc.FreeParkingSpace);
 			AddOwnMessage(Mc.CarTakeover);
 			AddOwnMessage(Mc.AssignParkingSpace);
 			AddOwnMessage(Mc.Inicialization);

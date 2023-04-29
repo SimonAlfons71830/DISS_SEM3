@@ -59,12 +59,47 @@ namespace managers
 		public void ProcessPayment(MessageForm message)
 		{
 			((MyMessage)message).technician.obsluhuje = false;
+			((MyMessage)message).technician.customer_car = null;
+            ((MyMessage)message).technician = null;
 
-			//response ze sa vykonal payment
-			message.Code = Mc.CustomerService;
+            //response ze sa vykonal payment
+            message.Code = Mc.CustomerService;
 			message.Addressee = MySim.FindAgent(SimId.AgentModelu);
 			Response(message);
-		}
+
+            //prevzatie dalsieho zakaznika !!!
+
+            var technic = this.getAvailableTechnician();
+            if (technic != null)
+            {
+                if (this.MyAgent.paymentLine.Count > 0)
+                {
+                    var paymentMessage = this.MyAgent.paymentLine.Dequeue();
+                    paymentMessage.technician = technic;
+                    paymentMessage.technician.obsluhuje = true;
+                    paymentMessage.technician.customer_car = paymentMessage.customer;
+
+                    paymentMessage.Code = Mc.Payment;
+                    paymentMessage.Addressee = MySim.FindAgent(SimId.AgentService);
+
+                    Request(paymentMessage);
+                }
+                else if (this.MyAgent.customersLine.Count > 0)
+                {
+                    var takeOverMessage = this.MyAgent.customersLine.Dequeue();
+                    takeOverMessage.technician = technic;
+                    takeOverMessage.technician.obsluhuje = true;
+                    takeOverMessage.technician.customer_car = takeOverMessage.customer;
+
+
+                    takeOverMessage.Code = Mc.AssignParkingSpace;
+                    takeOverMessage.Addressee = MySim.FindAgent(SimId.AgentService);
+
+                    Request(takeOverMessage);
+                }
+            }
+
+        }
 
 		//meta! sender="AgentInspection", id="52", type="Response"
 		public void ProcessInspection(MessageForm message)
@@ -121,7 +156,7 @@ namespace managers
 				var copiedMessage = new MyMessage(((MyMessage)message));
 				copiedMessage.Code = Mc.FreeParkingSpace;
 				copiedMessage.Addressee = MySim.FindAgent(SimId.AgentService);
-				Notice(copiedMessage);
+				Request(copiedMessage);
 			}
 			else
 			{
@@ -156,9 +191,40 @@ namespace managers
 			}
 		}
 
-		//meta! sender="AgentService", id="34", type="Response"
+		//meta! userInfo="Removed from model"
 		public void ProcessFreeParkingSpace(MessageForm message)
 		{
+            //uvolnilo sa miesto na prijatie noveho zakaznika 
+            var technic = this.getAvailableTechnician();
+			if (technic != null)
+			{
+				if (this.MyAgent.paymentLine.Count > 0)
+				{
+					var paymentMessage = this.MyAgent.paymentLine.Dequeue();
+					paymentMessage.technician = technic;
+					paymentMessage.technician.obsluhuje = true;
+					paymentMessage.technician.customer_car = paymentMessage.customer;
+
+					paymentMessage.Code = Mc.Payment;
+					paymentMessage.Addressee = MySim.FindAgent(SimId.AgentService);
+
+					Request(paymentMessage);
+				}
+				else if (this.MyAgent.customersLine.Count > 0)
+				{
+					var takeOverMessage = this.MyAgent.customersLine.Dequeue();
+					takeOverMessage.technician = technic;
+					takeOverMessage.technician.obsluhuje = true;
+					takeOverMessage.technician.customer_car = takeOverMessage.customer;
+
+
+					takeOverMessage.Code = Mc.AssignParkingSpace;
+					takeOverMessage.Addressee = MySim.FindAgent(SimId.AgentService);
+
+					Request(takeOverMessage);
+				}
+			}
+			//moze sa poslat na obed ??
 		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
@@ -174,24 +240,16 @@ namespace managers
 				ProcessInicialization(message);
 			break;
 
-			case Mc.FreeParkingSpace:
-				ProcessFreeParkingSpace(message);
+			case Mc.Inspection:
+				ProcessInspection(message);
 			break;
 
 			case Mc.Payment:
 				ProcessPayment(message);
 			break;
 
-			case Mc.Inspection:
-				ProcessInspection(message);
-			break;
-
 			case Mc.CarTakeover:
 				ProcessCarTakeover(message);
-			break;
-
-			case Mc.AssignParkingSpace:
-				ProcessAssignParkingSpace(message);
 			break;
 
 			case Mc.Finish:
@@ -200,6 +258,10 @@ namespace managers
 
 			case Mc.CustomerService:
 				ProcessCustomerService(message);
+			break;
+
+			case Mc.AssignParkingSpace:
+				ProcessAssignParkingSpace(message);
 			break;
 
 			default:
