@@ -14,18 +14,23 @@ namespace agents
 	{
         public SimplePriorityQueue<Customer, double> garageParkingSpace;
 		public List<ParkingSpace> garageCounter;
+		public SimplePriorityQueue<MyMessage, double> waitingForAssigningFront;
+
         public AgentService(int id, Simulation mySim, Agent parent) :
 			base(id, mySim, parent)
 		{
 			Init();
-			garageParkingSpace = new SimplePriorityQueue<Customer, double>();
-			garageCounter = new List<ParkingSpace>();
+			this.garageParkingSpace = new SimplePriorityQueue<Customer, double>();
+			this.garageCounter = new List<ParkingSpace>();
             for (int i = 0; i < 5; i++)
             {
                 var parking = new ParkingSpace();
                 parking._id = i + 1;
                 this.garageCounter.Add(parking);
             }
+
+			this.waitingForAssigningFront = new SimplePriorityQueue<MyMessage, double>();
+
         }
 
 		override public void PrepareReplication()

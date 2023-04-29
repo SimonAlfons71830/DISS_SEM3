@@ -16,6 +16,7 @@ namespace agents
 
         public List<Technician> technicians;
         public List<Automechanic> automechanics;
+        public SimplePriorityQueue<MyMessage, double> waitingForInspection;
 
         public AgentSTK(int id, Simulation mySim, Agent parent) :
 			base(id, mySim, parent)
@@ -25,6 +26,7 @@ namespace agents
 			paymentLine = new SimplePriorityQueue<MyMessage, double>();
             this.technicians = new List<Technician>();
 			this.automechanics = new List<Automechanic>();
+            this.waitingForInspection = new SimplePriorityQueue<MyMessage, double>();
         }
 
 		override public void PrepareReplication()
