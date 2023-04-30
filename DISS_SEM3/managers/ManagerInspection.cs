@@ -36,8 +36,8 @@ namespace managers
 		//meta! sender="ProcessInspection", id="61", type="Finish"
 		public void ProcessFinish(MessageForm message)
 		{
-			//vratit agentovi stk o ukonceni inspekcie
-			message.Code = Mc.Inspection;
+            //vratit agentovi stk o ukonceni inspekcie
+            message.Code = Mc.Inspection;
 			message.Addressee = MySim.FindAgent(SimId.AgentSTK);
 			Response(message);
 		}

@@ -48,12 +48,17 @@ namespace managers
                 //generacia noveho zakaznika s casom ktory prisiel po ukonceni assistenta
                 customer = new Customer(MySim.CurrentTime, new Car(this.carTypeGenerator.Next()))
 			};
-			((MyMessage)newMessage).customer._id = this.id;
+            newMessage.customer._id = this.id;
 			this.id++;
             Notice(newMessage);
 
-            message.Addressee = MyAgent.FindAssistant(SimId.PlanerCustomerArrival);
-            StartContinualAssistant(message);
+			//chladenie
+			if (MySim.CurrentTime < 24300) // 6*60+45  *  60 
+			{
+                message.Addressee = MyAgent.FindAssistant(SimId.PlanerCustomerArrival);
+                StartContinualAssistant(message);
+            }
+            
         }
 
 		//meta! sender="AgentModelu", id="15", type="Notice"

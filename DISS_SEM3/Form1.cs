@@ -21,7 +21,11 @@ namespace DISS_SEM3
         private DataTable dataTechnicians = new DataTable();
         private DataTable dataAutomechanics = new DataTable();
         private DataTable dataGarage = new DataTable();
+        private DataTable dataWaitingLine = new DataTable();
+        private DataTable dataPaymentLine = new DataTable();
+        private DataTable dataInspection = new DataTable();
 
+        private DateTime startTime;
         private Thread thread1;
         private DateTime _simtime;
         private MySimulation simulation;
@@ -38,7 +42,7 @@ namespace DISS_SEM3
         {
             this.simulation.RegisterDelegate(this);
             _simtime = DateTime.Parse("2/16/2008 09:00:00 AM");
-
+            startTime = DateTime.Parse("2/16/2008 09:00:00 AM");
             dataTechnicians.Columns.Add("Technician ID", typeof(int));
             dataTechnicians.Columns.Add("Customer ID", typeof(int));
             dataTechnicians.Columns.Add("Status", typeof(string));
@@ -50,7 +54,15 @@ namespace DISS_SEM3
             dataGarage.Columns.Add("Parking place ID", typeof(int));
             dataGarage.Columns.Add("Customer ID", typeof(int));
 
+            dataInspection.Columns.Add("Customer ID", typeof(int));
 
+            dataWaitingLine.Columns.Add("Place in Line", typeof(int));
+            dataWaitingLine.Columns.Add("Customer ID", typeof(int));
+            dataWaitingLine.Columns.Add("Arrival time", typeof(DateTime));
+
+            dataPaymentLine.Columns.Add("Place in Line", typeof(int));
+            dataPaymentLine.Columns.Add("Customer ID", typeof(int));
+            dataPaymentLine.Columns.Add("Arrival time", typeof(DateTime));
 
         }
 
@@ -58,10 +70,6 @@ namespace DISS_SEM3
         {
             this.simulation.AgentSTK.createAutomechanics((int)numericUpDown3.Value);
             this.simulation.AgentSTK.createTechnicians((int)numericUpDown2.Value);
-
-            
-
-
 
             thread1 = new Thread(new ThreadStart(this.startSimulation));
             thread1.IsBackground = true;
@@ -71,13 +79,8 @@ namespace DISS_SEM3
         private void startSimulation()
         {
             double timeOfReplication = (double)this.numericUpDown4.Value * 3600;
-            //this.simulation.SetSimSpeed(1,(double)this.numericUpDown1.Value);
             this.simulation.SetSimSpeed(1, 0.001);
             this.simulation.Simulate(1, timeOfReplication);
-        }
-
-        public void SimStateChanged(Simulation sim, SimState state)
-        {
         }
 
         public void Refresh(Simulation sim)
@@ -87,15 +90,21 @@ namespace DISS_SEM3
             _simtime = _simtime.AddSeconds(time);
             this.Invoke((MethodInvoker)delegate
             {
+                var speed = (double)numericUpDown1.Value;
+                if (speed == 0)
+                {
+                    speed = 1;
+                }
+                this.simulation.SetSimSpeed(1, 1/speed);
                 //refreshing stats
                 sim_time_label.Text = _simtime.ToString("hh:mm:ss tt");
                 customers_in_line_label.Text = this.simulation.AgentSTK.customersLine.Count.ToString();
                 customers_in_paymentline_label.Text = this.simulation.AgentSTK.paymentLine.Count.ToString();
                 free_technicians_label.Text = (numericUpDown2.Value - this.simulation.AgentSTK.getAvailableTechniciansCount()).ToString() + "/" + numericUpDown2.Value.ToString();
                 free_automechanics_label.Text = (numericUpDown3.Value - this.simulation.AgentSTK.getAvailableAutomechanicsCount()).ToString() + "/" + numericUpDown3.Value.ToString();
-                reserved_garage_parking_label.Text = (5 - this.simulation.AgentService.getReservedParkingSpace()).ToString() + "/5";
-                cars_parked_in_garage_label.Text = (5 - this.simulation.AgentService.getCarsCountInGarage()).ToString();
-
+                reserved_garage_parking_label.Text = this.simulation.AgentService.getReservedParkingSpace().ToString() + "/5";
+                cars_parked_in_garage_label.Text = this.simulation.AgentService.getCarsCountInGarage().ToString();
+/*
                 //refreshing dataGrids
                 dataTechnicians.Clear();
                 //create data grid
@@ -149,21 +158,6 @@ namespace DISS_SEM3
                     }
                 }
 
-                /* for (int i = 0; i < this.simulation.AgentSTK.technicians.Count; i++)
-                 {
-                     Customer customer = this.simulation.AgentSTK.technicians[i].customer_car;
-                     if (customer != null)
-                     {
-                         dataGridTechnicians.Rows[i].Cells["Customer ID"].Value = customer._id;
-                         dataGridTechnicians.Rows[i].Cells["Status"].Value = "Busy";
-                     }
-                     else
-                     {
-                         dataGridTechnicians.Rows[i].Cells["Status"].Value = "Free";
-                     }
-
-                 }*/
-
                 dataAutomechanics.Clear();
                 foreach (Automechanic automechanic in this.simulation.AgentSTK.automechanics)
                 {
@@ -207,45 +201,74 @@ namespace DISS_SEM3
                     }
                 }
 
+                //var pometimei = startTime;
+                var i = 1;
                 dataGarage.Clear();
-                foreach (Customer customer in this.simulation.AgentService.garageParkingSpace)
+                foreach (var parking in this.simulation.AgentService.garageParkingSpace)
                 {
                     DataRow row = dataGarage.NewRow();
-                    row["Parking place ID"] = "X";
-
-
-                     
-                    if (customer != null)
-                    {
-                        row["Customer ID"] = customer._id;
-                    }
-                    else
-                    {
-                        row["Customer ID"] = "X";
-                    }
-
-                    dataGridGarage.Rows.Add(row);
+                    row["Parking place ID"] = i;
+                    i++;
+                    row["Customer ID"] = parking._id; //customer id
+                    dataGarage.Rows.Add(row);
                 }
 
-
-                // Bind the DataTable to the DataGridView
                 dataGridGarage.DataSource = dataGarage;
 
-                // Format the DataGridView
                 dataGridGarage.RowHeadersVisible = true;
                 dataGridGarage.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
 
+                var pomtimey = startTime;
+                var y = 1;
+                dataWaitingLine.Clear();
+                foreach (var message in this.simulation.AgentSTK.customersLine)
+                {
+                    DataRow row = dataWaitingLine.NewRow();
+                    row["Place in Line"] = y;
+                    y++;
+                    row["Customer ID"] = message.customer._id; //customer id
+                    row["Arrival time"] = pomtimey.AddSeconds(message.customer.arrivalTime);
+                    dataWaitingLine.Rows.Add(row);
+                }
+
+                dataGridWaitingLine.DataSource = dataWaitingLine;
+
+                dataGridWaitingLine.RowHeadersVisible = true;
+                dataGridWaitingLine.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+
+                var z = 1;
+                var pomtimez = startTime;
+                dataPaymentLine.Clear();
+                foreach (var message in this.simulation.AgentSTK.paymentLine)
+                {
+                    DataRow row = dataPaymentLine.NewRow();
+                    row["Place in Line"] = z;
+                    z++;
+                    row["Customer ID"] = message.customer._id; //customer id
+                    row["Arrival time"] = pomtimez.AddSeconds(message.customer.arrivalTime);
+                    dataPaymentLine.Rows.Add(row);
+                }
+
+                dataGridView4.DataSource = dataPaymentLine;
+
+                dataGridView4.RowHeadersVisible = true;
+                dataGridView4.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+
+                dataInspection.Clear();
+                foreach (var waitingCustomer in this.simulation.AgentSTK.waitingForInspection)
+                {
+                    DataRow row = dataInspection.NewRow();
+                    row["Customer ID"] = waitingCustomer.customer._id; //customer id
+                    dataInspection.Rows.Add(row);
+                }
+
+                dataGridView1.DataSource = dataInspection;
+
+                dataGridView1.RowHeadersVisible = true;
+                dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+*/
             });
-        }
 
-        private void sim_time_label_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tabPage1_Click(object sender, EventArgs e)
-        {
-            
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -258,22 +281,22 @@ namespace DISS_SEM3
             this.simulation.ResumeSimulation();
         }
 
+        public void SimStateChanged(Simulation sim, SimState state)
+        {
+
+        }
+
+        private void dataGridView4_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void cars_parked_in_garage_label_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void dataGridGarage_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }

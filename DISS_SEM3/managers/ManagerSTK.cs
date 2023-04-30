@@ -31,38 +31,39 @@ namespace managers
 		//meta! sender="AgentModelu", id="18", type="Request"
 		public void ProcessCustomerService(MessageForm message)
 		{
-
-            MyAgent.customersLine.Enqueue(((MyMessage)message), ((MyMessage)message).DeliveryTime);
-
-            //prisiel request ze chcem obsluzit zakaznika
+			//prisiel request ze chcem obsluzit zakaznika
             //priradim ho do frontu
             //zavolam si request ci mam volne miesto
 
             var technic = this.getAvailableTechnician();
             if (technic != null)
 			{
-                technic.obsluhuje = true;
-                technic.customer_car = ((MyMessage)message).customer;
-
-                ((MyMessage)message).technician = technic;
+				((MyMessage)message).technician = technic;
+				/*((MyMessage)message).technician.obsluhuje = true;
+				((MyMessage)message).technician.customer_car = ((MyMessage)message).customer;*/
 
                 message.Addressee = MySim.FindAgent(SimId.AgentService);
                 message.Code = Mc.AssignParkingSpace;
                 //opyta sa agenta obsluhy ci ma volne parkovacie miesto
                 Request(message);
+			}
+			else
+			{
+				//queue kde sa caka na prebratie auta technikom, ak nieje dostupny
+                this.MyAgent.customersLine.Enqueue(((MyMessage)message), ((MyMessage)message).DeliveryTime);
             }
-			//else dat do frontu (uz je vo fronte)
-
 		}
 
 		//meta! sender="AgentService", id="53", type="Response"
 		public void ProcessPayment(MessageForm message)
 		{
+			//uvolnenie technika z platenia
+			//dat mu novu pracu - bud z payment alebo potom takeover
 			((MyMessage)message).technician.obsluhuje = false;
 			((MyMessage)message).technician.customer_car = null;
             ((MyMessage)message).technician = null;
 
-            //response ze sa vykonal payment
+            //response ze sa vykonal payment - obsluha zakaznika skoncila
             message.Code = Mc.CustomerService;
 			message.Addressee = MySim.FindAgent(SimId.AgentModelu);
 			Response(message);
@@ -91,24 +92,53 @@ namespace managers
                     takeOverMessage.technician.obsluhuje = true;
                     takeOverMessage.technician.customer_car = takeOverMessage.customer;
 
-
                     takeOverMessage.Code = Mc.AssignParkingSpace;
                     takeOverMessage.Addressee = MySim.FindAgent(SimId.AgentService);
 
                     Request(takeOverMessage);
                 }
-            }
+            }// else nikto necaka
 
         }
 
 		//meta! sender="AgentInspection", id="52", type="Response"
 		public void ProcessInspection(MessageForm message)
 		{
+			//mechanik skoncil, moze brat dalsie auto z radu na cakanie na inspection
+
             ((MyMessage)message).automechanic.obsluhuje = false;
 			((MyMessage)message).automechanic.customer_car = null;
 			((MyMessage)message).automechanic = null;
 
-            //vyhlada volneho technika a moze ist platit
+			//automechanik pokracuje v praci vypyta si z garaze??
+			if (this.MyAgent.waitingForInspection.Count > 0 )
+			{
+				var automechanic = this.getAvailableAutomechanic();
+				if (automechanic != null)
+				{
+					var inspectionMessage = this.MyAgent.waitingForInspection.Dequeue();
+
+
+                    ((MyMessage)inspectionMessage).automechanic = automechanic;
+                    ((MyMessage)inspectionMessage).automechanic.obsluhuje = true;
+                    ((MyMessage)inspectionMessage).automechanic.customer_car = ((MyMessage)message).customer;
+
+                    inspectionMessage.Code = Mc.Inspection;
+					inspectionMessage.Addressee = MySim.FindAgent(SimId.AgentInspection);
+					Request(inspectionMessage);
+
+                    //kopirovat spravu lebo posielam do dvoch agentov
+                    var copiedMessage = new MyMessage(((MyMessage)inspectionMessage));
+                    copiedMessage.Code = Mc.FreeParkingSpace;
+                    copiedMessage.Addressee = MySim.FindAgent(SimId.AgentService);
+                    Request(copiedMessage);
+
+
+                }
+			}
+
+            //vyhlada volneho technika a zakaznik ktory prisiel z inspectio moze ist platit
+			//ak nieje volny technik ide do radu na platenie
             var technic = this.getAvailableTechnician();
 			if (technic != null)
 			{
@@ -135,6 +165,10 @@ namespace managers
 		//meta! sender="AgentService", id="33", type="Response"
 		public void ProcessCarTakeover(MessageForm message)
 		{
+
+			//uvolnenie technika moze brat dalsieho zakaznika z radu (payment/takeover)
+			//zistenie ci je volny automechanik ak ano tak request ak nie tak do line
+
 			//uvolnenie technika
 			((MyMessage)message).technician.obsluhuje = false;
 			((MyMessage)message).technician.customer_car = null;
@@ -145,8 +179,8 @@ namespace managers
 			if (mechanic != null)
 			{
                 ((MyMessage)message).automechanic = mechanic;
-				mechanic.obsluhuje = true;
-				mechanic.customer_car = ((MyMessage)message).customer;
+                ((MyMessage)message).automechanic.obsluhuje = true;
+                ((MyMessage)message).automechanic.customer_car = ((MyMessage)message).customer;
 
                 message.Code = Mc.Inspection;
 				message.Addressee = MySim.FindAgent(SimId.AgentInspection);
@@ -160,9 +194,41 @@ namespace managers
 			}
 			else
 			{
-                this.MyAgent.waitingForInspection.Enqueue(((MyMessage)message), ((MyMessage)message).DeliveryTime);
+				this.MyAgent.waitingForInspection.Enqueue(((MyMessage)message), ((MyMessage)message).DeliveryTime);
             }
-		}
+
+
+            //pridelenie roboty technikovi
+            var technic = this.getAvailableTechnician();
+            if (technic != null)
+            {
+                if (this.MyAgent.paymentLine.Count > 0)
+                {
+                    var paymentMessage = this.MyAgent.paymentLine.Dequeue();
+                    paymentMessage.technician = technic;
+                    paymentMessage.technician.obsluhuje = true;
+                    paymentMessage.technician.customer_car = paymentMessage.customer;
+
+                    paymentMessage.Code = Mc.Payment;
+                    paymentMessage.Addressee = MySim.FindAgent(SimId.AgentService);
+
+                    Request(paymentMessage);
+                }
+                else if (this.MyAgent.customersLine.Count > 0)
+                {
+                    var takeOverMessage = this.MyAgent.customersLine.Dequeue();
+                    takeOverMessage.technician = technic;
+                    /*takeOverMessage.technician.obsluhuje = true;
+                    takeOverMessage.technician.customer_car = takeOverMessage.customer;*/
+
+                    takeOverMessage.Code = Mc.AssignParkingSpace;
+                    takeOverMessage.Addressee = MySim.FindAgent(SimId.AgentService);
+
+                    Request(takeOverMessage);
+                }
+            }
+
+        }
 
 		//meta! sender="AgentService", id="19", type="Response"
 		public void ProcessAssignParkingSpace(MessageForm message)
@@ -170,7 +236,7 @@ namespace managers
 			//pridelilo mi parkovacie miesto
             //mame technika, parking space, mozeme poslat na takeover
 
-			MyAgent.customersLine.Dequeue();
+			//this.MyAgent.customersLine.Dequeue();
             
 			message.Code = Mc.CarTakeover;
 			message.Addressee = MySim.FindAgent(SimId.AgentService);
@@ -214,9 +280,8 @@ namespace managers
 				{
 					var takeOverMessage = this.MyAgent.customersLine.Dequeue();
 					takeOverMessage.technician = technic;
-					takeOverMessage.technician.obsluhuje = true;
-					takeOverMessage.technician.customer_car = takeOverMessage.customer;
-
+					/*takeOverMessage.technician.obsluhuje = true;
+					takeOverMessage.technician.customer_car = takeOverMessage.customer;*/
 
 					takeOverMessage.Code = Mc.AssignParkingSpace;
 					takeOverMessage.Addressee = MySim.FindAgent(SimId.AgentService);

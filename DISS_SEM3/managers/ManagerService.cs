@@ -48,8 +48,9 @@ namespace managers
 		//meta! sender="ProcessTakeOver", id="51", type="Finish"
 		public void ProcessFinishProcessTakeOver(MessageForm message)
 		{
-			//koniec preberania auta - response pre agenta stk
-			message.Code = Mc.CarTakeover;
+            //koniec preberania auta - response pre agenta stk
+            this.MyAgent.garageParkingSpace.Enqueue(((MyMessage)message).customer, ((MyMessage)message).customer.arrivalTime);
+            message.Code = Mc.CarTakeover;
 			message.Addressee = MySim.FindAgent(SimId.AgentSTK);
 			Response(message);
 		}
@@ -57,9 +58,10 @@ namespace managers
 		//meta! sender="AgentSTK", id="34", type="Notice"
 		public void ProcessFreeParkingSpace(MessageForm message)
 		{
-            this.freeParking();
-			//da vediet o uvolneni - z radu na response o priradeni parkovacieho miesta 
-			if (this.MyAgent.waitingForAssigningFront.Count > 0)
+            this.freeOneParkingSpace();
+            this.MyAgent.garageParkingSpace.Dequeue();
+            //da vediet o uvolneni - z radu na response o priradeni parkovacieho miesta 
+            if (this.MyAgent.waitingForAssigningFront.Count > 0)
 			{
 				var assignMessage = this.MyAgent.waitingForAssigningFront.Dequeue();
 				assignMessage.Code = Mc.AssignParkingSpace;
@@ -72,7 +74,16 @@ namespace managers
 		public void ProcessCarTakeover(MessageForm message)
 		{
 			//zavolame start proces na takeover
-			message.Addressee = MyAgent.FindAssistant(SimId.ProcessTakeOver);
+			//technik zacne pracovat
+			if (((MyMessage)message).technician.obsluhuje == true)
+			{
+				return; //technik sa uz niekomu priradil
+			}
+
+            ((MyMessage)message).technician.obsluhuje = true;
+            ((MyMessage)message).technician.customer_car = ((MyMessage)message).customer;
+
+            message.Addressee = MyAgent.FindAssistant(SimId.ProcessTakeOver);
 			StartContinualAssistant(message);
 		}
 
@@ -167,13 +178,25 @@ namespace managers
             return false;
         }
 
-		private void freeParking()
+		private void freeAllParking()
 		{
             for (int i = 0; i < this.MyAgent.garageCounter.Count; i++)
             {
                 if (!this.MyAgent.garageCounter[i].free)
                 {
                     this.MyAgent.garageCounter[i].free = true;
+                }
+            }
+        }
+
+        private void freeOneParkingSpace()
+        {
+            for (int i = 0; i < this.MyAgent.garageCounter.Count; i++)
+            {
+                if (!this.MyAgent.garageCounter[i].free)
+                {
+                    this.MyAgent.garageCounter[i].free = true;
+					return;
                 }
             }
         }
