@@ -63,6 +63,12 @@ namespace managers
             //da vediet o uvolneni - z radu na response o priradeni parkovacieho miesta 
             if (this.MyAgent.waitingForAssigningFront.Count > 0)
 			{
+				//musim rezervovat miesto
+				if (!this.reserveParking())
+				{
+					return;
+				}
+				
 				var assignMessage = this.MyAgent.waitingForAssigningFront.Dequeue();
 				assignMessage.Code = Mc.AssignParkingSpace;
 				assignMessage.Addressee = MySim.FindAgent(SimId.AgentSTK);
@@ -75,17 +81,12 @@ namespace managers
 		{
 			//zavolame start proces na takeover
 			//technik zacne pracovat
-			if (((MyMessage)message).technician.obsluhuje == true)
-			{
-				return; //technik sa uz niekomu priradil
-			}
-
-            ((MyMessage)message).technician.obsluhuje = true;
-            ((MyMessage)message).technician.customer_car = ((MyMessage)message).customer;
-
+			((MyMessage)message).technician.obsluhuje = true;
+			((MyMessage)message).technician.customer_car = ((MyMessage)message).customer;
+			
             message.Addressee = MyAgent.FindAssistant(SimId.ProcessTakeOver);
-			StartContinualAssistant(message);
-		}
+            StartContinualAssistant(message);
+        }
 
 		//meta! sender="AgentSTK", id="19", type="Request"
 		public void ProcessAssignParkingSpace(MessageForm message)

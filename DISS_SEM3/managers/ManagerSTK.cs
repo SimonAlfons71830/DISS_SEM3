@@ -31,7 +31,17 @@ namespace managers
 		//meta! sender="AgentModelu", id="18", type="Request"
 		public void ProcessCustomerService(MessageForm message)
 		{
-			//prisiel request ze chcem obsluzit zakaznika
+            //this.MyAgent.customersLine.Enqueue(((MyMessage)message), ((MyMessage)message).DeliveryTime);
+            //popytam ci je volne parkovacie miesto
+            message.Addressee = MySim.FindAgent(SimId.AgentService);
+            message.Code = Mc.AssignParkingSpace;
+            //opyta sa agenta obsluhy ci ma volne parkovacie miesto
+            Request(message);
+
+
+
+
+           /* //prisiel request ze chcem obsluzit zakaznika
             //priradim ho do frontu
             //zavolam si request ci mam volne miesto
 
@@ -39,8 +49,8 @@ namespace managers
             if (technic != null)
 			{
 				((MyMessage)message).technician = technic;
-				/*((MyMessage)message).technician.obsluhuje = true;
-				((MyMessage)message).technician.customer_car = ((MyMessage)message).customer;*/
+				*//*((MyMessage)message).technician.obsluhuje = true;
+				((MyMessage)message).technician.customer_car = ((MyMessage)message).customer;*//*
 
                 message.Addressee = MySim.FindAgent(SimId.AgentService);
                 message.Code = Mc.AssignParkingSpace;
@@ -51,7 +61,7 @@ namespace managers
 			{
 				//queue kde sa caka na prebratie auta technikom, ak nieje dostupny
                 this.MyAgent.customersLine.Enqueue(((MyMessage)message), ((MyMessage)message).DeliveryTime);
-            }
+            }*/
 		}
 
 		//meta! sender="AgentService", id="53", type="Response"
@@ -84,6 +94,17 @@ namespace managers
                     paymentMessage.Addressee = MySim.FindAgent(SimId.AgentService);
 
                     Request(paymentMessage);
+				}
+				else if (this.MyAgent.waitingForTakeOverAssigned.Count > 0)
+				{
+                    var instantTakeOver = this.MyAgent.waitingForTakeOverAssigned.Dequeue();
+
+                    instantTakeOver.technician = technic;
+
+                    instantTakeOver.Code = Mc.CarTakeover;
+                    instantTakeOver.Addressee = MySim.FindAgent(SimId.AgentService);
+                    Request(instantTakeOver);
+
                 }
                 else if (this.MyAgent.customersLine.Count > 0)
                 {
@@ -128,7 +149,8 @@ namespace managers
 					Request(inspectionMessage);
 
                     //kopirovat spravu lebo posielam do dvoch agentov
-                    var copiedMessage = new MyMessage(((MyMessage)inspectionMessage));
+					var copiedMessage = message.CreateCopy();
+                    //var copiedMessage = new MyMessage(((MyMessage)inspectionMessage));
                     copiedMessage.Code = Mc.FreeParkingSpace;
                     copiedMessage.Addressee = MySim.FindAgent(SimId.AgentService);
                     Request(copiedMessage);
@@ -165,9 +187,10 @@ namespace managers
 		//meta! sender="AgentService", id="33", type="Response"
 		public void ProcessCarTakeover(MessageForm message)
 		{
-
-			//uvolnenie technika moze brat dalsieho zakaznika z radu (payment/takeover)
-			//zistenie ci je volny automechanik ak ano tak request ak nie tak do line
+			//auto je v garazi
+			//uvolni sa technik
+			//priradi sa automechanik (front cakajucich na inspection)
+ 			//technikovi sa prideli nova robota
 
 			//uvolnenie technika
 			((MyMessage)message).technician.obsluhuje = false;
@@ -187,7 +210,8 @@ namespace managers
 				Request(message);
 
 				//kopirovat spravu lebo posielam do dvoch agentov
-				var copiedMessage = new MyMessage(((MyMessage)message));
+				var copiedMessage = message.CreateCopy();
+				//var copiedMessage = new MyMessage(((MyMessage)message));
 				copiedMessage.Code = Mc.FreeParkingSpace;
 				copiedMessage.Addressee = MySim.FindAgent(SimId.AgentService);
 				Request(copiedMessage);
@@ -196,6 +220,8 @@ namespace managers
 			{
 				this.MyAgent.waitingForInspection.Enqueue(((MyMessage)message), ((MyMessage)message).DeliveryTime);
             }
+
+
 
 
             //pridelenie roboty technikovi
@@ -213,11 +239,23 @@ namespace managers
                     paymentMessage.Addressee = MySim.FindAgent(SimId.AgentService);
 
                     Request(paymentMessage);
-                }
+				}
+				else if (this.MyAgent.waitingForTakeOverAssigned.Count>0)
+				{
+					//moze ist hned na takeover uz ma miesto
+					var instantTakeOver = this.MyAgent.waitingForTakeOverAssigned.Dequeue();
+
+					instantTakeOver.technician = technic;
+
+					instantTakeOver.Code = Mc.CarTakeover;
+					instantTakeOver.Addressee = MySim.FindAgent(SimId.AgentService);
+					Request(instantTakeOver);
+
+				}
                 else if (this.MyAgent.customersLine.Count > 0)
                 {
                     var takeOverMessage = this.MyAgent.customersLine.Dequeue();
-                    takeOverMessage.technician = technic;
+                    //takeOverMessage.technician = technic;
                     /*takeOverMessage.technician.obsluhuje = true;
                     takeOverMessage.technician.customer_car = takeOverMessage.customer;*/
 
@@ -233,15 +271,52 @@ namespace managers
 		//meta! sender="AgentService", id="19", type="Response"
 		public void ProcessAssignParkingSpace(MessageForm message)
 		{
-			//pridelilo mi parkovacie miesto
-            //mame technika, parking space, mozeme poslat na takeover
+			//pridelene parkovacie miesto
+			//priradim technika, ak nieje dam do frontu na cakanie na prevzatie uz assigned
+			var technic = this.getAvailableTechnician();
+			if (technic != null)
+			{
+				((MyMessage)message).technician = technic;
 
-			//this.MyAgent.customersLine.Dequeue();
-            
-			message.Code = Mc.CarTakeover;
-			message.Addressee = MySim.FindAgent(SimId.AgentService);
-			Request(message);
-		
+                message.Code = Mc.CarTakeover;
+                message.Addressee = MySim.FindAgent(SimId.AgentService);
+                Request(message);
+            }
+			else
+			{
+				this.MyAgent.waitingForTakeOverAssigned.Enqueue(((MyMessage)message), message.DeliveryTime);
+			}
+
+
+
+			/*//pridelilo mi parkovacie miesto
+			//mame technika, parking space, mozeme poslat na takeover
+
+			//medzitym ako cakal na priradenie sa ten isty technik obsadil na platenie
+			if (((MyMessage)message).technician.obsluhuje == true)
+			{
+				var nextTechnic = this.getAvailableTechnician();
+				if (nextTechnic!= null)
+				{
+					((MyMessage)message).technician = nextTechnic;
+
+                    message.Code = Mc.CarTakeover;
+                    message.Addressee = MySim.FindAgent(SimId.AgentService);
+                    Request(message);
+				}
+				else
+				{
+					this.MyAgent.waitingForTakeOverAssigned.Enqueue(((MyMessage)message), message.DeliveryTime);
+				}
+			}
+			else
+			{
+				//ide rovno na prevzatie
+                message.Code = Mc.CarTakeover;
+                message.Addressee = MySim.FindAgent(SimId.AgentService);
+                Request(message);
+            }*/
+
 		}
 
 		//meta! sender="AgentModelu", id="55", type="Notice"
@@ -255,41 +330,6 @@ namespace managers
 			switch (message.Code)
 			{
 			}
-		}
-
-		//meta! userInfo="Removed from model"
-		public void ProcessFreeParkingSpace(MessageForm message)
-		{
-            //uvolnilo sa miesto na prijatie noveho zakaznika 
-            var technic = this.getAvailableTechnician();
-			if (technic != null)
-			{
-				if (this.MyAgent.paymentLine.Count > 0)
-				{
-					var paymentMessage = this.MyAgent.paymentLine.Dequeue();
-					paymentMessage.technician = technic;
-					paymentMessage.technician.obsluhuje = true;
-					paymentMessage.technician.customer_car = paymentMessage.customer;
-
-					paymentMessage.Code = Mc.Payment;
-					paymentMessage.Addressee = MySim.FindAgent(SimId.AgentService);
-
-					Request(paymentMessage);
-				}
-				else if (this.MyAgent.customersLine.Count > 0)
-				{
-					var takeOverMessage = this.MyAgent.customersLine.Dequeue();
-					takeOverMessage.technician = technic;
-					/*takeOverMessage.technician.obsluhuje = true;
-					takeOverMessage.technician.customer_car = takeOverMessage.customer;*/
-
-					takeOverMessage.Code = Mc.AssignParkingSpace;
-					takeOverMessage.Addressee = MySim.FindAgent(SimId.AgentService);
-
-					Request(takeOverMessage);
-				}
-			}
-			//moze sa poslat na obed ??
 		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"

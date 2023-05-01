@@ -265,8 +265,8 @@ namespace DISS_SEM3
                 dataGridView1.DataSource = dataInspection;
 
                 dataGridView1.RowHeadersVisible = true;
-                dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-*/
+                dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;*/
+
             });
 
         }
