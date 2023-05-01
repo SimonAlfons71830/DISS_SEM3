@@ -11,6 +11,7 @@ namespace managers
 	{
         public CarGenerator carTypeGenerator { get; set; }
 		private int id;
+        
 
         public ManagerOkolia(int id, Simulation mySim, Agent myAgent) :
 			base(id, mySim, myAgent)
@@ -34,6 +35,7 @@ namespace managers
 		//meta! sender="AgentModelu", id="17", type="Notice"
 		public void ProcessCustomerDeparture(MessageForm message)
 		{
+			this.MyAgent.CustomersCount--;
 			//ZAKAZNIK ODISIEL
 		}
 
@@ -51,6 +53,7 @@ namespace managers
             newMessage.customer._id = this.id;
 			this.id++;
             Notice(newMessage);
+            this.MyAgent.CustomersCount++;
 
 			//chladenie
 			if (MySim.CurrentTime < 24300) // 6*60+45  *  60 
@@ -76,7 +79,7 @@ namespace managers
 			((MyMessage)newMessage).customer._id = this.id;
 			this.id++;
             Notice(newMessage);
-
+            this.MyAgent.CustomersCount++;
 
             message.Addressee = MyAgent.FindAssistant(SimId.PlanerCustomerArrival);
             StartContinualAssistant(message);

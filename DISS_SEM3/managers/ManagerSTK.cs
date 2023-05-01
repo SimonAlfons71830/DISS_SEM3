@@ -31,37 +31,13 @@ namespace managers
 		//meta! sender="AgentModelu", id="18", type="Request"
 		public void ProcessCustomerService(MessageForm message)
 		{
-            //this.MyAgent.customersLine.Enqueue(((MyMessage)message), ((MyMessage)message).DeliveryTime);
+			//this.MyAgent.customersLine.Enqueue(((MyMessage)message), message.DeliveryTime);
             //popytam ci je volne parkovacie miesto
             message.Addressee = MySim.FindAgent(SimId.AgentService);
             message.Code = Mc.AssignParkingSpace;
             //opyta sa agenta obsluhy ci ma volne parkovacie miesto
             Request(message);
 
-
-
-
-           /* //prisiel request ze chcem obsluzit zakaznika
-            //priradim ho do frontu
-            //zavolam si request ci mam volne miesto
-
-            var technic = this.getAvailableTechnician();
-            if (technic != null)
-			{
-				((MyMessage)message).technician = technic;
-				*//*((MyMessage)message).technician.obsluhuje = true;
-				((MyMessage)message).technician.customer_car = ((MyMessage)message).customer;*//*
-
-                message.Addressee = MySim.FindAgent(SimId.AgentService);
-                message.Code = Mc.AssignParkingSpace;
-                //opyta sa agenta obsluhy ci ma volne parkovacie miesto
-                Request(message);
-			}
-			else
-			{
-				//queue kde sa caka na prebratie auta technikom, ak nieje dostupny
-                this.MyAgent.customersLine.Enqueue(((MyMessage)message), ((MyMessage)message).DeliveryTime);
-            }*/
 		}
 
 		//meta! sender="AgentService", id="53", type="Response"
@@ -278,6 +254,8 @@ namespace managers
 			{
 				((MyMessage)message).technician = technic;
 
+				//this.MyAgent.customersLine.Dequeue();
+
                 message.Code = Mc.CarTakeover;
                 message.Addressee = MySim.FindAgent(SimId.AgentService);
                 Request(message);
@@ -286,36 +264,6 @@ namespace managers
 			{
 				this.MyAgent.waitingForTakeOverAssigned.Enqueue(((MyMessage)message), message.DeliveryTime);
 			}
-
-
-
-			/*//pridelilo mi parkovacie miesto
-			//mame technika, parking space, mozeme poslat na takeover
-
-			//medzitym ako cakal na priradenie sa ten isty technik obsadil na platenie
-			if (((MyMessage)message).technician.obsluhuje == true)
-			{
-				var nextTechnic = this.getAvailableTechnician();
-				if (nextTechnic!= null)
-				{
-					((MyMessage)message).technician = nextTechnic;
-
-                    message.Code = Mc.CarTakeover;
-                    message.Addressee = MySim.FindAgent(SimId.AgentService);
-                    Request(message);
-				}
-				else
-				{
-					this.MyAgent.waitingForTakeOverAssigned.Enqueue(((MyMessage)message), message.DeliveryTime);
-				}
-			}
-			else
-			{
-				//ide rovno na prevzatie
-                message.Code = Mc.CarTakeover;
-                message.Addressee = MySim.FindAgent(SimId.AgentService);
-                Request(message);
-            }*/
 
 		}
 

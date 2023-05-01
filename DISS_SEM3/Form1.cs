@@ -98,12 +98,15 @@ namespace DISS_SEM3
                 this.simulation.SetSimSpeed(1, 1/speed);
                 //refreshing stats
                 sim_time_label.Text = _simtime.ToString("hh:mm:ss tt");
-                customers_in_line_label.Text = this.simulation.AgentSTK.customersLine.Count.ToString();
+                //customers_in_line_label.Text = this.simulation.AgentSTK.customersLine.Count.ToString();
+                customers_in_line_label.Text = (this.simulation.AgentSTK.waitingForTakeOverAssigned.Count() + 
+                this.simulation.AgentService.waitingForAssigningFront.Count()).ToString();
                 customers_in_paymentline_label.Text = this.simulation.AgentSTK.paymentLine.Count.ToString();
                 free_technicians_label.Text = (numericUpDown2.Value - this.simulation.AgentSTK.getAvailableTechniciansCount()).ToString() + "/" + numericUpDown2.Value.ToString();
                 free_automechanics_label.Text = (numericUpDown3.Value - this.simulation.AgentSTK.getAvailableAutomechanicsCount()).ToString() + "/" + numericUpDown3.Value.ToString();
                 reserved_garage_parking_label.Text = this.simulation.AgentService.getReservedParkingSpace().ToString() + "/5";
                 cars_parked_in_garage_label.Text = this.simulation.AgentService.getCarsCountInGarage().ToString();
+                label20.Text = this.simulation.AgentOkolia.CustomersCount.ToString();
 /*
                 //refreshing dataGrids
                 dataTechnicians.Clear();
@@ -286,19 +289,5 @@ namespace DISS_SEM3
 
         }
 
-        private void dataGridView4_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
     }
 }

@@ -7,6 +7,8 @@ namespace agents
 	//meta! id="2"
 	public class AgentOkolia : Agent
 	{
+        public int CustomersCount { get; set; }
+
         public AgentOkolia(int id, Simulation mySim, Agent parent) :
 			base(id, mySim, parent)
 		{
