@@ -43,9 +43,13 @@ namespace managers
 		//meta! sender="AgentService", id="53", type="Response"
 		public void ProcessPayment(MessageForm message)
 		{
-			//uvolnenie technika z platenia
-			//dat mu novu pracu - bud z payment alebo potom takeover
-			((MyMessage)message).technician.obsluhuje = false;
+            this.MyAgent.localAverageFreeTechnicianCount.addValues(this.MyAgent.getAvailableTechniciansCount(),
+                       MySim.CurrentTime - this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange);
+            this.MyAgent.localAverageFreeTechnicianCount.setFinalTimeOfLastChange(MySim.CurrentTime);
+
+            //uvolnenie technika z platenia
+            //dat mu novu pracu - bud z payment alebo potom takeover
+            ((MyMessage)message).technician.obsluhuje = false;
 			((MyMessage)message).technician.customer_car = null;
             ((MyMessage)message).technician = null;
 
@@ -61,6 +65,10 @@ namespace managers
             {
                 if (this.MyAgent.paymentLine.Count > 0)
                 {
+                    this.MyAgent.localAverageFreeTechnicianCount.addValues(this.MyAgent.getAvailableTechniciansCount(),
+                       MySim.CurrentTime - this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange);
+                    this.MyAgent.localAverageFreeTechnicianCount.setFinalTimeOfLastChange(MySim.CurrentTime);
+
                     var paymentMessage = this.MyAgent.paymentLine.Dequeue();
                     paymentMessage.technician = technic;
                     paymentMessage.technician.obsluhuje = true;
@@ -73,9 +81,22 @@ namespace managers
 				}
 				else if (this.MyAgent.waitingForTakeOverAssigned.Count > 0)
 				{
-                    var instantTakeOver = this.MyAgent.waitingForTakeOverAssigned.Dequeue();
+					
+					var instantTakeOver = this.MyAgent.waitingForTakeOverAssigned.Dequeue();
 
-                    instantTakeOver.technician = technic;
+					this.MyAgent.localAverageTimeToTakeOverCar.addValues(MySim.CurrentTime - ((MyMessage)instantTakeOver).customer.arrivalTime);
+                    
+					instantTakeOver.technician = technic;
+
+
+                    this.MyAgent.localAverageFreeTechnicianCount.addValues(this.MyAgent.getAvailableTechniciansCount(), 
+						MySim.CurrentTime - this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange);
+                    this.MyAgent.localAverageFreeTechnicianCount.setFinalTimeOfLastChange(MySim.CurrentTime);
+
+                    //prehodene z managerSERVICE - processtakeover
+
+                    ((MyMessage)instantTakeOver).technician.obsluhuje = true;
+                    ((MyMessage)instantTakeOver).technician.customer_car = ((MyMessage)message).customer;
 
                     instantTakeOver.Code = Mc.CarTakeover;
                     instantTakeOver.Addressee = MySim.FindAgent(SimId.AgentService);
@@ -84,6 +105,10 @@ namespace managers
                 }
                 else if (this.MyAgent.customersLine.Count > 0)
                 {
+                    this.MyAgent.localAverageFreeTechnicianCount.addValues(this.MyAgent.getAvailableTechniciansCount(),
+                       MySim.CurrentTime - this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange);
+                    this.MyAgent.localAverageFreeTechnicianCount.setFinalTimeOfLastChange(MySim.CurrentTime);
+
                     var takeOverMessage = this.MyAgent.customersLine.Dequeue();
                     takeOverMessage.technician = technic;
                     takeOverMessage.technician.obsluhuje = true;
@@ -101,7 +126,11 @@ namespace managers
 		//meta! sender="AgentInspection", id="52", type="Response"
 		public void ProcessInspection(MessageForm message)
 		{
-			//mechanik skoncil, moze brat dalsie auto z radu na cakanie na inspection
+            //mechanik skoncil, moze brat dalsie auto z radu na cakanie na inspection
+
+            this.MyAgent.localAverageFreeAutomechanicCount.addValues(this.MyAgent.getAvailableAutomechanicsCount(),
+                        MySim.CurrentTime - this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange);
+            this.MyAgent.localAverageFreeAutomechanicCount.setFinalTimeOfLastChange(MySim.CurrentTime);
 
             ((MyMessage)message).automechanic.obsluhuje = false;
 			((MyMessage)message).automechanic.customer_car = null;
@@ -115,6 +144,10 @@ namespace managers
 				{
 					var inspectionMessage = this.MyAgent.waitingForInspection.Dequeue();
 
+
+                    this.MyAgent.localAverageFreeAutomechanicCount.addValues(this.MyAgent.getAvailableAutomechanicsCount(),
+                        MySim.CurrentTime - this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange);
+                    this.MyAgent.localAverageFreeAutomechanicCount.setFinalTimeOfLastChange(MySim.CurrentTime);
 
                     ((MyMessage)inspectionMessage).automechanic = automechanic;
                     ((MyMessage)inspectionMessage).automechanic.obsluhuje = true;
@@ -140,7 +173,11 @@ namespace managers
             var technic = this.getAvailableTechnician();
 			if (technic != null)
 			{
-				((MyMessage)message).technician = technic;
+                this.MyAgent.localAverageFreeTechnicianCount.addValues(this.MyAgent.getAvailableTechniciansCount(),
+                       MySim.CurrentTime - this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange);
+                this.MyAgent.localAverageFreeTechnicianCount.setFinalTimeOfLastChange(MySim.CurrentTime);
+
+                ((MyMessage)message).technician = technic;
 				((MyMessage)message).technician.customer_car = ((MyMessage)message).customer;
                 ((MyMessage)message).technician.obsluhuje = true;
 
@@ -163,13 +200,17 @@ namespace managers
 		//meta! sender="AgentService", id="33", type="Response"
 		public void ProcessCarTakeover(MessageForm message)
 		{
-			//auto je v garazi
-			//uvolni sa technik
-			//priradi sa automechanik (front cakajucich na inspection)
- 			//technikovi sa prideli nova robota
+            //auto je v garazi
+            //uvolni sa technik
+            //priradi sa automechanik (front cakajucich na inspection)
+            //technikovi sa prideli nova robota
 
-			//uvolnenie technika
-			((MyMessage)message).technician.obsluhuje = false;
+            this.MyAgent.localAverageFreeTechnicianCount.addValues(this.MyAgent.getAvailableTechniciansCount(),
+                       MySim.CurrentTime - this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange);
+            this.MyAgent.localAverageFreeTechnicianCount.setFinalTimeOfLastChange(MySim.CurrentTime);
+
+            //uvolnenie technika
+            ((MyMessage)message).technician.obsluhuje = false;
 			((MyMessage)message).technician.customer_car = null;
 			((MyMessage)message).technician = null;
 
@@ -177,6 +218,10 @@ namespace managers
             var mechanic = this.getAvailableAutomechanic();
 			if (mechanic != null)
 			{
+                this.MyAgent.localAverageFreeAutomechanicCount.addValues(this.MyAgent.getAvailableAutomechanicsCount(),
+                        MySim.CurrentTime - this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange);
+                this.MyAgent.localAverageFreeAutomechanicCount.setFinalTimeOfLastChange(MySim.CurrentTime);
+
                 ((MyMessage)message).automechanic = mechanic;
                 ((MyMessage)message).automechanic.obsluhuje = true;
                 ((MyMessage)message).automechanic.customer_car = ((MyMessage)message).customer;
@@ -206,6 +251,10 @@ namespace managers
             {
                 if (this.MyAgent.paymentLine.Count > 0)
                 {
+                    this.MyAgent.localAverageFreeTechnicianCount.addValues(this.MyAgent.getAvailableTechniciansCount(),
+                       MySim.CurrentTime - this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange);
+                    this.MyAgent.localAverageFreeTechnicianCount.setFinalTimeOfLastChange(MySim.CurrentTime);
+
                     var paymentMessage = this.MyAgent.paymentLine.Dequeue();
                     paymentMessage.technician = technic;
                     paymentMessage.technician.obsluhuje = true;
@@ -218,12 +267,15 @@ namespace managers
 				}
 				else if (this.MyAgent.waitingForTakeOverAssigned.Count>0)
 				{
+
 					//moze ist hned na takeover uz ma miesto
 					var instantTakeOver = this.MyAgent.waitingForTakeOverAssigned.Dequeue();
 
 					instantTakeOver.technician = technic;
 
-					instantTakeOver.Code = Mc.CarTakeover;
+                    this.MyAgent.localAverageTimeToTakeOverCar.addValues(MySim.CurrentTime - ((MyMessage)instantTakeOver).customer.arrivalTime);
+
+                    instantTakeOver.Code = Mc.CarTakeover;
 					instantTakeOver.Addressee = MySim.FindAgent(SimId.AgentService);
 					Request(instantTakeOver);
 
@@ -254,7 +306,8 @@ namespace managers
 			{
 				((MyMessage)message).technician = technic;
 
-				//this.MyAgent.customersLine.Dequeue();
+                //this.MyAgent.customersLine.Dequeue();
+                this.MyAgent.localAverageTimeToTakeOverCar.addValues(MySim.CurrentTime - ((MyMessage)message).customer.arrivalTime);
 
                 message.Code = Mc.CarTakeover;
                 message.Addressee = MySim.FindAgent(SimId.AgentService);

@@ -6,6 +6,7 @@ using DISS_SEM2;
 using Priority_Queue;
 using System.Collections.Generic;
 using DISS_SEM2.Objects;
+using DISS_SEM3.statistics;
 
 namespace agents
 {
@@ -15,6 +16,8 @@ namespace agents
         public SimplePriorityQueue<Customer, double> garageParkingSpace;
 		public List<ParkingSpace> garageCounter;
 		public SimplePriorityQueue<MyMessage, double> waitingForAssigningFront;
+
+		
 
         public AgentService(int id, Simulation mySim, Agent parent) :
 			base(id, mySim, parent)
@@ -31,14 +34,24 @@ namespace agents
 
 			this.waitingForAssigningFront = new SimplePriorityQueue<MyMessage, double>();
 
+			
         }
 
 		override public void PrepareReplication()
 		{
 			base.PrepareReplication();
 			// Setup component for the next replication
-			garageParkingSpace.Clear();
-		}
+			this.garageParkingSpace.Clear();
+			for (int i = 0; i < this.garageCounter.Count; i++)
+			{
+				this.garageCounter[i].parkedCar = null;
+				this.garageCounter[i].free = true;
+			}
+
+			this.waitingForAssigningFront.Clear();
+
+            
+        }
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
 		private void Init()

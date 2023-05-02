@@ -50,7 +50,19 @@ namespace simulation
 		override protected void ReplicationFinished()
 		{
 			this.replicationNum++;
+			if (this.AgentOkolia.localAverageCustomerTimeInSTK.count == 0)
+			{
+				var pocet = this.AgentOkolia.CustomersCount;
+			}
 			this.globalAverageCustomerTimeInSTK.addValues(this.AgentOkolia.localAverageCustomerTimeInSTK.getMean());
+			this.globalAverageTimeToTakeOverCar.addValues(this.AgentSTK.localAverageTimeToTakeOverCar.getMean());
+
+			this.AgentSTK.localAverageFreeTechnicianCount.setFinalTimeOfLastChange(this.CurrentTime);
+			this.globalAverageFreeTechnicianCount.addValues(this.AgentSTK.localAverageFreeTechnicianCount.getMean());
+
+			this.AgentSTK.localAverageFreeAutomechanicCount.setFinalTimeOfLastChange(this.CurrentTime);
+			this.globalAverageFreeAutomechanicCount.addValues(this.AgentSTK.localAverageFreeAutomechanicCount.getMean());
+
 			// Collect local statistics into global, update UI, etc...
 			base.ReplicationFinished();
 

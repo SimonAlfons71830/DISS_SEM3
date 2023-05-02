@@ -25,7 +25,7 @@ namespace managers
 		{
 			base.PrepareReplication();
 			// Setup component for the next replication
-
+			this.id = 0;
 			if (PetriNet != null)
 			{
 				PetriNet.Clear();
@@ -36,7 +36,9 @@ namespace managers
 		public void ProcessCustomerDeparture(MessageForm message)
 		{
 			this.MyAgent.CustomersCount--;
-			this.MyAgent.localAverageCustomerTimeInSTK.addValues(MySim.CurrentTime - ((MyMessage)message).customer.arrivalTime);
+			var pom = MySim.CurrentTime - ((MyMessage)message).customer.arrivalTime;
+
+            this.MyAgent.localAverageCustomerTimeInSTK.addValues(MySim.CurrentTime - ((MyMessage)message).customer.arrivalTime);
 			//ZAKAZNIK ODISIEL
 		}
 

@@ -8,9 +8,9 @@ namespace DISS_SEM3.statistics
 {
     public class Statistics
     {
-        private double sum;
-        public double count;
-        private double sumOfSqaredValues;
+        public double sum { get; set; }
+        public double count { get; set; }
+        public double sumOfSqaredValues { get; set; }
 
         public Statistics()
         {

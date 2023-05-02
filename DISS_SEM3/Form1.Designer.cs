@@ -414,6 +414,7 @@
             this.label34.Size = new System.Drawing.Size(51, 16);
             this.label34.TabIndex = 62;
             this.label34.Text = "label34";
+            this.label34.Click += new System.EventHandler(this.label34_Click);
             // 
             // label35
             // 
@@ -423,6 +424,7 @@
             this.label35.Size = new System.Drawing.Size(51, 16);
             this.label35.TabIndex = 61;
             this.label35.Text = "label35";
+            this.label35.Click += new System.EventHandler(this.label35_Click);
             // 
             // label36
             // 
@@ -495,6 +497,7 @@
             this.avg_wait_time_to_take_over_label.Size = new System.Drawing.Size(51, 16);
             this.avg_wait_time_to_take_over_label.TabIndex = 53;
             this.avg_wait_time_to_take_over_label.Text = "label43";
+            this.avg_wait_time_to_take_over_label.Click += new System.EventHandler(this.avg_wait_time_to_take_over_label_Click);
             // 
             // avg_cust_time_in_stk_label
             // 

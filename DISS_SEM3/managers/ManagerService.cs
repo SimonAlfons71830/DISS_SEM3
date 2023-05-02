@@ -81,8 +81,9 @@ namespace managers
 		{
 			//zavolame start proces na takeover
 			//technik zacne pracovat
-			((MyMessage)message).technician.obsluhuje = true;
-			((MyMessage)message).technician.customer_car = ((MyMessage)message).customer;
+			
+			/*((MyMessage)message).technician.obsluhuje = true;
+			((MyMessage)message).technician.customer_car = ((MyMessage)message).customer;*/
 			
             message.Addressee = MyAgent.FindAssistant(SimId.ProcessTakeOver);
             StartContinualAssistant(message);

@@ -16,13 +16,16 @@ namespace agents
 			base(id, mySim, parent)
 		{
 			Init();
-		}
+            this.localAverageCustomerTimeInSTK = new Statistics();
+			this.CustomersCount = 0;
+        }
 
 		override public void PrepareReplication()
 		{
 			base.PrepareReplication();
 			// Setup component for the next replication
-			this.localAverageCustomerTimeInSTK = new Statistics();
+		
+			localAverageCustomerTimeInSTK.resetStatistic();
 			CustomersCount = 0;
 		}
 

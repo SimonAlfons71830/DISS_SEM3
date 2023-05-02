@@ -296,7 +296,10 @@ namespace DISS_SEM3
                 {
                     var pom = this.simulation.replicationNum;
                     num_of_repl_label.Text = pom.ToString();
-                    avg_cust_time_in_stk_label.Text = (this.simulation.globalAverageCustomerTimeInSTK.getMean()/60).ToString("0.000");
+                    avg_cust_time_in_stk_label.Text = (this.simulation.globalAverageCustomerTimeInSTK.getMean()/60).ToString("0.0000");
+                    avg_wait_time_to_take_over_label.Text = (this.simulation.globalAverageTimeToTakeOverCar.getMean() / 60).ToString("0.0000");
+                    label35.Text = this.simulation.globalAverageFreeTechnicianCount.getMean().ToString("0.0000");
+                    label34.Text = this.simulation.globalAverageFreeAutomechanicCount.getMean().ToString("0.0000");
                     //fast mode refresh
                 });
             }
@@ -386,6 +389,21 @@ namespace DISS_SEM3
         }
 
         private void average_customer_time_in_stk_label_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void avg_wait_time_to_take_over_label_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label35_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label34_Click(object sender, EventArgs e)
         {
 
         }
