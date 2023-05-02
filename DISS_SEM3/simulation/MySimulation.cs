@@ -2,14 +2,26 @@ using OSPABA;
 using agents;
 using DISS_SEM2.Generators;
 using DISS_SEM2;
+using DISS_SEM3.statistics;
+using System.Linq;
 
 namespace simulation
 {
 	public class MySimulation : Simulation
 	{
         public SeedGenerator seedGenerator = new SeedGenerator();
-            
-		public MySimulation()
+
+        public Statistics globalAverageCustomerTimeInSTK { get; set; }
+        public Statistics globalAverageTimeToTakeOverCar { get; set; }
+        public Statistics globalAverageCustomerCountInLineToTakeOver { get; set; }
+        public Statistics globalAverageFreeTechnicianCount { get; set; }
+        public Statistics globalAverageFreeAutomechanicCount { get; set; }
+        public Statistics globalAverageCustomerCountEndOfDay { get; set; }
+        public Statistics globalAverageCustomerCountInSTK { get; set; }
+
+		public int replicationNum { get; set; }
+
+        public MySimulation()
 		{
 			Init();
 		}
@@ -18,6 +30,15 @@ namespace simulation
 		{
 			base.PrepareSimulation();
 			// Create global statistcis
+			this.globalAverageCustomerTimeInSTK = new Statistics();
+			this.globalAverageTimeToTakeOverCar = new Statistics();
+			this.globalAverageCustomerCountInLineToTakeOver = new Statistics();
+			this.globalAverageFreeTechnicianCount = new Statistics();
+			this.globalAverageFreeAutomechanicCount = new Statistics();
+			this.globalAverageCustomerCountEndOfDay = new Statistics();
+			this.globalAverageCustomerCountInSTK = new Statistics();
+
+			this.replicationNum = 0;
 		}
 
 		override protected void PrepareReplication()
@@ -28,8 +49,16 @@ namespace simulation
 
 		override protected void ReplicationFinished()
 		{
+			this.replicationNum++;
+			this.globalAverageCustomerTimeInSTK.addValues(this.AgentOkolia.localAverageCustomerTimeInSTK.getMean());
 			// Collect local statistics into global, update UI, etc...
 			base.ReplicationFinished();
+
+			if (replicationNum % 10 == 0)
+			{
+                this.Delegates.First().Refresh(this);
+            }
+			
 		}
 
 		override protected void SimulationFinished()

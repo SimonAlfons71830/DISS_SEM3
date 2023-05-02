@@ -36,6 +36,7 @@ namespace managers
 		public void ProcessCustomerDeparture(MessageForm message)
 		{
 			this.MyAgent.CustomersCount--;
+			this.MyAgent.localAverageCustomerTimeInSTK.addValues(MySim.CurrentTime - ((MyMessage)message).customer.arrivalTime);
 			//ZAKAZNIK ODISIEL
 		}
 

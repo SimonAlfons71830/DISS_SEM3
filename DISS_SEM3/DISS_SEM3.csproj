@@ -91,6 +91,8 @@
     <Compile Include="simulation\MyMessage.cs" />
     <Compile Include="simulation\MySimulation.cs" />
     <Compile Include="simulation\SimId.cs" />
+    <Compile Include="statistics\Statistics.cs" />
+    <Compile Include="statistics\WSatistics.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

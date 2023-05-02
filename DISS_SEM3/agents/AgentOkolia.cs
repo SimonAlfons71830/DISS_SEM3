@@ -2,12 +2,15 @@ using OSPABA;
 using simulation;
 using managers;
 using continualAssistants;
+using DISS_SEM3.statistics;
+
 namespace agents
 {
 	//meta! id="2"
 	public class AgentOkolia : Agent
 	{
         public int CustomersCount { get; set; }
+		public Statistics localAverageCustomerTimeInSTK { get; set; }
 
         public AgentOkolia(int id, Simulation mySim, Agent parent) :
 			base(id, mySim, parent)
@@ -19,6 +22,8 @@ namespace agents
 		{
 			base.PrepareReplication();
 			// Setup component for the next replication
+			this.localAverageCustomerTimeInSTK = new Statistics();
+			CustomersCount = 0;
 		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
