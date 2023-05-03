@@ -35,8 +35,13 @@ namespace managers
 		//meta! sender="AgentModelu", id="17", type="Notice"
 		public void ProcessCustomerDeparture(MessageForm message)
 		{
+			this.MyAgent.localAverageCustomerCountInSTK.addValues(this.MyAgent.CustomersCount, MySim.CurrentTime - this.MyAgent.localAverageCustomerCountInSTK.timeOfLastChange);
+			this.MyAgent.localAverageCustomerCountInSTK.timeOfLastChange = MySim.CurrentTime;
+			
 			this.MyAgent.CustomersCount--;
 			var pom = MySim.CurrentTime - ((MyMessage)message).customer.arrivalTime;
+
+
 
             this.MyAgent.localAverageCustomerTimeInSTK.addValues(MySim.CurrentTime - ((MyMessage)message).customer.arrivalTime);
 			//ZAKAZNIK ODISIEL
@@ -56,6 +61,10 @@ namespace managers
             newMessage.customer._id = this.id;
 			this.id++;
             Notice(newMessage);
+
+            this.MyAgent.localAverageCustomerCountInSTK.addValues(this.MyAgent.CustomersCount, MySim.CurrentTime - this.MyAgent.localAverageCustomerCountInSTK.timeOfLastChange);
+            this.MyAgent.localAverageCustomerCountInSTK.timeOfLastChange = MySim.CurrentTime;
+
             this.MyAgent.CustomersCount++;
 
 			//chladenie
@@ -82,6 +91,10 @@ namespace managers
 			((MyMessage)newMessage).customer._id = this.id;
 			this.id++;
             Notice(newMessage);
+
+            this.MyAgent.localAverageCustomerCountInSTK.addValues(this.MyAgent.CustomersCount, MySim.CurrentTime - this.MyAgent.localAverageCustomerCountInSTK.timeOfLastChange);
+            this.MyAgent.localAverageCustomerCountInSTK.timeOfLastChange = MySim.CurrentTime;
+
             this.MyAgent.CustomersCount++;
 
             message.Addressee = MyAgent.FindAssistant(SimId.PlanerCustomerArrival);

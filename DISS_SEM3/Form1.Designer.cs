@@ -369,6 +369,7 @@
             this.label16.Size = new System.Drawing.Size(51, 16);
             this.label16.TabIndex = 69;
             this.label16.Text = "label16";
+            this.label16.Click += new System.EventHandler(this.label16_Click);
             // 
             // label22
             // 
@@ -396,6 +397,7 @@
             this.label23.Size = new System.Drawing.Size(51, 16);
             this.label23.TabIndex = 64;
             this.label23.Text = "label23";
+            this.label23.Click += new System.EventHandler(this.label23_Click);
             // 
             // label33
             // 
@@ -479,6 +481,7 @@
             this.label41.Size = new System.Drawing.Size(51, 16);
             this.label41.TabIndex = 55;
             this.label41.Text = "label41";
+            this.label41.Click += new System.EventHandler(this.label41_Click);
             // 
             // label42
             // 

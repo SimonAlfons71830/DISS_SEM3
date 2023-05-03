@@ -63,6 +63,14 @@ namespace simulation
 			this.AgentSTK.localAverageFreeAutomechanicCount.setFinalTimeOfLastChange(this.CurrentTime);
 			this.globalAverageFreeAutomechanicCount.addValues(this.AgentSTK.localAverageFreeAutomechanicCount.getMean());
 
+			this.globalAverageCustomerCountEndOfDay.addValues(this.AgentOkolia.CustomersCount);
+
+			this.AgentOkolia.localAverageCustomerCountInSTK.setFinalTimeOfLastChange(this.CurrentTime);
+			this.globalAverageCustomerCountInSTK.addValues(this.AgentOkolia.localAverageCustomerCountInSTK.getMean());
+
+			this.AgentSTK.localAverageCustomerCountToTakeOver.setFinalTimeOfLastChange(this.CurrentTime);
+			this.globalAverageCustomerCountInLineToTakeOver.addValues(this.AgentSTK.localAverageCustomerCountToTakeOver.getMean());
+
 			// Collect local statistics into global, update UI, etc...
 			base.ReplicationFinished();
 

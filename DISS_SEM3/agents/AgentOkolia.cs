@@ -11,12 +11,14 @@ namespace agents
 	{
         public int CustomersCount { get; set; }
 		public Statistics localAverageCustomerTimeInSTK { get; set; }
+		public WStatistics localAverageCustomerCountInSTK { get; set; }
 
         public AgentOkolia(int id, Simulation mySim, Agent parent) :
 			base(id, mySim, parent)
 		{
 			Init();
             this.localAverageCustomerTimeInSTK = new Statistics();
+			this.localAverageCustomerCountInSTK = new WStatistics();
 			this.CustomersCount = 0;
         }
 
@@ -26,6 +28,7 @@ namespace agents
 			// Setup component for the next replication
 		
 			localAverageCustomerTimeInSTK.resetStatistic();
+			localAverageCustomerCountInSTK.resetStatistic();
 			CustomersCount = 0;
 		}
 
