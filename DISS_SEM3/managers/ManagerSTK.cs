@@ -32,11 +32,11 @@ namespace managers
 		public void ProcessCustomerService(MessageForm message)
 		{
 
-            this.MyAgent.localAverageCustomerCountToTakeOver.addValues(this.MyAgent.customersLine.Count, MySim.CurrentTime
+            /*this.MyAgent.localAverageCustomerCountToTakeOver.addValues(this.MyAgent.customersLine.Count, MySim.CurrentTime
                         - this.MyAgent.localAverageCustomerCountToTakeOver.timeOfLastChange);
             this.MyAgent.localAverageCustomerCountToTakeOver.timeOfLastChange = MySim.CurrentTime;
             //just for statistic
-            this.MyAgent.customersLine.Enqueue(((MyMessage)message), message.DeliveryTime);
+            this.MyAgent.customersLine.Enqueue(((MyMessage)message), message.DeliveryTime);*/
 
             //popytam ci je volne parkovacie miesto
             message.Addressee = MySim.FindAgent(SimId.AgentService);
@@ -87,12 +87,12 @@ namespace managers
 				}
 				else if (this.MyAgent.waitingForTakeOverAssigned.Count > 0)
 				{
-					this.MyAgent.localAverageCustomerCountToTakeOver.addValues(this.MyAgent.customersLine.Count, MySim.CurrentTime 
+					/*this.MyAgent.localAverageCustomerCountToTakeOver.addValues(this.MyAgent.customersLine.Count, MySim.CurrentTime 
 						- this.MyAgent.localAverageCustomerCountToTakeOver.timeOfLastChange);
 					this.MyAgent.localAverageCustomerCountToTakeOver.timeOfLastChange = MySim.CurrentTime;
 
 					//just for stats
-					this.MyAgent.customersLine.Dequeue();
+					this.MyAgent.customersLine.Dequeue();*/
 
 					var instantTakeOver = this.MyAgent.waitingForTakeOverAssigned.Dequeue();
 
@@ -280,12 +280,12 @@ namespace managers
 				}
 				else if (this.MyAgent.waitingForTakeOverAssigned.Count>0)
 				{
-                    this.MyAgent.localAverageCustomerCountToTakeOver.addValues(this.MyAgent.customersLine.Count, MySim.CurrentTime
+                    /*this.MyAgent.localAverageCustomerCountToTakeOver.addValues(this.MyAgent.customersLine.Count, MySim.CurrentTime
                         - this.MyAgent.localAverageCustomerCountToTakeOver.timeOfLastChange);
                     this.MyAgent.localAverageCustomerCountToTakeOver.timeOfLastChange = MySim.CurrentTime;
                     //just for statistics
                     this.MyAgent.customersLine.Dequeue();
-
+*/
 					//moze ist hned na takeover uz ma miesto
 					var instantTakeOver = this.MyAgent.waitingForTakeOverAssigned.Dequeue();
 
