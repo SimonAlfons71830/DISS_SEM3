@@ -6,6 +6,7 @@ using DISS_SEM2;
 using Priority_Queue;
 using System.Collections.Generic;
 using DISS_SEM3.statistics;
+using OSPDataStruct;
 
 namespace agents
 {
@@ -14,6 +15,8 @@ namespace agents
 	{
         public SimplePriorityQueue<MyMessage, double> customersLine;
 		public SimplePriorityQueue<MyMessage, double> paymentLine;
+
+        public SimQueue<MyMessage> takeoverqueue;
 
         public List<Technician> technicians;
         public List<Automechanic> automechanics;
@@ -24,6 +27,8 @@ namespace agents
         public WStatistics localAverageCustomerCountToTakeOver { get; set; }
         public WStatistics localAverageFreeTechnicianCount { get; set; }
         public WStatistics localAverageFreeAutomechanicCount { get; set; }
+
+        public SimQueue<Technician> technicians_queue;
 
         public AgentSTK(int id, Simulation mySim, Agent parent) :
 			base(id, mySim, parent)
@@ -40,6 +45,9 @@ namespace agents
             this.localAverageCustomerCountToTakeOver =  new WStatistics();
             this.localAverageFreeTechnicianCount = new WStatistics();
             this.localAverageFreeAutomechanicCount = new WStatistics();
+            this.takeoverqueue = new SimQueue<MyMessage>(new OSPStat.WStat(MySim));
+
+            this.technicians_queue = new SimQueue<Technician>(new OSPStat.WStat(MySim));
         }
 
 		override public void PrepareReplication()
@@ -65,8 +73,10 @@ namespace agents
             this.localAverageCustomerCountToTakeOver.resetStatistic();
             this.localAverageFreeTechnicianCount.resetStatistic();
             this.localAverageFreeAutomechanicCount.resetStatistic();
-			
-		}
+
+            this.takeoverqueue.Clear();
+
+        }
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
 		private void Init()
@@ -87,7 +97,7 @@ namespace agents
             for (int i = 0; i < number; i++)
             {
                 var technic = new Technician();
-                technic._id = i;
+                technic._id = i+1;
                 this.technicians.Add(technic);
             }
         }
@@ -97,7 +107,7 @@ namespace agents
             for (int i = 0; i < number; i++)
             {
                 var mechanic = new Automechanic();
-                mechanic._id = i;
+                mechanic._id = i+1;
                 this.automechanics.Add(mechanic);
             }
         }

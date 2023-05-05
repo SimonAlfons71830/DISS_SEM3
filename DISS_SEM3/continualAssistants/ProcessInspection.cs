@@ -63,7 +63,6 @@ namespace continualAssistants
                 default:
 					break;
 			}
-			
         }
 
 		//meta! userInfo="Process messages defined in code", id="0"

@@ -11,10 +11,12 @@ namespace DISS_SEM2
         public Customer customer_car;
         public bool obsluhuje;
         public int _id;
+        public bool obeduje;
 
         public Technician() 
         {
             this.obsluhuje = false;
+            this.obeduje = false;
         }
 
         public bool Obsluhuje()

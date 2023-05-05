@@ -33,9 +33,7 @@ namespace continualAssistants
 		public void ProcessDefault(MessageForm message)
 		{
             //customer arrival message after hold
-            
             AssistantFinished(message);
-            
         }
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
