@@ -663,6 +663,8 @@
             // 
             // dataGridGarage
             // 
+            this.dataGridGarage.AllowUserToAddRows = false;
+            this.dataGridGarage.AllowUserToDeleteRows = false;
             this.dataGridGarage.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridGarage.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.parking_place_id,
@@ -670,6 +672,7 @@
             this.dataGridGarage.Location = new System.Drawing.Point(550, 30);
             this.dataGridGarage.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dataGridGarage.Name = "dataGridGarage";
+            this.dataGridGarage.ReadOnly = true;
             this.dataGridGarage.RowHeadersWidth = 51;
             this.dataGridGarage.RowTemplate.Height = 24;
             this.dataGridGarage.Size = new System.Drawing.Size(278, 180);
