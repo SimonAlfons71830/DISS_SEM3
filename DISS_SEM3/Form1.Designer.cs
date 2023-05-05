@@ -71,6 +71,8 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.label11 = new System.Windows.Forms.Label();
             this.dataGridGarage = new System.Windows.Forms.DataGridView();
+            this.parking_place_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.car_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label9 = new System.Windows.Forms.Label();
             this.dataGridView4 = new System.Windows.Forms.DataGridView();
             this.label7 = new System.Windows.Forms.Label();
@@ -105,20 +107,20 @@
             this.label21 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridAutomechanics = new System.Windows.Forms.DataGridView();
+            this.automechanic_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.car_type = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.customers_car_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.status_A = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridTechnicians = new System.Windows.Forms.DataGridView();
+            this.technician_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.customers_car = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.customer_state = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sim_time_label = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.automechanic_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.customers_car_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.status_A = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.technician_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.customers_car = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.parking_place_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.car_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
@@ -172,10 +174,10 @@
             this.tabPage2.Controls.Add(this.label51);
             this.tabPage2.Controls.Add(this.label52);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.tabPage2.Size = new System.Drawing.Size(1254, 581);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(2);
+            this.tabPage2.Size = new System.Drawing.Size(1419, 581);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "TurboMode";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -192,9 +194,9 @@
             this.groupBox3.Controls.Add(this.numericUpDown6);
             this.groupBox3.Controls.Add(this.numericUpDown7);
             this.groupBox3.Location = new System.Drawing.Point(679, 20);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox3.Size = new System.Drawing.Size(226, 249);
             this.groupBox3.TabIndex = 78;
             this.groupBox3.TabStop = false;
@@ -203,7 +205,7 @@
             // button4
             // 
             this.button4.Location = new System.Drawing.Point(131, 184);
-            this.button4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button4.Margin = new System.Windows.Forms.Padding(2);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(68, 29);
             this.button4.TabIndex = 67;
@@ -214,7 +216,7 @@
             // button5
             // 
             this.button5.Location = new System.Drawing.Point(22, 184);
-            this.button5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button5.Margin = new System.Windows.Forms.Padding(2);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(68, 29);
             this.button5.TabIndex = 66;
@@ -255,7 +257,7 @@
             // numericUpDown5
             // 
             this.numericUpDown5.Location = new System.Drawing.Point(127, 121);
-            this.numericUpDown5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.numericUpDown5.Margin = new System.Windows.Forms.Padding(2);
             this.numericUpDown5.Name = "numericUpDown5";
             this.numericUpDown5.Size = new System.Drawing.Size(74, 20);
             this.numericUpDown5.TabIndex = 44;
@@ -270,7 +272,7 @@
             // numericUpDown6
             // 
             this.numericUpDown6.Location = new System.Drawing.Point(127, 84);
-            this.numericUpDown6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.numericUpDown6.Margin = new System.Windows.Forms.Padding(2);
             this.numericUpDown6.Name = "numericUpDown6";
             this.numericUpDown6.Size = new System.Drawing.Size(74, 20);
             this.numericUpDown6.TabIndex = 43;
@@ -290,7 +292,7 @@
             0,
             0});
             this.numericUpDown7.Location = new System.Drawing.Point(127, 49);
-            this.numericUpDown7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.numericUpDown7.Margin = new System.Windows.Forms.Padding(2);
             this.numericUpDown7.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -611,10 +613,10 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Location = new System.Drawing.Point(1, 1);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1262, 607);
+            this.tabControl1.Size = new System.Drawing.Size(1427, 607);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -643,10 +645,10 @@
             this.tabPage1.Controls.Add(this.button1);
             this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.tabPage1.Size = new System.Drawing.Size(1254, 581);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(2);
+            this.tabPage1.Size = new System.Drawing.Size(1419, 581);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "SlowMode";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
@@ -654,7 +656,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(548, 15);
+            this.label11.Location = new System.Drawing.Point(641, 15);
             this.label11.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(42, 13);
@@ -669,8 +671,8 @@
             this.dataGridGarage.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.parking_place_id,
             this.car_id});
-            this.dataGridGarage.Location = new System.Drawing.Point(550, 30);
-            this.dataGridGarage.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridGarage.Location = new System.Drawing.Point(643, 30);
+            this.dataGridGarage.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridGarage.Name = "dataGridGarage";
             this.dataGridGarage.ReadOnly = true;
             this.dataGridGarage.RowHeadersWidth = 51;
@@ -678,10 +680,28 @@
             this.dataGridGarage.Size = new System.Drawing.Size(278, 180);
             this.dataGridGarage.TabIndex = 110;
             // 
+            // parking_place_id
+            // 
+            this.parking_place_id.HeaderText = "Parking ID";
+            this.parking_place_id.MinimumWidth = 6;
+            this.parking_place_id.Name = "parking_place_id";
+            this.parking_place_id.ReadOnly = true;
+            this.parking_place_id.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.parking_place_id.Width = 110;
+            // 
+            // car_id
+            // 
+            this.car_id.HeaderText = "Car ID";
+            this.car_id.MinimumWidth = 6;
+            this.car_id.Name = "car_id";
+            this.car_id.ReadOnly = true;
+            this.car_id.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.car_id.Width = 115;
+            // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(850, 16);
+            this.label9.Location = new System.Drawing.Point(1025, 16);
             this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(71, 13);
@@ -691,8 +711,8 @@
             // dataGridView4
             // 
             this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView4.Location = new System.Drawing.Point(853, 30);
-            this.dataGridView4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridView4.Location = new System.Drawing.Point(1028, 30);
+            this.dataGridView4.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView4.Name = "dataGridView4";
             this.dataGridView4.RowHeadersWidth = 51;
             this.dataGridView4.RowTemplate.Height = 24;
@@ -711,13 +731,16 @@
             // 
             // dataGridWaitingLine
             // 
+            this.dataGridWaitingLine.AllowUserToAddRows = false;
+            this.dataGridWaitingLine.AllowUserToDeleteRows = false;
             this.dataGridWaitingLine.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridWaitingLine.Location = new System.Drawing.Point(280, 299);
-            this.dataGridWaitingLine.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridWaitingLine.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridWaitingLine.Name = "dataGridWaitingLine";
+            this.dataGridWaitingLine.ReadOnly = true;
             this.dataGridWaitingLine.RowHeadersWidth = 51;
             this.dataGridWaitingLine.RowTemplate.Height = 24;
-            this.dataGridWaitingLine.Size = new System.Drawing.Size(242, 258);
+            this.dataGridWaitingLine.Size = new System.Drawing.Size(345, 258);
             this.dataGridWaitingLine.TabIndex = 106;
             this.dataGridWaitingLine.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridWaitingLine_CellContentClick);
             // 
@@ -744,7 +767,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(850, 284);
+            this.label5.Location = new System.Drawing.Point(1025, 284);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(80, 13);
@@ -754,7 +777,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(548, 284);
+            this.label4.Location = new System.Drawing.Point(641, 284);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(65, 13);
@@ -772,9 +795,9 @@
             this.groupBox2.Controls.Add(this.label14);
             this.groupBox2.Controls.Add(this.numericUpDown1);
             this.groupBox2.Location = new System.Drawing.Point(13, 71);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox2.Size = new System.Drawing.Size(477, 117);
             this.groupBox2.TabIndex = 92;
             this.groupBox2.TabStop = false;
@@ -793,7 +816,7 @@
             // numericUpDown4
             // 
             this.numericUpDown4.Location = new System.Drawing.Point(368, 28);
-            this.numericUpDown4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.numericUpDown4.Margin = new System.Windows.Forms.Padding(2);
             this.numericUpDown4.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -832,7 +855,7 @@
             // numericUpDown3
             // 
             this.numericUpDown3.Location = new System.Drawing.Point(136, 68);
-            this.numericUpDown3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.numericUpDown3.Margin = new System.Windows.Forms.Padding(2);
             this.numericUpDown3.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -843,7 +866,7 @@
             this.numericUpDown3.TabIndex = 68;
             this.numericUpDown3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numericUpDown3.Value = new decimal(new int[] {
-            16,
+            17,
             0,
             0,
             0});
@@ -851,7 +874,7 @@
             // numericUpDown2
             // 
             this.numericUpDown2.Location = new System.Drawing.Point(136, 32);
-            this.numericUpDown2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.numericUpDown2.Margin = new System.Windows.Forms.Padding(2);
             this.numericUpDown2.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -885,7 +908,7 @@
             0,
             0});
             this.numericUpDown1.Location = new System.Drawing.Point(368, 72);
-            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(2);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -916,9 +939,9 @@
             this.groupBox1.Controls.Add(this.customers_in_line_label);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Location = new System.Drawing.Point(13, 299);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox1.Size = new System.Drawing.Size(213, 258);
             this.groupBox1.TabIndex = 91;
             this.groupBox1.TabStop = false;
@@ -1083,16 +1106,52 @@
             this.dataGridAutomechanics.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridAutomechanics.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.automechanic_id,
+            this.car_type,
             this.customers_car_id,
             this.status_A});
-            this.dataGridAutomechanics.Location = new System.Drawing.Point(853, 299);
-            this.dataGridAutomechanics.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridAutomechanics.Location = new System.Drawing.Point(1028, 299);
+            this.dataGridAutomechanics.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridAutomechanics.Name = "dataGridAutomechanics";
             this.dataGridAutomechanics.ReadOnly = true;
             this.dataGridAutomechanics.RowHeadersWidth = 51;
             this.dataGridAutomechanics.RowTemplate.Height = 24;
-            this.dataGridAutomechanics.Size = new System.Drawing.Size(275, 258);
+            this.dataGridAutomechanics.Size = new System.Drawing.Size(342, 258);
             this.dataGridAutomechanics.TabIndex = 87;
+            // 
+            // automechanic_id
+            // 
+            this.automechanic_id.HeaderText = "Mechanic ID";
+            this.automechanic_id.MinimumWidth = 6;
+            this.automechanic_id.Name = "automechanic_id";
+            this.automechanic_id.ReadOnly = true;
+            this.automechanic_id.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.automechanic_id.Width = 65;
+            // 
+            // car_type
+            // 
+            this.car_type.HeaderText = "Cert";
+            this.car_type.Name = "car_type";
+            this.car_type.ReadOnly = true;
+            this.car_type.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.car_type.Width = 65;
+            // 
+            // customers_car_id
+            // 
+            this.customers_car_id.HeaderText = "Customer ID";
+            this.customers_car_id.MinimumWidth = 6;
+            this.customers_car_id.Name = "customers_car_id";
+            this.customers_car_id.ReadOnly = true;
+            this.customers_car_id.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.customers_car_id.Width = 75;
+            // 
+            // status_A
+            // 
+            this.status_A.HeaderText = "Status";
+            this.status_A.MinimumWidth = 6;
+            this.status_A.Name = "status_A";
+            this.status_A.ReadOnly = true;
+            this.status_A.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.status_A.Width = 65;
             // 
             // dataGridTechnicians
             // 
@@ -1102,16 +1161,52 @@
             this.dataGridTechnicians.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.technician_id,
             this.customers_car,
+            this.customer_state,
             this.status});
-            this.dataGridTechnicians.Location = new System.Drawing.Point(551, 299);
-            this.dataGridTechnicians.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridTechnicians.Location = new System.Drawing.Point(644, 299);
+            this.dataGridTechnicians.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridTechnicians.Name = "dataGridTechnicians";
             this.dataGridTechnicians.ReadOnly = true;
             this.dataGridTechnicians.RowHeadersWidth = 51;
             this.dataGridTechnicians.RowTemplate.Height = 24;
-            this.dataGridTechnicians.Size = new System.Drawing.Size(277, 258);
+            this.dataGridTechnicians.Size = new System.Drawing.Size(341, 258);
             this.dataGridTechnicians.TabIndex = 86;
             this.dataGridTechnicians.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridTechnicians_CellContentClick);
+            // 
+            // technician_id
+            // 
+            this.technician_id.HeaderText = "Technic ID";
+            this.technician_id.MinimumWidth = 6;
+            this.technician_id.Name = "technician_id";
+            this.technician_id.ReadOnly = true;
+            this.technician_id.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.technician_id.Width = 65;
+            // 
+            // customers_car
+            // 
+            this.customers_car.HeaderText = "Customer ID";
+            this.customers_car.MinimumWidth = 6;
+            this.customers_car.Name = "customers_car";
+            this.customers_car.ReadOnly = true;
+            this.customers_car.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.customers_car.Width = 75;
+            // 
+            // customer_state
+            // 
+            this.customer_state.HeaderText = "State";
+            this.customer_state.Name = "customer_state";
+            this.customer_state.ReadOnly = true;
+            this.customer_state.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.customer_state.Width = 65;
+            // 
+            // status
+            // 
+            this.status.HeaderText = "Status";
+            this.status.MinimumWidth = 6;
+            this.status.Name = "status";
+            this.status.ReadOnly = true;
+            this.status.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.status.Width = 65;
             // 
             // sim_time_label
             // 
@@ -1163,77 +1258,13 @@
             this.label2.TabIndex = 81;
             this.label2.Text = "ACTUAL SIMULATION TIME";
             // 
-            // automechanic_id
-            // 
-            this.automechanic_id.HeaderText = "Mechanic ID";
-            this.automechanic_id.MinimumWidth = 6;
-            this.automechanic_id.Name = "automechanic_id";
-            this.automechanic_id.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.automechanic_id.Width = 65;
-            // 
-            // customers_car_id
-            // 
-            this.customers_car_id.HeaderText = "Customer ID";
-            this.customers_car_id.MinimumWidth = 6;
-            this.customers_car_id.Name = "customers_car_id";
-            this.customers_car_id.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.customers_car_id.Width = 75;
-            // 
-            // status_A
-            // 
-            this.status_A.HeaderText = "Status";
-            this.status_A.MinimumWidth = 6;
-            this.status_A.Name = "status_A";
-            this.status_A.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.status_A.Width = 65;
-            // 
-            // technician_id
-            // 
-            this.technician_id.HeaderText = "Technic ID";
-            this.technician_id.MinimumWidth = 6;
-            this.technician_id.Name = "technician_id";
-            this.technician_id.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.technician_id.Width = 65;
-            // 
-            // customers_car
-            // 
-            this.customers_car.HeaderText = "Customer ID";
-            this.customers_car.MinimumWidth = 6;
-            this.customers_car.Name = "customers_car";
-            this.customers_car.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.customers_car.Width = 75;
-            // 
-            // status
-            // 
-            this.status.HeaderText = "Status";
-            this.status.MinimumWidth = 6;
-            this.status.Name = "status";
-            this.status.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.status.Width = 65;
-            // 
-            // parking_place_id
-            // 
-            this.parking_place_id.HeaderText = "Parking ID";
-            this.parking_place_id.MinimumWidth = 6;
-            this.parking_place_id.Name = "parking_place_id";
-            this.parking_place_id.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.parking_place_id.Width = 110;
-            // 
-            // car_id
-            // 
-            this.car_id.HeaderText = "Car ID";
-            this.car_id.MinimumWidth = 6;
-            this.car_id.Name = "car_id";
-            this.car_id.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.car_id.Width = 115;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1351, 619);
+            this.ClientSize = new System.Drawing.Size(1454, 619);
             this.Controls.Add(this.tabControl1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -1349,13 +1380,15 @@
         private System.Windows.Forms.DataGridView dataGridView4;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.DataGridView dataGridWaitingLine;
-        private System.Windows.Forms.DataGridViewTextBoxColumn automechanic_id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn customers_car_id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn status_A;
         private System.Windows.Forms.DataGridViewTextBoxColumn parking_place_id;
         private System.Windows.Forms.DataGridViewTextBoxColumn car_id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn automechanic_id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn car_type;
+        private System.Windows.Forms.DataGridViewTextBoxColumn customers_car_id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn status_A;
         private System.Windows.Forms.DataGridViewTextBoxColumn technician_id;
         private System.Windows.Forms.DataGridViewTextBoxColumn customers_car;
+        private System.Windows.Forms.DataGridViewTextBoxColumn customer_state;
         private System.Windows.Forms.DataGridViewTextBoxColumn status;
     }
 }

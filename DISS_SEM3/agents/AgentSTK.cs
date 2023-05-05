@@ -16,7 +16,8 @@ namespace agents
         public SimplePriorityQueue<MyMessage, double> customersLine;
 		public SimplePriorityQueue<MyMessage, double> paymentLine;
 
-        public SimQueue<MyMessage> takeoverqueue;
+        public SimQueue<MyMessage> takeoverqueueQ;
+        public SimplePriorityQueue<MyMessage,double> takeoverqueue;
 
         public List<Technician> technicians;
         public List<Automechanic> automechanics;
@@ -45,7 +46,8 @@ namespace agents
             this.localAverageCustomerCountToTakeOver =  new WStatistics();
             this.localAverageFreeTechnicianCount = new WStatistics();
             this.localAverageFreeAutomechanicCount = new WStatistics();
-            this.takeoverqueue = new SimQueue<MyMessage>(new OSPStat.WStat(MySim));
+            this.takeoverqueueQ = new SimQueue<MyMessage>(new OSPStat.WStat(MySim));
+            this.takeoverqueue = new SimplePriorityQueue<MyMessage, double>();
 
             this.technicians_queue = new SimQueue<Technician>(new OSPStat.WStat(MySim));
         }
@@ -56,6 +58,9 @@ namespace agents
 			// Setup component for the next replication
             this.customersLine.Clear();
             this.paymentLine.Clear();
+            this.takeoverqueue.Clear();
+            this.takeoverqueueQ.Clear();
+
             for (int i = 0; i < this.technicians.Count; i++)
             {
                 this.technicians[i].obsluhuje = false;
@@ -73,8 +78,6 @@ namespace agents
             this.localAverageCustomerCountToTakeOver.resetStatistic();
             this.localAverageFreeTechnicianCount.resetStatistic();
             this.localAverageFreeAutomechanicCount.resetStatistic();
-
-            this.takeoverqueue.Clear();
 
         }
 

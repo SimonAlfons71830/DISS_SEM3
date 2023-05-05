@@ -9,15 +9,12 @@ namespace managers
 	//meta! id="2"
 	public class ManagerOkolia : Manager
 	{
-        public CarGenerator carTypeGenerator { get; set; }
-		private int id;
+		private int id; //id counter for customer
         
-
         public ManagerOkolia(int id, Simulation mySim, Agent myAgent) :
 			base(id, mySim, myAgent)
 		{
 			Init();
-			carTypeGenerator = new CarGenerator(((MySimulation)mySim).seedGenerator);
 			this.id = 0;
 		}
 
@@ -39,11 +36,8 @@ namespace managers
 			this.MyAgent.localAverageCustomerCountInSTK.timeOfLastChange = MySim.CurrentTime;
 			
 			this.MyAgent.CustomersCount--;
-			var pom = MySim.CurrentTime - ((MyMessage)message).customer.arrivalTime;
-
-
-
-            this.MyAgent.localAverageCustomerTimeInSTK.addValues(MySim.CurrentTime - ((MyMessage)message).customer.arrivalTime);
+            
+			this.MyAgent.localAverageCustomerTimeInSTK.addValues(MySim.CurrentTime - ((MyMessage)message).customer.arrivalTime);
 			//ZAKAZNIK ODISIEL
 		}
 
@@ -56,7 +50,7 @@ namespace managers
                 Addressee = MySim.FindAgent(SimId.AgentModelu),
 				Code = Mc.CustomerArrival,
                 //generacia noveho zakaznika s casom ktory prisiel po ukonceni assistenta
-                customer = new Customer(MySim.CurrentTime, new Car(this.carTypeGenerator.Next()))
+                customer = new Customer(MySim.CurrentTime, new Car(this.MyAgent.carTypeGenerator.Next()))
 			};
             newMessage.customer._id = this.id;
 			this.id++;
@@ -85,7 +79,7 @@ namespace managers
                 Addressee = MySim.FindAgent(SimId.AgentModelu),
                 Code = Mc.CustomerArrival,
                 //generacia noveho zakaznika s casom ktory prisiel po ukonceni assistenta
-                customer = new Customer(0, new Car(this.carTypeGenerator.Next()))
+                customer = new Customer(0, new Car(this.MyAgent.carTypeGenerator.Next()))
 				
             };
 			((MyMessage)newMessage).customer._id = this.id;

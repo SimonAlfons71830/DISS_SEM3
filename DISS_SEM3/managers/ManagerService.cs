@@ -49,7 +49,9 @@ namespace managers
 		public void ProcessFinishProcessTakeOver(MessageForm message)
 		{
             //koniec preberania auta - response pre agenta stk
-            this.MyAgent.garageParkingSpace.Enqueue(((MyMessage)message).customer, ((MyMessage)message).customer.arrivalTime);
+			//do garaze zaparkujeme vybavene auto
+            this.MyAgent.garageParkingSpace.Enqueue(((MyMessage)message).customer, ((MyMessage)message).DeliveryTime);
+
             message.Code = Mc.CarTakeover;
 			message.Addressee = MySim.FindAgent(SimId.AgentSTK);
 			Response(message);
@@ -80,10 +82,6 @@ namespace managers
 		public void ProcessCarTakeover(MessageForm message)
 		{
 			//zavolame start proces na takeover
-			//technik zacne pracovat
-
-			//((MyMessage)message).technician.obsluhuje = true;
-			//((MyMessage)message).technician.customer_car = ((MyMessage)message).customer;
 
 			message.Addressee = MyAgent.FindAssistant(SimId.ProcessTakeOver);
             StartContinualAssistant(message);
@@ -95,7 +93,7 @@ namespace managers
 			//chcem ziskat volne parkovacie miesto pre zakaznika
 			if (this.reserveParking())
 			{
-				//rezervovalo sa parking space
+				//rezervovalo sa parking space - zakaznik sa posiela na pridelenie technika
                 message.Code = Mc.AssignParkingSpace;
                 message.Addressee = MySim.FindAgent(SimId.AgentSTK);
                 Response(message);

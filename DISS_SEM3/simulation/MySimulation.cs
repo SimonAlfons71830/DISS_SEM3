@@ -18,8 +18,9 @@ namespace simulation
         public Statistics globalAverageFreeAutomechanicCount { get; set; }
         public Statistics globalAverageCustomerCountEndOfDay { get; set; }
         public Statistics globalAverageCustomerCountInSTK { get; set; }
+        public Statistics globalAverageCustomerCountInSTKII { get; set; }
 
-		public int replicationNum { get; set; }
+        public int replicationNum { get; set; }
 
         public MySimulation()
 		{
@@ -37,8 +38,9 @@ namespace simulation
 			this.globalAverageFreeAutomechanicCount = new Statistics();
 			this.globalAverageCustomerCountEndOfDay = new Statistics();
 			this.globalAverageCustomerCountInSTK = new Statistics();
+            this.globalAverageCustomerCountInSTKII = new Statistics();
 
-			this.replicationNum = 0;
+            this.replicationNum = 0;
 		}
 
 		override protected void PrepareReplication()

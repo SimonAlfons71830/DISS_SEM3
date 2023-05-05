@@ -57,6 +57,7 @@ namespace DISS_SEM3
             obedujeStyle.ForeColor = Color.White;
 
             this.simulation.RegisterDelegate(this);
+
             if (slow)
             {
 
@@ -78,7 +79,7 @@ namespace DISS_SEM3
 
                 dataWaitingLine.Columns.Add("Place in Line", typeof(int));
                 dataWaitingLine.Columns.Add("Customer ID", typeof(int));
-                dataWaitingLine.Columns.Add("Arrival time", typeof(DateTime));
+                dataWaitingLine.Columns.Add("Waiting time", typeof(double));
 
                 dataPaymentLine.Columns.Add("Place in Line", typeof(int));
                 dataPaymentLine.Columns.Add("Customer ID", typeof(int));
@@ -94,12 +95,12 @@ namespace DISS_SEM3
            
             foreach (Technician technician in this.simulation.AgentSTK.technicians)
             {
-                dataGridTechnicians.Rows.Add(technician._id, "X" , "Free");
+                dataGridTechnicians.Rows.Add(technician._id, " ", " " , "Free");
             }
 
             foreach (Automechanic automechanic in this.simulation.AgentSTK.automechanics) 
             {
-                dataGridAutomechanics.Rows.Add(automechanic._id, "X" , "Free");
+                dataGridAutomechanics.Rows.Add(automechanic._id, " ", " " , "Free");
             }
 
             for (int i = 0; i < 5; i++)
@@ -156,49 +157,7 @@ namespace DISS_SEM3
                     cars_parked_in_garage_label.Text = this.simulation.AgentService.getCarsCountInGarage().ToString();
                     label20.Text = this.simulation.AgentOkolia.CustomersCount.ToString();
 
-                    //refreshing dataGrids
-                    /* dataTechnicians.Clear();
-                     //create data grid
-                     //datagrid technicians
-                     foreach (Technician technician in this.simulation.AgentSTK.technicians)
-                     {
-                         DataRow row = dataTechnicians.NewRow();
-                         row["Technician ID"] = technician._id;
-
-
-                         Customer customer = technician.customer_car;
-                         if (customer != null)
-                         {
-                             row["Customer ID"] = customer._id;
-                             row["Status"] = "Busy";
-                         }
-                         else
-                         {
-                             row["Status"] = "Free";
-                         }
-
-                         dataTechnicians.Rows.Add(row);
-                     }*/
-                    /*var i = 0;
-                    foreach (DataGridViewRow row in dataGridTechnicians.Rows) 
-                    {
-
-                        row.Cells[1].Value = this.simulation.AgentSTK.technicians.ElementAt(i).customer_car;
-                        if (this.simulation.AgentSTK.technicians.ElementAt(i).customer_car != null)
-                        {
-                            row.Cells[2].Value = "Busy";
-                        }
-                        else if(this.simulation.AgentSTK.technicians.ElementAt(i).obeduje)
-                        {
-                            row.Cells[2].Value = "Obeduje";
-                        }
-                        else
-                        {
-                            row.Cells[2].Value = "Free";
-                        }
-                        i++;
-                        
-                    }*/
+                    //DTAGRID TECHNICIANS
                     var j = 0;
                     foreach (DataGridViewRow row in dataGridTechnicians.Rows)
                     {
@@ -212,76 +171,41 @@ namespace DISS_SEM3
                         }
                         else
                         {
-                            row.Cells[1].Value = "X";
+                            row.Cells[1].Value = " ";
                         }
-                        
 
-                        if (technician.customer_car != null)
+                        if (technician.state == 0)
                         {
-                            row.Cells[2].Value = "Busy";
-                            row.Cells[2].Style = busyStyle;
+                            row.Cells[2].Value = " ";
                         }
-                        else if (technician.obeduje)
+                        else if (technician.state == 1)
                         {
-                            row.Cells[2].Value = "Obeduje";
-                            row.Cells[2].Style = obedujeStyle;
+                            row.Cells[2].Value = "take over";
                         }
                         else
                         {
-                            row.Cells[2].Value = "Free";
-                            row.Cells[2].Style = freeStyle;
+                            row.Cells[2].Value = "payment";
+                        }
+
+                        if (technician.customer_car != null)
+                        {
+                            row.Cells[3].Value = "Busy";
+                            row.Cells[3].Style = busyStyle;
+                        }
+                        else if (technician.obeduje)
+                        {
+                            row.Cells[3].Value = "Lunch";
+                            row.Cells[3].Style = obedujeStyle;
+                        }
+                        else
+                        {
+                            row.Cells[3].Value = "Free";
+                            row.Cells[3].Style = freeStyle;
                         }
                         j++;
                     }
 
-                    /*for (int j = 0; j < dataGridTechnicians.Rows.Count; j++)
-                    {
-                        var technician = this.simulation.AgentSTK.technicians.ElementAt(j-1);
-
-                        dataGridTechnicians.Rows[j].Cells[1].Value = technician.customer_car;
-
-                        if (technician.customer_car != null)
-                        {
-                            dataGridTechnicians.Rows[j].Cells[2].Value = "Busy";
-                            dataGridTechnicians.Rows[j].Cells[2].Style = busyStyle;
-                        }
-                        else if (technician.obeduje)
-                        {
-                            dataGridTechnicians.Rows[j].Cells[2].Value = "Obeduje";
-                            dataGridTechnicians.Rows[j].Cells[2].Style = obedujeStyle;
-                        }
-                        else
-                        {
-                            dataGridTechnicians.Rows[j].Cells[2].Value = "Free";
-                            dataGridTechnicians.Rows[j].Cells[2].Style = freeStyle;
-                        }
-                    }*/
-                    // Bind the DataTable to the DataGridView
-                    //dataGridTechnicians.DataSource = dataTechnicians;
-
-                    // Format the DataGridView
-                    //dataGridTechnicians.RowHeadersVisible = true;
-                    //dataGridTechnicians.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-
-                    // Format the "Status" column
-
-
-                    /*foreach (DataGridViewRow row in dataGridTechnicians.Rows)
-                    {
-                        if (row.Cells["Status"].Value != null && row.Cells["Status"].Value.ToString() == "Busy")
-                        {
-                            row.Cells["Status"].Style = busyStyle;
-                        }
-                        else if (row.Cells["Status"].Value != null && row.Cells["Status"].Value.ToString() == "Free")
-                        {
-                            row.Cells["Status"].Style = freeStyle;
-                        }
-                        else
-                        {
-                            row.Cells["Status"].Style = obedujeStyle;
-                        }
-                    }*/
-
+                    //DATAGRID AUTOMECHANICS
                     var k = 0;
                     foreach (DataGridViewRow row in dataGridAutomechanics.Rows)
                     {
@@ -295,113 +219,60 @@ namespace DISS_SEM3
                         }
                         else
                         {
-                            row.Cells[1].Value = "X";
+                            row.Cells[1].Value = " "; //ziadny zakaznik
                         }
 
 
                         if (automechanic.customer_car != null)
                         {
-                            row.Cells[2].Value = "Busy";
-                            row.Cells[2].Style = busyStyle;
+                            row.Cells[3].Value = "Busy";
+                            row.Cells[3].Style = busyStyle;
                         }
                         else if (automechanic.obeduje)
                         {
-                            row.Cells[2].Value = "Obeduje";
-                            row.Cells[2].Style = obedujeStyle;
+                            row.Cells[3].Value = "Lunch";
+                            row.Cells[3].Style = obedujeStyle;
                         }
                         else
                         {
-                            row.Cells[2].Value = "Free";
-                            row.Cells[2].Style = freeStyle;
+                            row.Cells[3].Value = "Free";
+                            row.Cells[3].Style = freeStyle;
                         }
                         k++;
                     }
 
-                    /* dataAutomechanics.Clear();
-                     foreach (Automechanic automechanic in this.simulation.AgentSTK.automechanics)
-                     {
-                         DataRow row = dataAutomechanics.NewRow();
-                         row["Automechanic ID"] = automechanic._id;
-
-
-                         Customer customer = automechanic.customer_car; // assuming this method returns the customer the technician is working on
-                         if (customer != null)
-                         {
-                             row["Customer ID"] = customer._id;
-                             row["Status"] = "Busy";
-                         }
-                         else
-                         {
-                             row["Status"] = "Free";
-                         }
-
-                         dataAutomechanics.Rows.Add(row);
-                     }
-
-
-                     // Bind the DataTable to the DataGridView
-                     dataGridAutomechanics.DataSource = dataAutomechanics;
-
-                     // Format the DataGridView
-                     dataGridAutomechanics.RowHeadersVisible = true;
-                     dataGridAutomechanics.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-
-                     // Format the "Status" column
-
-                     foreach (DataGridViewRow row in dataGridAutomechanics.Rows)
-                     {
-                         if (row.Cells["Status"].Value != null && row.Cells["Status"].Value.ToString() == "Busy")
-                         {
-                             row.Cells["Status"].Style = busyStyle;
-                         }
-                         else
-                         {
-                             row.Cells["Status"].Style = freeStyle;
-                         }
-                     }*/
-
-                    //var pometimei = startTime;
-                    /*var i = 1;
-                    dataGarage.Clear();
-                    foreach (var parking in this.simulation.AgentService.garageParkingSpace)
-                    {
-                        DataRow row = dataGarage.NewRow();
-                        row["Parking place ID"] = i;
-                        i++;
-                        row["Customer ID"] = parking._id; //customer id
-                        dataGarage.Rows.Add(row);
-                    }
-
-                    dataGridGarage.DataSource = dataGarage;
-
-                    dataGridGarage.RowHeadersVisible = true;
-                    dataGridGarage.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-                    */
-                    var pomtimey = startTime;
-                    var y = 1;
+                    //DATAGRID WAITING LINE
                     dataWaitingLine.Clear();
-                    foreach (var message in this.simulation.AgentSTK.customersLine)
+                    if (this.simulation.AgentSTK.takeoverqueue.Count > 0)
                     {
-                        DataRow row = dataWaitingLine.NewRow();
-                        row["Place in Line"] = y;
-                        y++;
-                        row["Customer ID"] = message.customer._id; //customer id
-                        row["Arrival time"] = pomtimey.AddSeconds(message.customer.arrivalTime);
-                        dataWaitingLine.Rows.Add(row);
+                        var y = 1;
+                        foreach (var message in this.simulation.AgentSTK.takeoverqueue)
+                        {
+                           /* var arrivalTime = startTime.AddSeconds(message.customer.arrivalTime);
+                            var currentTime = startTime.AddSeconds(this.simulation.CurrentTime);*/
+                            DataRow row = dataWaitingLine.NewRow();
+                            row["Place in Line"] = y;
+                            y++;
+                            row["Customer ID"] = message.customer._id; //customer id
+                            row["Waiting time"] = this.simulation.CurrentTime - message.customer.arrivalTime;
+                            dataWaitingLine.Rows.Add(row);
+                        }
+
+                        dataGridWaitingLine.DataSource = dataWaitingLine;
+
+                        dataGridWaitingLine.RowHeadersVisible = true;
+                        dataGridWaitingLine.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+
                     }
 
-                    dataGridWaitingLine.DataSource = dataWaitingLine;
-
-                    dataGridWaitingLine.RowHeadersVisible = true;
-                    dataGridWaitingLine.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-
-
-
+                    //DATAGRID GARAGE
+                    dataGarage.Clear();
                     var i = 0;
                     foreach (DataGridViewRow row in dataGridGarage.Rows)
                     {
                         if (row.Index == 5) continue;
                         row.Cells[0].Value = i+1;
+                        
                         if (i < this.simulation.AgentService.garageParkingSpace.Count)
                         {
                             if (this.simulation.AgentService.garageParkingSpace.ElementAt(i) != null)
@@ -409,44 +280,32 @@ namespace DISS_SEM3
                                 row.Cells[1].Value = this.simulation.AgentService.garageParkingSpace.ElementAt(i)._id;
                             }
                         }
+                        else
+                        {
+                            row.Cells[1].Value = " ";
+                        }                   
                        
                         i++;
                     }
 
-
-
-
-                    var z = 1;
-                    var pomtimez = startTime;
+                    //DATAGRID PAYMENTLINE
                     dataPaymentLine.Clear();
-                    foreach (var message in this.simulation.AgentSTK.paymentLine)
+                    if (this.simulation.AgentSTK.paymentLine.Count>0)
                     {
-                        DataRow row = dataPaymentLine.NewRow();
-                        row["Place in Line"] = z;
-                        z++;
-                        row["Customer ID"] = message.customer._id; //customer id
-                        row["Arrival time"] = pomtimez.AddSeconds(message.customer.arrivalTime);
-                        dataPaymentLine.Rows.Add(row);
+                        var z = 1;
+                        foreach (var message in this.simulation.AgentSTK.paymentLine)
+                        {
+                            DataRow row = dataPaymentLine.NewRow();
+                            row["Place in Line"] = z;
+                            z++;
+                            row["Customer ID"] = message.customer._id; //customer id
+                            dataPaymentLine.Rows.Add(row);
+                        }
+                        dataGridView4.DataSource = dataPaymentLine;
+
+                        dataGridView4.RowHeadersVisible = true;
+                        dataGridView4.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
                     }
-
-                    dataGridView4.DataSource = dataPaymentLine;
-
-                    dataGridView4.RowHeadersVisible = true;
-                    dataGridView4.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-
-                    /*dataInspection.Clear();
-                    foreach (var waitingCustomer in this.simulation.AgentSTK.waitingForInspection)
-                    {
-                        DataRow row = dataInspection.NewRow();
-                        row["Customer ID"] = waitingCustomer.customer._id; //customer id
-                        dataInspection.Rows.Add(row);
-                    }
-
-                    dataGridView1.DataSource = dataInspection;
-
-                    dataGridView1.RowHeadersVisible = true;
-                    dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;*/
-
                 });
             }
             else
