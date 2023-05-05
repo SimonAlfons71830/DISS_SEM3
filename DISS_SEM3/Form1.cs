@@ -79,11 +79,11 @@ namespace DISS_SEM3
 
                 dataWaitingLine.Columns.Add("Place in Line", typeof(int));
                 dataWaitingLine.Columns.Add("Customer ID", typeof(int));
-                dataWaitingLine.Columns.Add("Waiting time", typeof(double));
+                dataWaitingLine.Columns.Add("Waiting time", typeof(string));
 
                 dataPaymentLine.Columns.Add("Place in Line", typeof(int));
                 dataPaymentLine.Columns.Add("Customer ID", typeof(int));
-                dataPaymentLine.Columns.Add("Arrival time", typeof(DateTime));
+                //dataPaymentLine.Columns.Add("Arrival time", typeof(DateTime));
             }
         }
 
@@ -254,7 +254,15 @@ namespace DISS_SEM3
                             row["Place in Line"] = y;
                             y++;
                             row["Customer ID"] = message.customer._id; //customer id
-                            row["Waiting time"] = this.simulation.CurrentTime - message.customer.arrivalTime;
+                            TimeSpan waitingTime = TimeSpan.FromSeconds(this.simulation.CurrentTime - message.customer.arrivalTime);
+                            row["Waiting time"] = string.Format("{0:%h}h {0:%m}m {0:%s}s", waitingTime);
+
+                            if (waitingTime.TotalMinutes > 70)
+                            {
+                                dataGridWaitingLine.RowsDefaultCellStyle.ForeColor = Color.Red;
+                            }
+
+                            //row["Waiting time"] = pom.AddSeconds(this.simulation.CurrentTime - message.customer.arrivalTime).ToString("hh:mm");
                             dataWaitingLine.Rows.Add(row);
                         }
 
