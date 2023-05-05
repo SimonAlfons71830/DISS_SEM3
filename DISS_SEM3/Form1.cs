@@ -257,11 +257,6 @@ namespace DISS_SEM3
                             TimeSpan waitingTime = TimeSpan.FromSeconds(this.simulation.CurrentTime - message.customer.arrivalTime);
                             row["Waiting time"] = string.Format("{0:%h}h {0:%m}m {0:%s}s", waitingTime);
 
-                            if (waitingTime.TotalMinutes > 70)
-                            {
-                                dataGridWaitingLine.RowsDefaultCellStyle.ForeColor = Color.Red;
-                            }
-
                             //row["Waiting time"] = pom.AddSeconds(this.simulation.CurrentTime - message.customer.arrivalTime).ToString("hh:mm");
                             dataWaitingLine.Rows.Add(row);
                         }
