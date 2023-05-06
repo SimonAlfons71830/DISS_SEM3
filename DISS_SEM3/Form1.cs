@@ -299,6 +299,15 @@ namespace DISS_SEM3
                             dataGridWaitingLine.RowHeadersVisible = true;
                             dataGridWaitingLine.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
 
+                            dataGridView4.AutoResizeColumns();
+                            foreach (DataGridViewColumn column in dataGridWaitingLine.Columns)
+                            {
+                                if (column.Index == 0 || column.Index == 1)
+                                {
+                                    column.Width = 65;
+                                }
+                            }
+
                         }
 
                         //DATAGRID PAYMENTLINE

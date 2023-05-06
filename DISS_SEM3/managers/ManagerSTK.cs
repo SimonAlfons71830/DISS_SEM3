@@ -73,6 +73,11 @@ namespace managers
                 {
                     if (!technicianLunch.obedoval && !technicianLunch.obeduje)
                     {
+
+                        this.MyAgent.localAverageFreeTechnicianCount.addValues(this.MyAgent.getAvailableTechniciansCount(),
+                            MySim.CurrentTime - this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange);
+                        this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange = MySim.CurrentTime;
+
                         technicianLunch.obsluhuje = true;
                         technicianLunch.obeduje = true;
                         var lunchMessage = new MyMessage(MySim)
@@ -149,7 +154,10 @@ namespace managers
                             if (!technic.obedoval && !technic.obeduje)
                             {
 
-                                //TODO: doplnit statistiky
+                                this.MyAgent.localAverageFreeTechnicianCount.addValues(this.MyAgent.getAvailableTechniciansCount(),
+                                    MySim.CurrentTime - this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange);
+                                this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange = MySim.CurrentTime;
+
                                 technic.obsluhuje = true;
                                 technic.obeduje = true;
                                 var lunchMessage = new MyMessage(MySim)
@@ -195,7 +203,10 @@ namespace managers
                 {
                     if (!automechanicLunch.obedoval && !automechanicLunch.obeduje)
                     {
-                        //TODO: dorobit stats
+                        this.MyAgent.localAverageFreeAutomechanicCount.addValues(this.MyAgent.getAvailableAutomechanicsCount(),
+                        MySim.CurrentTime - this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange);
+                        this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange = MySim.CurrentTime;
+
                         automechanicLunch.obsluhuje = true;
                         automechanicLunch.obeduje = true;
                         var lunchMessage = new MyMessage(MySim)
@@ -286,7 +297,11 @@ namespace managers
                         Addressee = MyAgent.FindAssistant(SimId.Lunch)
                     };
 
-                    //TODO: dorobit stats
+                    
+                    this.MyAgent.localAverageFreeTechnicianCount.addValues(this.MyAgent.getAvailableTechniciansCount(),
+                       MySim.CurrentTime - this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange);
+                    this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange = MySim.CurrentTime;
+
                     newMessage.technician.obsluhuje = true;
                     newMessage.technician.obeduje = true;
                     StartContinualAssistant(newMessage);
@@ -303,7 +318,10 @@ namespace managers
                         Addressee = MyAgent.FindAssistant(SimId.Lunch)
                     };
 
-                    //TODO: dorobit stats
+                    this.MyAgent.localAverageFreeAutomechanicCount.addValues(this.MyAgent.getAvailableAutomechanicsCount(),
+                        MySim.CurrentTime - this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange);
+                    this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange = MySim.CurrentTime;
+
                     newMessage.automechanic.obsluhuje= true;
                     newMessage.automechanic.obeduje = true;
                     StartContinualAssistant(newMessage);
@@ -339,7 +357,10 @@ namespace managers
                 {
                     if (!technicianLunch.obedoval && !technicianLunch.obeduje)
                     {
-                        //TODO: dorobit stats
+                        this.MyAgent.localAverageFreeTechnicianCount.addValues(this.MyAgent.getAvailableTechniciansCount(),
+                       MySim.CurrentTime - this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange);
+                        this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange = MySim.CurrentTime;
+
                         technicianLunch.obsluhuje = true;
                         technicianLunch.obeduje = true;
                         var lunchMessage = new MyMessage(MySim)
@@ -379,9 +400,6 @@ namespace managers
 			{
 				this.MyAgent.waitingForInspection.Enqueue(((MyMessage)message), ((MyMessage)message).DeliveryTime);
             }
-
-
-
 
             //pridelenie roboty technikovi
             var technic = this.getAvailableTechnician();
@@ -442,7 +460,10 @@ namespace managers
                         {
                             if (!technic.obedoval && !technic.obeduje)
                             {
-                                //TODO : dorobit stats
+                                this.MyAgent.localAverageFreeTechnicianCount.addValues(this.MyAgent.getAvailableTechniciansCount(),
+                                    MySim.CurrentTime - this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange);
+                                this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange = MySim.CurrentTime;
+
                                 technic.obsluhuje = true;
                                 technic.obeduje = true;
                                 var lunchMessage = new MyMessage(MySim)
@@ -519,7 +540,11 @@ namespace managers
             if (((MyMessage)message).technician != null)
             {
                 //nastav robotu 
-                //TODO : dorobit stats
+
+                this.MyAgent.localAverageFreeTechnicianCount.addValues(this.MyAgent.getAvailableTechniciansCount(),
+                       MySim.CurrentTime - this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange);
+                this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange = MySim.CurrentTime;
+
                 ((MyMessage)message).technician.obsluhuje = false;
                 ((MyMessage)message).technician.obeduje = false;
                 ((MyMessage)message).technician.obedoval = true;
@@ -528,7 +553,10 @@ namespace managers
             }
             else if (((MyMessage)message).automechanic != null)
             {
-                //TODO : dorobit stats
+                this.MyAgent.localAverageFreeAutomechanicCount.addValues(this.MyAgent.getAvailableAutomechanicsCount(),
+                        MySim.CurrentTime - this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange);
+                this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange = MySim.CurrentTime;
+
                 ((MyMessage)message).automechanic.obsluhuje = false;
                 ((MyMessage)message).automechanic.obeduje = false;
                 ((MyMessage)message).automechanic.obedoval = true;
