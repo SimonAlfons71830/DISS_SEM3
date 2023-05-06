@@ -13,11 +13,13 @@ namespace DISS_SEM2
         public bool certificate;
         public int _id;
         public bool obeduje;
+        public bool obedoval;
 
         public Automechanic()
         {
             this.obsluhuje = false;
             this.obeduje = false;
+            this.obedoval = false;
         }
 
         public bool Obsluhuje()

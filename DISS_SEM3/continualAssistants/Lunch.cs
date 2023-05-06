@@ -20,14 +20,15 @@ namespace continualAssistants
 		//meta! sender="AgentSTK", id="82", type="Start"
 		public void ProcessStart(MessageForm message)
 		{
+			//obeduje 30 min
+			message.Code = Mc.Finish;
+			Hold(30 * 60, message);
 		}
 
 		//meta! userInfo="Process messages defined in code", id="0"
 		public void ProcessDefault(MessageForm message)
 		{
-			switch (message.Code)
-			{
-			}
+			AssistantFinished(message);
 		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"

@@ -214,6 +214,11 @@ namespace DISS_SEM3
                             row.Cells[3].Value = "Free";
                             row.Cells[3].Style = freeStyle;
                         }
+
+                        if (technician.obedoval)
+                        {
+                            row.Cells[4].Value = "had lunch";
+                        }
                         j++;
                     }
 
@@ -258,6 +263,11 @@ namespace DISS_SEM3
                         {
                             row.Cells[3].Value = "Free";
                             row.Cells[3].Style = freeStyle;
+                        }
+
+                        if (automechanic.obedoval)
+                        {
+                            row.Cells[4].Value = "had lunch";
                         }
                         k++;
                     }

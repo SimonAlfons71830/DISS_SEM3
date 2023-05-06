@@ -119,15 +119,7 @@
             this.label21 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridAutomechanics = new System.Windows.Forms.DataGridView();
-            this.automechanic_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.car_type = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.customers_car_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.status_A = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridTechnicians = new System.Windows.Forms.DataGridView();
-            this.technician_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.customers_car = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.customer_state = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sim_time_label = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -137,6 +129,16 @@
             this.label57 = new System.Windows.Forms.Label();
             this.label58 = new System.Windows.Forms.Label();
             this.label59 = new System.Windows.Forms.Label();
+            this.automechanic_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.car_type = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.customers_car_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.status_A = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.had_lunch_automechanic = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.technician_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.customers_car = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.customer_state = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.had_lunch_technician = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nonCertification_numericUpDown_fast)).BeginInit();
@@ -653,7 +655,7 @@
             this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1903, 747);
+            this.tabControl1.Size = new System.Drawing.Size(1911, 747);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -689,7 +691,7 @@
             this.tabPage1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage1.Size = new System.Drawing.Size(1895, 718);
+            this.tabPage1.Size = new System.Drawing.Size(1903, 718);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "SlowMode";
             // 
@@ -784,7 +786,7 @@
             this.dataGridView4.Name = "dataGridView4";
             this.dataGridView4.RowHeadersWidth = 51;
             this.dataGridView4.RowTemplate.Height = 24;
-            this.dataGridView4.Size = new System.Drawing.Size(241, 222);
+            this.dataGridView4.Size = new System.Drawing.Size(249, 222);
             this.dataGridView4.TabIndex = 108;
             // 
             // label7
@@ -831,7 +833,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(1367, 350);
+            this.label5.Location = new System.Drawing.Point(1408, 350);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(99, 16);
             this.label5.TabIndex = 96;
@@ -1203,51 +1205,16 @@
             this.automechanic_id,
             this.car_type,
             this.customers_car_id,
-            this.status_A});
-            this.dataGridAutomechanics.Location = new System.Drawing.Point(1371, 368);
+            this.status_A,
+            this.had_lunch_automechanic});
+            this.dataGridAutomechanics.Location = new System.Drawing.Point(1412, 368);
             this.dataGridAutomechanics.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataGridAutomechanics.Name = "dataGridAutomechanics";
             this.dataGridAutomechanics.ReadOnly = true;
             this.dataGridAutomechanics.RowHeadersWidth = 51;
             this.dataGridAutomechanics.RowTemplate.Height = 24;
-            this.dataGridAutomechanics.Size = new System.Drawing.Size(456, 318);
+            this.dataGridAutomechanics.Size = new System.Drawing.Size(838, 318);
             this.dataGridAutomechanics.TabIndex = 87;
-            // 
-            // automechanic_id
-            // 
-            this.automechanic_id.HeaderText = "Mechanic ID";
-            this.automechanic_id.MinimumWidth = 6;
-            this.automechanic_id.Name = "automechanic_id";
-            this.automechanic_id.ReadOnly = true;
-            this.automechanic_id.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.automechanic_id.Width = 65;
-            // 
-            // car_type
-            // 
-            this.car_type.HeaderText = "Cert";
-            this.car_type.MinimumWidth = 6;
-            this.car_type.Name = "car_type";
-            this.car_type.ReadOnly = true;
-            this.car_type.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.car_type.Width = 65;
-            // 
-            // customers_car_id
-            // 
-            this.customers_car_id.HeaderText = "Customer ID";
-            this.customers_car_id.MinimumWidth = 6;
-            this.customers_car_id.Name = "customers_car_id";
-            this.customers_car_id.ReadOnly = true;
-            this.customers_car_id.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.customers_car_id.Width = 75;
-            // 
-            // status_A
-            // 
-            this.status_A.HeaderText = "Status";
-            this.status_A.MinimumWidth = 6;
-            this.status_A.Name = "status_A";
-            this.status_A.ReadOnly = true;
-            this.status_A.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.status_A.Width = 65;
             // 
             // dataGridTechnicians
             // 
@@ -1258,51 +1225,16 @@
             this.technician_id,
             this.customers_car,
             this.customer_state,
-            this.status});
+            this.status,
+            this.had_lunch_technician});
             this.dataGridTechnicians.Location = new System.Drawing.Point(859, 368);
             this.dataGridTechnicians.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataGridTechnicians.Name = "dataGridTechnicians";
             this.dataGridTechnicians.ReadOnly = true;
             this.dataGridTechnicians.RowHeadersWidth = 51;
             this.dataGridTechnicians.RowTemplate.Height = 24;
-            this.dataGridTechnicians.Size = new System.Drawing.Size(455, 318);
+            this.dataGridTechnicians.Size = new System.Drawing.Size(527, 318);
             this.dataGridTechnicians.TabIndex = 86;
-            // 
-            // technician_id
-            // 
-            this.technician_id.HeaderText = "Technic ID";
-            this.technician_id.MinimumWidth = 6;
-            this.technician_id.Name = "technician_id";
-            this.technician_id.ReadOnly = true;
-            this.technician_id.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.technician_id.Width = 65;
-            // 
-            // customers_car
-            // 
-            this.customers_car.HeaderText = "Customer ID";
-            this.customers_car.MinimumWidth = 6;
-            this.customers_car.Name = "customers_car";
-            this.customers_car.ReadOnly = true;
-            this.customers_car.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.customers_car.Width = 75;
-            // 
-            // customer_state
-            // 
-            this.customer_state.HeaderText = "State";
-            this.customer_state.MinimumWidth = 6;
-            this.customer_state.Name = "customer_state";
-            this.customer_state.ReadOnly = true;
-            this.customer_state.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.customer_state.Width = 65;
-            // 
-            // status
-            // 
-            this.status.HeaderText = "Status";
-            this.status.MinimumWidth = 6;
-            this.status.Name = "status";
-            this.status.ReadOnly = true;
-            this.status.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.status.Width = 65;
             // 
             // sim_time_label
             // 
@@ -1395,6 +1327,94 @@
             this.label59.Size = new System.Drawing.Size(47, 16);
             this.label59.TabIndex = 81;
             this.label59.Text = "[count]";
+            // 
+            // automechanic_id
+            // 
+            this.automechanic_id.HeaderText = "Mechanic ID";
+            this.automechanic_id.MinimumWidth = 6;
+            this.automechanic_id.Name = "automechanic_id";
+            this.automechanic_id.ReadOnly = true;
+            this.automechanic_id.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.automechanic_id.Width = 65;
+            // 
+            // car_type
+            // 
+            this.car_type.HeaderText = "Cert";
+            this.car_type.MinimumWidth = 6;
+            this.car_type.Name = "car_type";
+            this.car_type.ReadOnly = true;
+            this.car_type.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.car_type.Width = 65;
+            // 
+            // customers_car_id
+            // 
+            this.customers_car_id.HeaderText = "Customer ID";
+            this.customers_car_id.MinimumWidth = 6;
+            this.customers_car_id.Name = "customers_car_id";
+            this.customers_car_id.ReadOnly = true;
+            this.customers_car_id.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.customers_car_id.Width = 75;
+            // 
+            // status_A
+            // 
+            this.status_A.HeaderText = "Status";
+            this.status_A.MinimumWidth = 6;
+            this.status_A.Name = "status_A";
+            this.status_A.ReadOnly = true;
+            this.status_A.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.status_A.Width = 65;
+            // 
+            // had_lunch_automechanic
+            // 
+            this.had_lunch_automechanic.HeaderText = "Lunch";
+            this.had_lunch_automechanic.MinimumWidth = 6;
+            this.had_lunch_automechanic.Name = "had_lunch_automechanic";
+            this.had_lunch_automechanic.ReadOnly = true;
+            this.had_lunch_automechanic.Width = 65;
+            // 
+            // technician_id
+            // 
+            this.technician_id.HeaderText = "Technic ID";
+            this.technician_id.MinimumWidth = 6;
+            this.technician_id.Name = "technician_id";
+            this.technician_id.ReadOnly = true;
+            this.technician_id.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.technician_id.Width = 65;
+            // 
+            // customers_car
+            // 
+            this.customers_car.HeaderText = "Customer ID";
+            this.customers_car.MinimumWidth = 6;
+            this.customers_car.Name = "customers_car";
+            this.customers_car.ReadOnly = true;
+            this.customers_car.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.customers_car.Width = 75;
+            // 
+            // customer_state
+            // 
+            this.customer_state.HeaderText = "State";
+            this.customer_state.MinimumWidth = 6;
+            this.customer_state.Name = "customer_state";
+            this.customer_state.ReadOnly = true;
+            this.customer_state.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.customer_state.Width = 65;
+            // 
+            // status
+            // 
+            this.status.HeaderText = "Status";
+            this.status.MinimumWidth = 6;
+            this.status.Name = "status";
+            this.status.ReadOnly = true;
+            this.status.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.status.Width = 65;
+            // 
+            // had_lunch_technician
+            // 
+            this.had_lunch_technician.HeaderText = "Lunch";
+            this.had_lunch_technician.MinimumWidth = 6;
+            this.had_lunch_technician.Name = "had_lunch_technician";
+            this.had_lunch_technician.ReadOnly = true;
+            this.had_lunch_technician.Width = 65;
             // 
             // Form1
             // 
@@ -1523,14 +1543,6 @@
         private System.Windows.Forms.DataGridView dataGridWaitingLine;
         private System.Windows.Forms.DataGridViewTextBoxColumn parking_place_id;
         private System.Windows.Forms.DataGridViewTextBoxColumn car_id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn automechanic_id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn car_type;
-        private System.Windows.Forms.DataGridViewTextBoxColumn customers_car_id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn status_A;
-        private System.Windows.Forms.DataGridViewTextBoxColumn technician_id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn customers_car;
-        private System.Windows.Forms.DataGridViewTextBoxColumn customer_state;
-        private System.Windows.Forms.DataGridViewTextBoxColumn status;
         private System.Windows.Forms.Label label43;
         private System.Windows.Forms.DataGridView customersThatLeftDataGrid;
         private System.Windows.Forms.CheckBox checkBox1;
@@ -1547,6 +1559,16 @@
         private System.Windows.Forms.Label label59;
         private System.Windows.Forms.Label label58;
         private System.Windows.Forms.Label label57;
+        private System.Windows.Forms.DataGridViewTextBoxColumn automechanic_id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn car_type;
+        private System.Windows.Forms.DataGridViewTextBoxColumn customers_car_id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn status_A;
+        private System.Windows.Forms.DataGridViewTextBoxColumn had_lunch_automechanic;
+        private System.Windows.Forms.DataGridViewTextBoxColumn technician_id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn customers_car;
+        private System.Windows.Forms.DataGridViewTextBoxColumn customer_state;
+        private System.Windows.Forms.DataGridViewTextBoxColumn status;
+        private System.Windows.Forms.DataGridViewTextBoxColumn had_lunch_technician;
     }
 }
 

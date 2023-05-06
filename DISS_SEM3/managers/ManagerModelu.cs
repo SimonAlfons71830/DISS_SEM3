@@ -44,15 +44,20 @@ namespace managers
 		//meta! userInfo="Process messages defined in code", id="0"
 		public void ProcessDefault(MessageForm message)
 		{
-			//inicializacia
+			//inicializacia - tu to ani nevojde rovno z agenta ide do pozadovaneho manazera
 			//TODO: poslat message o inicializacii aj agentoviSTK
 			message.Code = Mc.Inicialization;
             message.Addressee = MySim.FindAgent(SimId.AgentOkolia);
             Notice(message);
 
-			var copiedMessage = message.CreateCopy();
-			message.Addressee = MySim.FindAgent(SimId.AgentSTK);
-			Notice(message);
+			if (!((MySimulation)MySim).validationMode)
+			{
+                var copiedMessage = message.CreateCopy();
+				copiedMessage.Code = Mc.Inicialization;
+                copiedMessage.Addressee = MySim.FindAgent(SimId.AgentSTK);
+                Notice(copiedMessage);
+            }
+			
         }
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"

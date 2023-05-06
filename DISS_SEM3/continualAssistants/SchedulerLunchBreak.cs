@@ -20,14 +20,16 @@ namespace continualAssistants
 		//meta! sender="AgentSTK", id="65", type="Start"
 		public void ProcessStart(MessageForm message)
 		{
-		}
+            message.Code = Mc.Finish;
+            Hold(2*60*60, message); //2 hodiny od zaciatku - 11:00
+        }
 
 		//meta! userInfo="Process messages defined in code", id="0"
 		public void ProcessDefault(MessageForm message)
 		{
-			switch (message.Code)
-			{
-			}
+			//je 11:00
+			var pom = MySim.CurrentTime; //7200
+			AssistantFinished(message);
 		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"

@@ -12,6 +12,7 @@ namespace DISS_SEM2
         public bool obsluhuje;
         public int _id;
         public bool obeduje;
+        public bool obedoval;
         public int state; // 0 - nic nerobi, 1 - kontroluje , 2 - plati
 
         public Technician() 
@@ -19,6 +20,7 @@ namespace DISS_SEM2
             this.obsluhuje = false;
             this.obeduje = false;
             this.state = 0;
+            this.obedoval = false;
         }
 
         public bool Obsluhuje()

@@ -5,6 +5,7 @@ using continualAssistants;
 using DISS_SEM2;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using System.Windows.Forms;
 
 namespace managers
 {
@@ -57,10 +58,32 @@ namespace managers
                        MySim.CurrentTime - this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange);
             this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange = MySim.CurrentTime;
 
+            var technicianLunch = ((MyMessage)message).technician;
+
             ((MyMessage)message).technician.obsluhuje = false;
             ((MyMessage)message).technician.state = 0;
 			((MyMessage)message).technician.customer_car = null;
             ((MyMessage)message).technician = null;
+
+            //ked sa uvolnil treba zistit ci uz bol na obede ak nie tak ho treba poslat
+            //na obede sa rata ako obsluhuje - nieje volny
+            if (!((MySimulation)MySim).validationMode)
+            {
+                if (IsLunchTime())
+                {
+                    if (!technicianLunch.obedoval && !technicianLunch.obeduje)
+                    {
+                        technicianLunch.obsluhuje = true;
+                        technicianLunch.obeduje = true;
+                        var lunchMessage = new MyMessage(MySim)
+                        {
+                            Addressee = this.MyAgent.FindAssistant(SimId.Lunch),
+                            technician = technicianLunch
+                        };
+                        StartContinualAssistant(lunchMessage);
+                    }
+                }
+            }
 
 
             //zakaznik po plateni odchadza
@@ -111,8 +134,6 @@ namespace managers
                     instantTakeOver.technician.customer_car = instantTakeOver.customer;
                     instantTakeOver.technician.state = 1; //kontrola
 
-                    
-
                     instantTakeOver.Code = Mc.CarTakeover;
                     instantTakeOver.Addressee = MySim.FindAgent(SimId.AgentService);
                     Request(instantTakeOver);
@@ -120,13 +141,33 @@ namespace managers
                 }
                 else 
                 {
-                    //nikto necaka v radoch
+                    //nikto necaka v radoch, mozem ziskaneho technika poslat na obed ak este nebol
+                    if (!((MySimulation)MySim).validationMode)
+                    {
+                        if (IsLunchTime())
+                        {
+                            if (!technic.obedoval && !technic.obeduje)
+                            {
+
+                                //TODO: doplnit statistiky
+                                technic.obsluhuje = true;
+                                technic.obeduje = true;
+                                var lunchMessage = new MyMessage(MySim)
+                                {
+                                    Addressee = this.MyAgent.FindAssistant(SimId.Lunch),
+                                    technician = technic
+                                };
+                                StartContinualAssistant(lunchMessage);
+                            }
+                        }
+                    }
                     return;
                 }
             }
             else
             {
                 //nemalo by nastat lebo sa predtym uvolnil
+                //pri not validation moze nastat lebo sme ho poslali na obed
                 return;
             }
 
@@ -142,13 +183,36 @@ namespace managers
                         MySim.CurrentTime - this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange);
             this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange = MySim.CurrentTime;
 
+            var automechanicLunch = ((MyMessage)message).automechanic;
+
             ((MyMessage)message).automechanic.obsluhuje = false;
 			((MyMessage)message).automechanic.customer_car = null;
 			((MyMessage)message).automechanic = null;
 
-			//automechanik pokracuje v praci vypyta si z garaze
+            if (!((MySimulation)MySim).validationMode)
+            {
+                if (IsLunchTime())
+                {
+                    if (!automechanicLunch.obedoval && !automechanicLunch.obeduje)
+                    {
+                        //TODO: dorobit stats
+                        automechanicLunch.obsluhuje = true;
+                        automechanicLunch.obeduje = true;
+                        var lunchMessage = new MyMessage(MySim)
+                        {
+                            Addressee = this.MyAgent.FindAssistant(SimId.Lunch),
+                            automechanic = automechanicLunch
+                        };
+                        StartContinualAssistant(lunchMessage);
+                    }
+                }
+            }
+
+
+
+            //automechanik pokracuje v praci vypyta si z garaze
             //az ked mu je auto priradene tak sa posle message na uvolnenie z garaze
-			if (this.MyAgent.waitingForInspection.Count > 0 )
+            if (this.MyAgent.waitingForInspection.Count > 0 )
 			{
 				var automechanic = this.getAvailableAutomechanic();
 				if (automechanic != null)
@@ -173,13 +237,11 @@ namespace managers
                     copiedMessage.Code = Mc.FreeParkingSpace;
                     copiedMessage.Addressee = MySim.FindAgent(SimId.AgentService);
                     Request(copiedMessage);
-
-
                 }
                 else
                 {
-
                     //stale by mal byt nejaky volny lebo sa predtym uvolni 
+                    //nemusi lebo je na obede
                     return;
                 }
 			}
@@ -212,6 +274,41 @@ namespace managers
 		//meta! sender="SchedulerLunchBreak", id="65", type="Finish"
 		public void ProcessFinishSchedulerLunchBreak(MessageForm message)
 		{
+            //mozem poslat vsetkych volnych zamestnancov na obed
+            foreach (var technic in this.MyAgent.technicians) 
+            {
+                if (!technic.obsluhuje)
+                {
+                    //vyvolam proces 
+                    var newMessage = new MyMessage(MySim)
+                    {
+                        technician = technic,
+                        Addressee = MyAgent.FindAssistant(SimId.Lunch)
+                    };
+
+                    //TODO: dorobit stats
+                    newMessage.technician.obsluhuje = true;
+                    newMessage.technician.obeduje = true;
+                    StartContinualAssistant(newMessage);
+                }
+            }
+
+            foreach (var mechanic in this.MyAgent.automechanics)
+            {
+                if (!mechanic.obsluhuje)
+                {
+                    var newMessage = new MyMessage(MySim)
+                    {
+                        automechanic = mechanic,
+                        Addressee = MyAgent.FindAssistant(SimId.Lunch)
+                    };
+
+                    //TODO: dorobit stats
+                    newMessage.automechanic.obsluhuje= true;
+                    newMessage.automechanic.obeduje = true;
+                    StartContinualAssistant(newMessage);
+                }
+            }
 		}
 
 		//meta! sender="AgentService", id="33", type="Response"
@@ -226,11 +323,34 @@ namespace managers
                        MySim.CurrentTime - this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange);
             this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange = MySim.CurrentTime;
 
+            
+            var technicianLunch = ((MyMessage)message).technician;
+
             //uvolnenie technika
             ((MyMessage)message).technician.obsluhuje = false;
             ((MyMessage)message).technician.state = 0; //nic nerobi
 			((MyMessage)message).technician.customer_car = null;
 			((MyMessage)message).technician = null;
+
+            //ked sa uvolnil treba zistit ci uz bol na obede ak nie tak ho treba poslat
+            if (!((MySimulation)MySim).validationMode)
+            {
+                if (IsLunchTime())
+                {
+                    if (!technicianLunch.obedoval && !technicianLunch.obeduje)
+                    {
+                        //TODO: dorobit stats
+                        technicianLunch.obsluhuje = true;
+                        technicianLunch.obeduje = true;
+                        var lunchMessage = new MyMessage(MySim)
+                        {
+                            Addressee = this.MyAgent.FindAssistant(SimId.Lunch),
+                            technician = technicianLunch
+                        };
+                        StartContinualAssistant(lunchMessage);
+                    }
+                }
+            }
 
             //zistit ci je volny automechanik ak ano, tak mozem zacat inspekciu + poslat notice o uvolneni parkovacieho miesta
             var mechanic = this.getAvailableAutomechanic();
@@ -312,7 +432,29 @@ namespace managers
 					instantTakeOver.Addressee = MySim.FindAgent(SimId.AgentService);
 					Request(instantTakeOver);
 
-				}
+                }
+                else
+                {
+                    //nikto nieje v radoch mozem ziskaneho technika poslat na obed
+                    if (!((MySimulation)MySim).validationMode)
+                    {
+                        if (IsLunchTime())
+                        {
+                            if (!technic.obedoval && !technic.obeduje)
+                            {
+                                //TODO : dorobit stats
+                                technic.obsluhuje = true;
+                                technic.obeduje = true;
+                                var lunchMessage = new MyMessage(MySim)
+                                {
+                                    Addressee = this.MyAgent.FindAssistant(SimId.Lunch),
+                                    technician = technic
+                                };
+                                StartContinualAssistant(lunchMessage);
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -355,21 +497,51 @@ namespace managers
 		//meta! sender="AgentModelu", id="55", type="Notice"
 		public void ProcessInicialization(MessageForm message)
 		{
-            //o 2 hodiny nastavit obednu prestavku
+            //do tejto casti kodu sa da dostat iba ak je vypnuta moznost validacia
 
-		}
+            //o 2 hodiny nastavit obednu prestavku
+            message.Addressee = MyAgent.FindAssistant(SimId.SchedulerLunchBreak);
+            StartContinualAssistant(message);
+        }
 
 		//meta! userInfo="Process messages defined in code", id="0"
 		public void ProcessDefault(MessageForm message)
 		{
-			switch (message.Code)
-			{
-			}
+            return;
 		}
 
 		//meta! sender="Lunch", id="82", type="Finish"
 		public void ProcessFinishLunch(MessageForm message)
 		{
+            //nastavim prichodziemu robotu dalsiu ak je 
+            //nastavim bool obedoval na true
+            // a obeduje na false
+            if (((MyMessage)message).technician != null)
+            {
+                //nastav robotu 
+                //TODO : dorobit stats
+                ((MyMessage)message).technician.obsluhuje = false;
+                ((MyMessage)message).technician.obeduje = false;
+                ((MyMessage)message).technician.obedoval = true;
+
+                this.giveJobToTechnician(((MyMessage)message).technician);
+            }
+            else if (((MyMessage)message).automechanic != null)
+            {
+                //TODO : dorobit stats
+                ((MyMessage)message).automechanic.obsluhuje = false;
+                ((MyMessage)message).automechanic.obeduje = false;
+                ((MyMessage)message).automechanic.obedoval = true;
+
+                if (this.MyAgent.waitingForInspection.Count > 0)
+                {
+                    this.giveJobToAutomechanic(((MyMessage)message).automechanic);
+                }
+            }
+            else
+            {
+                return; //??
+            }
 		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
@@ -454,6 +626,94 @@ namespace managers
             }
             return null;
         }
-		
+
+        //TODO: do schedulera kde sa nastavi true kym neubehnu 2 hodiny potom sa nastavi false
+        public bool IsLunchTime()
+        {
+            if (MySim.CurrentTime > 7200 && MySim.CurrentTime < 14400)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        public void giveJobToTechnician(Technician technic)
+        {
+            if (this.MyAgent.paymentLine.Count > 0)
+            {
+                this.MyAgent.localAverageFreeTechnicianCount.addValues(this.MyAgent.getAvailableTechniciansCount(),
+                   MySim.CurrentTime - this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange);
+                this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange = MySim.CurrentTime;
+
+                var paymentMessage = this.MyAgent.paymentLine.Dequeue();
+
+                paymentMessage.technician = technic;
+                paymentMessage.technician.obsluhuje = true;
+                paymentMessage.technician.customer_car = paymentMessage.customer;
+                paymentMessage.technician.state = 2; //platenie
+
+                paymentMessage.Code = Mc.Payment;
+                paymentMessage.Addressee = MySim.FindAgent(SimId.AgentService);
+
+                Request(paymentMessage);
+            }
+            else if (this.MyAgent.waitingForTakeOverAssigned.Count > 0)
+            {
+
+                //moze ist hned na takeover uz ma miesto
+                var instantTakeOver = this.MyAgent.waitingForTakeOverAssigned.Dequeue();
+
+
+                this.MyAgent.localAverageFreeTechnicianCount.addValues(this.MyAgent.getAvailableTechniciansCount(),
+                    MySim.CurrentTime - this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange);
+                this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange = MySim.CurrentTime;
+
+                instantTakeOver.technician = technic;
+                instantTakeOver.technician.obsluhuje = true;
+                instantTakeOver.technician.customer_car = instantTakeOver.customer;
+                instantTakeOver.technician.state = 1; //kontrola
+
+                //STATS
+                this.MyAgent.localAverageTimeToTakeOverCar.addValues(MySim.CurrentTime - ((MyMessage)instantTakeOver).customer.arrivalTime);
+                this.MyAgent.localAverageCustomerCountToTakeOver.addValues(this.MyAgent.takeoverqueue.Count, MySim.CurrentTime - this.MyAgent.localAverageCustomerCountToTakeOver.timeOfLastChange);
+                this.MyAgent.localAverageCustomerCountToTakeOver.timeOfLastChange = MySim.CurrentTime;
+                this.MyAgent.takeoverqueue.Dequeue();
+                //END STATS
+
+                instantTakeOver.Code = Mc.CarTakeover;
+                instantTakeOver.Addressee = MySim.FindAgent(SimId.AgentService);
+                Request(instantTakeOver);
+
+            }
+        }
+
+        public void giveJobToAutomechanic(Automechanic mechanic)
+        {
+            var inspectionMessage = this.MyAgent.waitingForInspection.Dequeue();
+
+            this.MyAgent.localAverageFreeAutomechanicCount.addValues(this.MyAgent.getAvailableAutomechanicsCount(),
+                MySim.CurrentTime - this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange);
+            this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange = MySim.CurrentTime;
+
+            ((MyMessage)inspectionMessage).automechanic = mechanic;
+            ((MyMessage)inspectionMessage).automechanic.obsluhuje = true;
+            ((MyMessage)inspectionMessage).automechanic.customer_car = ((MyMessage)inspectionMessage).customer;
+
+            inspectionMessage.Code = Mc.Inspection;
+            inspectionMessage.Addressee = MySim.FindAgent(SimId.AgentInspection);
+            Request(inspectionMessage);
+
+            //kopirovat spravu lebo posielam do dvoch agentov
+            var copiedMessage = inspectionMessage.CreateCopy();
+            //var copiedMessage = new MyMessage(((MyMessage)inspectionMessage));
+            copiedMessage.Code = Mc.FreeParkingSpace;
+            copiedMessage.Addressee = MySim.FindAgent(SimId.AgentService);
+            Request(copiedMessage);
+        }
+
     }
 }
