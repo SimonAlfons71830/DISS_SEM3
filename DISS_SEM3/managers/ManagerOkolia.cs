@@ -36,10 +36,12 @@ namespace managers
 			this.MyAgent.localAverageCustomerCountInSTK.timeOfLastChange = MySim.CurrentTime;
 			
 			this.MyAgent.CustomersCount--;
-            
+
 			this.MyAgent.localAverageCustomerTimeInSTK.addValues(MySim.CurrentTime - ((MyMessage)message).customer.arrivalTime);
-			//ZAKAZNIK ODISIEL
-		}
+
+            this.MyAgent.customersThatLeft.Enqueue(((MyMessage)message), ((MyMessage)message).DeliveryTime);
+            //ZAKAZNIK ODISIEL
+        }
 
 		//meta! sender="PlanerCustomerArrival", id="39", type="Finish"
 		public void ProcessFinish(MessageForm message)

@@ -4,6 +4,7 @@ using managers;
 using continualAssistants;
 using DISS_SEM3.statistics;
 using DISS_SEM2.Generators;
+using Priority_Queue;
 
 namespace agents
 {
@@ -14,6 +15,7 @@ namespace agents
 		public Statistics localAverageCustomerTimeInSTK { get; set; }
 		public WStatistics localAverageCustomerCountInSTK { get; set; }
         public CarGenerator carTypeGenerator { get; set; }
+		public SimplePriorityQueue<MyMessage, double> customersThatLeft;
 
         public AgentOkolia(int id, Simulation mySim, Agent parent) :
 			base(id, mySim, parent)
@@ -22,6 +24,7 @@ namespace agents
             this.localAverageCustomerTimeInSTK = new Statistics();
 			this.localAverageCustomerCountInSTK = new WStatistics();
 			this.carTypeGenerator = new CarGenerator(((MySimulation)mySim).seedGenerator);
+			this.customersThatLeft = new SimplePriorityQueue<MyMessage, double>();
 			this.CustomersCount = 0;
         }
 
@@ -32,6 +35,7 @@ namespace agents
 		
 			localAverageCustomerTimeInSTK.resetStatistic();
 			localAverageCustomerCountInSTK.resetStatistic();
+			this.customersThatLeft.Clear();
 			CustomersCount = 0;
 		}
 

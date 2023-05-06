@@ -1,5 +1,6 @@
 ﻿using DISS_SEM2;
 using DISS_SEM2.Objects;
+using DISS_SEM2.Objects.Cars;
 using OSPABA;
 using simulation;
 using System;
@@ -25,6 +26,7 @@ namespace DISS_SEM3
         private DataTable dataWaitingLine = new DataTable();
         private DataTable dataPaymentLine = new DataTable();
         private DataTable dataInspection = new DataTable();
+        private DataTable dataCustomersLeft = new DataTable();
 
         DataGridViewCellStyle busyStyle = new DataGridViewCellStyle();
         DataGridViewCellStyle freeStyle = new DataGridViewCellStyle();
@@ -84,6 +86,10 @@ namespace DISS_SEM3
                 dataPaymentLine.Columns.Add("Place in Line", typeof(int));
                 dataPaymentLine.Columns.Add("Customer ID", typeof(int));
                 //dataPaymentLine.Columns.Add("Arrival time", typeof(DateTime));
+
+                dataCustomersLeft.Columns.Add("Customer ID", typeof(int));
+                dataCustomersLeft.Columns.Add("Time in STK", typeof(string));
+                dataCustomersLeft.Columns.Add("Car type", typeof(CarTypes));
             }
         }
 
@@ -124,7 +130,7 @@ namespace DISS_SEM3
             this.simulation.Simulate(1, timeOfReplication);
             this.Invoke((MethodInvoker)delegate
             {
-                average_customer_time_in_stk_label.Text = this.simulation.AgentOkolia.localAverageCustomerTimeInSTK.getMean().ToString();
+                average_customer_time_in_stk_label.Text = (this.simulation.AgentOkolia.localAverageCustomerTimeInSTK.getMean() / 60).ToString();
             });
         }
 
@@ -155,7 +161,7 @@ namespace DISS_SEM3
                     free_automechanics_label.Text = (numericUpDown3.Value - this.simulation.AgentSTK.getAvailableAutomechanicsCount()).ToString() + "/" + numericUpDown3.Value.ToString();
                     reserved_garage_parking_label.Text = this.simulation.AgentService.getReservedParkingSpace().ToString() + "/5";
                     cars_parked_in_garage_label.Text = this.simulation.AgentService.getCarsCountInGarage().ToString();
-                    label20.Text = this.simulation.AgentOkolia.CustomersCount.ToString();
+                    label20.Text = this.simulation.AgentOkolia.customersThatLeft.Count.ToString();
 
                     //DTAGRID TECHNICIANS
                     var j = 0;
@@ -241,32 +247,104 @@ namespace DISS_SEM3
                         k++;
                     }
 
-                    //DATAGRID WAITING LINE
-                    dataWaitingLine.Clear();
-                    if (this.simulation.AgentSTK.takeoverqueue.Count > 0)
+                    if (!checkBox1.Checked)
                     {
-                        var y = 1;
-                        foreach (var message in this.simulation.AgentSTK.takeoverqueue)
+                        //DATAGRID WAITING LINE
+                        dataWaitingLine.Clear();
+                        if (this.simulation.AgentSTK.takeoverqueue.Count > 0)
                         {
-                           /* var arrivalTime = startTime.AddSeconds(message.customer.arrivalTime);
-                            var currentTime = startTime.AddSeconds(this.simulation.CurrentTime);*/
-                            DataRow row = dataWaitingLine.NewRow();
-                            row["Place in Line"] = y;
-                            y++;
-                            row["Customer ID"] = message.customer._id; //customer id
-                            TimeSpan waitingTime = TimeSpan.FromSeconds(this.simulation.CurrentTime - message.customer.arrivalTime);
-                            row["Waiting time"] = string.Format("{0:%h}h {0:%m}m {0:%s}s", waitingTime);
+                            var y = 1;
+                            foreach (var message in this.simulation.AgentSTK.takeoverqueue)
+                            {
+                                /* var arrivalTime = startTime.AddSeconds(message.customer.arrivalTime);
+                                 var currentTime = startTime.AddSeconds(this.simulation.CurrentTime);*/
+                                DataRow row = dataWaitingLine.NewRow();
+                                row["Place in Line"] = y;
+                                y++;
+                                row["Customer ID"] = message.customer._id; //customer id
+                                TimeSpan waitingTime = TimeSpan.FromSeconds(this.simulation.CurrentTime - message.customer.arrivalTime);
+                                row["Waiting time"] = string.Format("{0:%h}h {0:%m}m {0:%s}s", waitingTime);
 
-                            //row["Waiting time"] = pom.AddSeconds(this.simulation.CurrentTime - message.customer.arrivalTime).ToString("hh:mm");
-                            dataWaitingLine.Rows.Add(row);
+                                //row["Waiting time"] = pom.AddSeconds(this.simulation.CurrentTime - message.customer.arrivalTime).ToString("hh:mm");
+                                dataWaitingLine.Rows.Add(row);
+                            }
+
+                            dataGridWaitingLine.DataSource = dataWaitingLine;
+
+                            dataGridWaitingLine.RowHeadersVisible = true;
+                            dataGridWaitingLine.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+
                         }
 
-                        dataGridWaitingLine.DataSource = dataWaitingLine;
+                        //DATAGRID PAYMENTLINE
+                        dataPaymentLine.Clear();
+                        if (this.simulation.AgentSTK.paymentLine.Count > 0)
+                        {
+                            var z = 1;
+                            foreach (var message in this.simulation.AgentSTK.paymentLine)
+                            {
+                                DataRow row = dataPaymentLine.NewRow();
+                                row["Place in Line"] = z;
+                                z++;
+                                row["Customer ID"] = message.customer._id; //customer id
+                                dataPaymentLine.Rows.Add(row);
+                            }
+                            dataGridView4.DataSource = dataPaymentLine;
 
-                        dataGridWaitingLine.RowHeadersVisible = true;
-                        dataGridWaitingLine.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+                            dataGridView4.RowHeadersVisible = true;
+                            dataGridView4.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
 
+                            dataGridView4.AutoResizeColumns();
+                            foreach (DataGridViewColumn column in dataGridView4.Columns)
+                            {
+                                column.Width = 65;
+                            }
+                        }
+
+                        //DATAGRID customers left
+                        if (this.simulation.AgentOkolia.customersThatLeft.Count > 0)
+                        {
+                            foreach (var message in this.simulation.AgentOkolia.customersThatLeft)
+                            {
+                                // Check if the customer ID already exists in the DataTable
+                                bool customerExists = false;
+                                foreach (DataRow row in dataCustomersLeft.Rows)
+                                {
+                                    if ((int)row["Customer ID"] == message.customer._id)
+                                    {
+                                        customerExists = true;
+                                        break;
+                                    }
+                                }
+                                if (!customerExists)
+                                {
+                                    DataRow row = dataCustomersLeft.NewRow();
+                                    row["Customer ID"] = message.customer._id;
+                                    TimeSpan overallTime = TimeSpan.FromSeconds(this.simulation.CurrentTime - message.customer.arrivalTime);
+                                    row["Time in STK"] = string.Format("{0:%h}h {0:%m}m {0:%s}s", overallTime);
+                                    row["Car type"] = message.customer.getCar().type;
+                                    dataCustomersLeft.Rows.Add(row);
+                                }
+                            }
+                            customersThatLeftDataGrid.DataSource = dataCustomersLeft;
+
+                            customersThatLeftDataGrid.RowHeadersVisible = true;
+                            customersThatLeftDataGrid.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+
+                            customersThatLeftDataGrid.AutoResizeColumns();
+                            foreach (DataGridViewColumn column in customersThatLeftDataGrid.Columns)
+                            {
+                                if (column.Index == 1) continue;
+                                column.Width = 65;
+                            }
+                        }
                     }
+                    else
+                    {
+                        
+                        //write in datagrid  - blocked ?
+                    }
+                    
 
                     //DATAGRID GARAGE
                     dataGarage.Clear();
@@ -291,24 +369,6 @@ namespace DISS_SEM3
                         i++;
                     }
 
-                    //DATAGRID PAYMENTLINE
-                    dataPaymentLine.Clear();
-                    if (this.simulation.AgentSTK.paymentLine.Count>0)
-                    {
-                        var z = 1;
-                        foreach (var message in this.simulation.AgentSTK.paymentLine)
-                        {
-                            DataRow row = dataPaymentLine.NewRow();
-                            row["Place in Line"] = z;
-                            z++;
-                            row["Customer ID"] = message.customer._id; //customer id
-                            dataPaymentLine.Rows.Add(row);
-                        }
-                        dataGridView4.DataSource = dataPaymentLine;
-
-                        dataGridView4.RowHeadersVisible = true;
-                        dataGridView4.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-                    }
                 });
             }
             else
@@ -458,6 +518,11 @@ namespace DISS_SEM3
         }
 
         private void dataGridTechnicians_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
 
         }
