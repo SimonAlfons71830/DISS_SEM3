@@ -90,7 +90,7 @@ namespace simulation
 			this.AgentSTK.localAverageCustomerCountToTakeOver.setFinalTimeOfLastChange(this.CurrentTime);
 			this.globalAverageCustomerCountInLineToTakeOver.addValues(this.AgentSTK.localAverageCustomerCountToTakeOver.getMean());
 
-			this.globalCustomersCount.addValues(this.AgentOkolia.customersThatLeft.Count);
+			this.globalCustomersCount.addValues(this.AgentSTK.totalCustomers);
 
 			// Collect local statistics into global, update UI, etc...
 			base.ReplicationFinished();

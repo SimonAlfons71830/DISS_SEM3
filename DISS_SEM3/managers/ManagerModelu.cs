@@ -49,6 +49,10 @@ namespace managers
 			message.Code = Mc.Inicialization;
             message.Addressee = MySim.FindAgent(SimId.AgentOkolia);
             Notice(message);
+
+			var copiedMessage = message.CreateCopy();
+			message.Addressee = MySim.FindAgent(SimId.AgentSTK);
+			Notice(message);
         }
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"

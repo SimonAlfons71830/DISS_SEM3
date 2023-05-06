@@ -30,12 +30,17 @@
         {
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.nonCertification_numericUpDown_fast = new System.Windows.Forms.NumericUpDown();
+            this.label54 = new System.Windows.Forms.Label();
+            this.label55 = new System.Windows.Forms.Label();
+            this.label56 = new System.Windows.Forms.Label();
+            this.validation_check_box = new System.Windows.Forms.CheckBox();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.label47 = new System.Windows.Forms.Label();
             this.label48 = new System.Windows.Forms.Label();
             this.label49 = new System.Windows.Forms.Label();
-            this.numericUpDown5 = new System.Windows.Forms.NumericUpDown();
+            this.certification_numericUpDown_fast = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown6 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown7 = new System.Windows.Forms.NumericUpDown();
             this.label32 = new System.Windows.Forms.Label();
@@ -69,6 +74,9 @@
             this.label52 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.label43 = new System.Windows.Forms.Label();
+            this.customersThatLeftDataGrid = new System.Windows.Forms.DataGridView();
             this.label11 = new System.Windows.Forms.Label();
             this.dataGridGarage = new System.Windows.Forms.DataGridView();
             this.parking_place_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -82,12 +90,16 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label53 = new System.Windows.Forms.Label();
+            this.label50 = new System.Windows.Forms.Label();
+            this.label44 = new System.Windows.Forms.Label();
+            this.nonCertification_numericUpDown_slow = new System.Windows.Forms.NumericUpDown();
             this.label19 = new System.Windows.Forms.Label();
             this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
             this.label18 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.certification_numericUpDown_slow = new System.Windows.Forms.NumericUpDown();
+            this.technicians_numericUpDown_slow = new System.Windows.Forms.NumericUpDown();
             this.label14 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -121,32 +133,38 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.label43 = new System.Windows.Forms.Label();
-            this.customersThatLeftDataGrid = new System.Windows.Forms.DataGridView();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.validation_checkbox_slow = new System.Windows.Forms.CheckBox();
+            this.label57 = new System.Windows.Forms.Label();
+            this.label58 = new System.Windows.Forms.Label();
+            this.label59 = new System.Windows.Forms.Label();
             this.tabPage2.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nonCertification_numericUpDown_fast)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.certification_numericUpDown_fast)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.customersThatLeftDataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridGarage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridWaitingLine)).BeginInit();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nonCertification_numericUpDown_slow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.certification_numericUpDown_slow)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.technicians_numericUpDown_slow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridAutomechanics)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridTechnicians)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.customersThatLeftDataGrid)).BeginInit();
             this.SuspendLayout();
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.label59);
+            this.tabPage2.Controls.Add(this.label58);
+            this.tabPage2.Controls.Add(this.label57);
             this.tabPage2.Controls.Add(this.groupBox3);
             this.tabPage2.Controls.Add(this.label32);
             this.tabPage2.Controls.Add(this.label31);
@@ -188,22 +206,81 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.nonCertification_numericUpDown_fast);
+            this.groupBox3.Controls.Add(this.label54);
+            this.groupBox3.Controls.Add(this.label55);
+            this.groupBox3.Controls.Add(this.label56);
+            this.groupBox3.Controls.Add(this.validation_check_box);
             this.groupBox3.Controls.Add(this.button4);
             this.groupBox3.Controls.Add(this.button5);
             this.groupBox3.Controls.Add(this.label47);
             this.groupBox3.Controls.Add(this.label48);
             this.groupBox3.Controls.Add(this.label49);
-            this.groupBox3.Controls.Add(this.numericUpDown5);
+            this.groupBox3.Controls.Add(this.certification_numericUpDown_fast);
             this.groupBox3.Controls.Add(this.numericUpDown6);
             this.groupBox3.Controls.Add(this.numericUpDown7);
             this.groupBox3.Location = new System.Drawing.Point(905, 25);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox3.Size = new System.Drawing.Size(301, 306);
+            this.groupBox3.Size = new System.Drawing.Size(301, 330);
             this.groupBox3.TabIndex = 78;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "STARTUP";
+            // 
+            // nonCertification_numericUpDown_fast
+            // 
+            this.nonCertification_numericUpDown_fast.Location = new System.Drawing.Point(220, 175);
+            this.nonCertification_numericUpDown_fast.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.nonCertification_numericUpDown_fast.Name = "nonCertification_numericUpDown_fast";
+            this.nonCertification_numericUpDown_fast.Size = new System.Drawing.Size(48, 22);
+            this.nonCertification_numericUpDown_fast.TabIndex = 79;
+            this.nonCertification_numericUpDown_fast.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.nonCertification_numericUpDown_fast.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            // 
+            // label54
+            // 
+            this.label54.AutoSize = true;
+            this.label54.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label54.Location = new System.Drawing.Point(46, 157);
+            this.label54.Name = "label54";
+            this.label54.Size = new System.Drawing.Size(76, 16);
+            this.label54.TabIndex = 79;
+            this.label54.Text = "Certification";
+            // 
+            // label55
+            // 
+            this.label55.AutoSize = true;
+            this.label55.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label55.Location = new System.Drawing.Point(233, 153);
+            this.label55.Name = "label55";
+            this.label55.Size = new System.Drawing.Size(21, 20);
+            this.label55.TabIndex = 78;
+            this.label55.Text = "✘";
+            // 
+            // label56
+            // 
+            this.label56.AutoSize = true;
+            this.label56.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label56.Location = new System.Drawing.Point(173, 154);
+            this.label56.Name = "label56";
+            this.label56.Size = new System.Drawing.Size(27, 18);
+            this.label56.TabIndex = 77;
+            this.label56.Text = "✔";
+            // 
+            // validation_check_box
+            // 
+            this.validation_check_box.AutoSize = true;
+            this.validation_check_box.Location = new System.Drawing.Point(32, 277);
+            this.validation_check_box.Name = "validation_check_box";
+            this.validation_check_box.Size = new System.Drawing.Size(125, 20);
+            this.validation_check_box.TabIndex = 68;
+            this.validation_check_box.Text = "validation mode";
+            this.validation_check_box.UseVisualStyleBackColor = true;
             // 
             // button4
             // 
@@ -230,7 +307,7 @@
             // label47
             // 
             this.label47.AutoSize = true;
-            this.label47.Location = new System.Drawing.Point(29, 155);
+            this.label47.Location = new System.Drawing.Point(29, 181);
             this.label47.Name = "label47";
             this.label47.Size = new System.Drawing.Size(99, 16);
             this.label47.TabIndex = 49;
@@ -254,16 +331,16 @@
             this.label49.TabIndex = 47;
             this.label49.Text = "REPLICATIONS";
             // 
-            // numericUpDown5
+            // certification_numericUpDown_fast
             // 
-            this.numericUpDown5.Location = new System.Drawing.Point(169, 149);
-            this.numericUpDown5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.numericUpDown5.Name = "numericUpDown5";
-            this.numericUpDown5.Size = new System.Drawing.Size(99, 22);
-            this.numericUpDown5.TabIndex = 44;
-            this.numericUpDown5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.numericUpDown5.Value = new decimal(new int[] {
-            20,
+            this.certification_numericUpDown_fast.Location = new System.Drawing.Point(169, 175);
+            this.certification_numericUpDown_fast.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.certification_numericUpDown_fast.Name = "certification_numericUpDown_fast";
+            this.certification_numericUpDown_fast.Size = new System.Drawing.Size(45, 22);
+            this.certification_numericUpDown_fast.TabIndex = 44;
+            this.certification_numericUpDown_fast.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.certification_numericUpDown_fast.Value = new decimal(new int[] {
+            15,
             0,
             0,
             0});
@@ -318,7 +395,7 @@
             // label31
             // 
             this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(564, 612);
+            this.label31.Location = new System.Drawing.Point(564, 634);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(47, 16);
             this.label31.TabIndex = 76;
@@ -327,7 +404,7 @@
             // label30
             // 
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(564, 569);
+            this.label30.Location = new System.Drawing.Point(564, 591);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(47, 16);
             this.label30.TabIndex = 75;
@@ -426,7 +503,7 @@
             // label34
             // 
             this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(465, 612);
+            this.label34.Location = new System.Drawing.Point(465, 634);
             this.label34.Name = "label34";
             this.label34.Size = new System.Drawing.Size(51, 16);
             this.label34.TabIndex = 62;
@@ -435,7 +512,7 @@
             // label35
             // 
             this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(465, 569);
+            this.label35.Location = new System.Drawing.Point(465, 591);
             this.label35.Name = "label35";
             this.label35.Size = new System.Drawing.Size(51, 16);
             this.label35.TabIndex = 61;
@@ -444,7 +521,7 @@
             // label36
             // 
             this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(35, 612);
+            this.label36.Location = new System.Drawing.Point(35, 634);
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(207, 16);
             this.label36.TabIndex = 60;
@@ -453,7 +530,7 @@
             // label37
             // 
             this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(35, 569);
+            this.label37.Location = new System.Drawing.Point(35, 591);
             this.label37.Name = "label37";
             this.label37.Size = new System.Drawing.Size(183, 16);
             this.label37.TabIndex = 59;
@@ -582,6 +659,7 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage1.Controls.Add(this.validation_checkbox_slow);
             this.tabPage1.Controls.Add(this.checkBox1);
             this.tabPage1.Controls.Add(this.label43);
             this.tabPage1.Controls.Add(this.customersThatLeftDataGrid);
@@ -614,6 +692,36 @@
             this.tabPage1.Size = new System.Drawing.Size(1895, 718);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "SlowMode";
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(16, 246);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(322, 20);
+            this.checkBox1.TabIndex = 114;
+            this.checkBox1.Text = "stop showing data in  fronts for better performance";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.Location = new System.Drawing.Point(1368, 40);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(115, 16);
+            this.label43.TabIndex = 113;
+            this.label43.Text = "Customers that left";
+            // 
+            // customersThatLeftDataGrid
+            // 
+            this.customersThatLeftDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.customersThatLeftDataGrid.Location = new System.Drawing.Point(1370, 57);
+            this.customersThatLeftDataGrid.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.customersThatLeftDataGrid.Name = "customersThatLeftDataGrid";
+            this.customersThatLeftDataGrid.RowHeadersWidth = 51;
+            this.customersThatLeftDataGrid.RowTemplate.Height = 24;
+            this.customersThatLeftDataGrid.Size = new System.Drawing.Size(328, 222);
+            this.customersThatLeftDataGrid.TabIndex = 112;
             // 
             // label11
             // 
@@ -740,12 +848,16 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label53);
+            this.groupBox2.Controls.Add(this.label50);
+            this.groupBox2.Controls.Add(this.label44);
+            this.groupBox2.Controls.Add(this.nonCertification_numericUpDown_slow);
             this.groupBox2.Controls.Add(this.label19);
             this.groupBox2.Controls.Add(this.numericUpDown4);
             this.groupBox2.Controls.Add(this.label18);
             this.groupBox2.Controls.Add(this.label17);
-            this.groupBox2.Controls.Add(this.numericUpDown3);
-            this.groupBox2.Controls.Add(this.numericUpDown2);
+            this.groupBox2.Controls.Add(this.certification_numericUpDown_slow);
+            this.groupBox2.Controls.Add(this.technicians_numericUpDown_slow);
             this.groupBox2.Controls.Add(this.label14);
             this.groupBox2.Controls.Add(this.numericUpDown1);
             this.groupBox2.Location = new System.Drawing.Point(17, 87);
@@ -756,6 +868,55 @@
             this.groupBox2.TabIndex = 92;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "INPUT";
+            // 
+            // label53
+            // 
+            this.label53.AutoSize = true;
+            this.label53.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label53.Location = new System.Drawing.Point(64, 77);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(76, 16);
+            this.label53.TabIndex = 76;
+            this.label53.Text = "Certification";
+            // 
+            // label50
+            // 
+            this.label50.AutoSize = true;
+            this.label50.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label50.Location = new System.Drawing.Point(263, 73);
+            this.label50.Name = "label50";
+            this.label50.Size = new System.Drawing.Size(21, 20);
+            this.label50.TabIndex = 75;
+            this.label50.Text = "✘";
+            // 
+            // label44
+            // 
+            this.label44.AutoSize = true;
+            this.label44.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label44.Location = new System.Drawing.Point(191, 74);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(27, 18);
+            this.label44.TabIndex = 74;
+            this.label44.Text = "✔";
+            // 
+            // nonCertification_numericUpDown_slow
+            // 
+            this.nonCertification_numericUpDown_slow.Location = new System.Drawing.Point(253, 102);
+            this.nonCertification_numericUpDown_slow.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.nonCertification_numericUpDown_slow.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.nonCertification_numericUpDown_slow.Name = "nonCertification_numericUpDown_slow";
+            this.nonCertification_numericUpDown_slow.Size = new System.Drawing.Size(51, 22);
+            this.nonCertification_numericUpDown_slow.TabIndex = 73;
+            this.nonCertification_numericUpDown_slow.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.nonCertification_numericUpDown_slow.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
             // 
             // label19
             // 
@@ -788,7 +949,7 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(31, 90);
+            this.label18.Location = new System.Drawing.Point(41, 108);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(99, 16);
             this.label18.TabIndex = 70;
@@ -797,45 +958,45 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(51, 46);
+            this.label17.Location = new System.Drawing.Point(60, 45);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(80, 16);
             this.label17.TabIndex = 69;
             this.label17.Text = "Technicians";
             // 
-            // numericUpDown3
+            // certification_numericUpDown_slow
             // 
-            this.numericUpDown3.Location = new System.Drawing.Point(181, 84);
-            this.numericUpDown3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.numericUpDown3.Maximum = new decimal(new int[] {
+            this.certification_numericUpDown_slow.Location = new System.Drawing.Point(181, 102);
+            this.certification_numericUpDown_slow.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.certification_numericUpDown_slow.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
-            this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(85, 22);
-            this.numericUpDown3.TabIndex = 68;
-            this.numericUpDown3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.numericUpDown3.Value = new decimal(new int[] {
-            17,
+            this.certification_numericUpDown_slow.Name = "certification_numericUpDown_slow";
+            this.certification_numericUpDown_slow.Size = new System.Drawing.Size(51, 22);
+            this.certification_numericUpDown_slow.TabIndex = 68;
+            this.certification_numericUpDown_slow.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.certification_numericUpDown_slow.Value = new decimal(new int[] {
+            14,
             0,
             0,
             0});
             // 
-            // numericUpDown2
+            // technicians_numericUpDown_slow
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(181, 39);
-            this.numericUpDown2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.numericUpDown2.Maximum = new decimal(new int[] {
+            this.technicians_numericUpDown_slow.Location = new System.Drawing.Point(181, 39);
+            this.technicians_numericUpDown_slow.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.technicians_numericUpDown_slow.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(85, 22);
-            this.numericUpDown2.TabIndex = 67;
-            this.numericUpDown2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.numericUpDown2.Value = new decimal(new int[] {
+            this.technicians_numericUpDown_slow.Name = "technicians_numericUpDown_slow";
+            this.technicians_numericUpDown_slow.Size = new System.Drawing.Size(123, 22);
+            this.technicians_numericUpDown_slow.TabIndex = 67;
+            this.technicians_numericUpDown_slow.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.technicians_numericUpDown_slow.Value = new decimal(new int[] {
             4,
             0,
             0,
@@ -844,7 +1005,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(332, 90);
+            this.label14.Location = new System.Drawing.Point(332, 107);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(120, 16);
             this.label14.TabIndex = 62;
@@ -857,7 +1018,7 @@
             0,
             0,
             0});
-            this.numericUpDown1.Location = new System.Drawing.Point(491, 89);
+            this.numericUpDown1.Location = new System.Drawing.Point(491, 106);
             this.numericUpDown1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             10000,
@@ -1156,7 +1317,7 @@
             // button3
             // 
             this.button3.Location = new System.Drawing.Point(409, 273);
-            this.button3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button3.Margin = new System.Windows.Forms.Padding(4);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(141, 41);
             this.button3.TabIndex = 84;
@@ -1167,7 +1328,7 @@
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(208, 273);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(141, 41);
             this.button2.TabIndex = 83;
@@ -1179,7 +1340,7 @@
             // 
             this.button1.BackColor = System.Drawing.Color.DarkSeaGreen;
             this.button1.Location = new System.Drawing.Point(16, 273);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(141, 41);
             this.button1.TabIndex = 82;
@@ -1198,35 +1359,42 @@
             this.label2.TabIndex = 81;
             this.label2.Text = "ACTUAL SIMULATION TIME";
             // 
-            // label43
+            // validation_checkbox_slow
             // 
-            this.label43.AutoSize = true;
-            this.label43.Location = new System.Drawing.Point(1368, 40);
-            this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(115, 16);
-            this.label43.TabIndex = 113;
-            this.label43.Text = "Customers that left";
+            this.validation_checkbox_slow.AutoSize = true;
+            this.validation_checkbox_slow.Location = new System.Drawing.Point(16, 321);
+            this.validation_checkbox_slow.Name = "validation_checkbox_slow";
+            this.validation_checkbox_slow.Size = new System.Drawing.Size(125, 20);
+            this.validation_checkbox_slow.TabIndex = 115;
+            this.validation_checkbox_slow.Text = "validation mode";
+            this.validation_checkbox_slow.UseVisualStyleBackColor = true;
             // 
-            // customersThatLeftDataGrid
+            // label57
             // 
-            this.customersThatLeftDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.customersThatLeftDataGrid.Location = new System.Drawing.Point(1370, 57);
-            this.customersThatLeftDataGrid.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.customersThatLeftDataGrid.Name = "customersThatLeftDataGrid";
-            this.customersThatLeftDataGrid.RowHeadersWidth = 51;
-            this.customersThatLeftDataGrid.RowTemplate.Height = 24;
-            this.customersThatLeftDataGrid.Size = new System.Drawing.Size(328, 222);
-            this.customersThatLeftDataGrid.TabIndex = 112;
+            this.label57.AutoSize = true;
+            this.label57.Location = new System.Drawing.Point(35, 500);
+            this.label57.Name = "label57";
+            this.label57.Size = new System.Drawing.Size(152, 16);
+            this.label57.TabIndex = 79;
+            this.label57.Text = "Average total customers";
             // 
-            // checkBox1
+            // label58
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(16, 246);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(322, 20);
-            this.checkBox1.TabIndex = 114;
-            this.checkBox1.Text = "stop showing data in  fronts for better performance";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.label58.AutoSize = true;
+            this.label58.Location = new System.Drawing.Point(465, 500);
+            this.label58.Name = "label58";
+            this.label58.Size = new System.Drawing.Size(51, 16);
+            this.label58.TabIndex = 80;
+            this.label58.Text = "label58";
+            // 
+            // label59
+            // 
+            this.label59.AutoSize = true;
+            this.label59.Location = new System.Drawing.Point(564, 500);
+            this.label59.Name = "label59";
+            this.label59.Size = new System.Drawing.Size(47, 16);
+            this.label59.TabIndex = 81;
+            this.label59.Text = "[count]";
             // 
             // Form1
             // 
@@ -1242,26 +1410,28 @@
             this.tabPage2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nonCertification_numericUpDown_fast)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.certification_numericUpDown_fast)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.customersThatLeftDataGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridGarage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridWaitingLine)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nonCertification_numericUpDown_slow)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.certification_numericUpDown_slow)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.technicians_numericUpDown_slow)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridAutomechanics)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridTechnicians)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.customersThatLeftDataGrid)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1278,8 +1448,8 @@
         private System.Windows.Forms.NumericUpDown numericUpDown4;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.NumericUpDown numericUpDown3;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
+        private System.Windows.Forms.NumericUpDown certification_numericUpDown_slow;
+        private System.Windows.Forms.NumericUpDown technicians_numericUpDown_slow;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -1313,7 +1483,7 @@
         private System.Windows.Forms.Label label47;
         private System.Windows.Forms.Label label48;
         private System.Windows.Forms.Label label49;
-        private System.Windows.Forms.NumericUpDown numericUpDown5;
+        private System.Windows.Forms.NumericUpDown certification_numericUpDown_fast;
         private System.Windows.Forms.NumericUpDown numericUpDown6;
         private System.Windows.Forms.NumericUpDown numericUpDown7;
         private System.Windows.Forms.Label label32;
@@ -1364,6 +1534,19 @@
         private System.Windows.Forms.Label label43;
         private System.Windows.Forms.DataGridView customersThatLeftDataGrid;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox validation_check_box;
+        private System.Windows.Forms.Label label44;
+        private System.Windows.Forms.NumericUpDown nonCertification_numericUpDown_slow;
+        private System.Windows.Forms.Label label50;
+        private System.Windows.Forms.Label label53;
+        private System.Windows.Forms.NumericUpDown nonCertification_numericUpDown_fast;
+        private System.Windows.Forms.Label label54;
+        private System.Windows.Forms.Label label55;
+        private System.Windows.Forms.Label label56;
+        private System.Windows.Forms.CheckBox validation_checkbox_slow;
+        private System.Windows.Forms.Label label59;
+        private System.Windows.Forms.Label label58;
+        private System.Windows.Forms.Label label57;
     }
 }
 

@@ -29,6 +29,7 @@ namespace agents
         public WStatistics localAverageFreeTechnicianCount { get; set; }
         public WStatistics localAverageFreeAutomechanicCount { get; set; }
 
+        public int totalCustomers;
         public SimQueue<Technician> technicians_queue;
 
         public AgentSTK(int id, Simulation mySim, Agent parent) :
@@ -49,6 +50,7 @@ namespace agents
             this.takeoverqueueQ = new SimQueue<MyMessage>(new OSPStat.WStat(MySim));
             this.takeoverqueue = new SimplePriorityQueue<MyMessage, double>();
 
+            this.totalCustomers = 0;
             //this.technicians_queue = new SimQueue<Technician>(new OSPStat.WStat(MySim));
         }
 
@@ -79,6 +81,8 @@ namespace agents
             this.localAverageFreeTechnicianCount.resetStatistic();
             this.localAverageFreeAutomechanicCount.resetStatistic();
 
+            this.totalCustomers = 0;
+
         }
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
@@ -105,14 +109,33 @@ namespace agents
             }
         }
 
-        public void createAutomechanics(int number)
+        public void createAutomechanics(int number, int certification)
         {
-            for (int i = 0; i < number; i++)
+            if (((MySimulation)MySim).validationMode)
             {
-                var mechanic = new Automechanic();
-                mechanic._id = i+1;
-                this.automechanics.Add(mechanic);
+                for (int i = 0; i < number; i++)
+                {
+                    var mechanic = new Automechanic();
+                    mechanic._id = i + 1;
+                    this.automechanics.Add(mechanic);
+                }
             }
+            else
+            {
+                var pom = 0;
+                for (int i = 0; i < number; i++)
+                {
+                    var mechanic = new Automechanic();
+                    mechanic._id = i + 1;
+                    if (pom < certification)
+                    {
+                        mechanic.certificate = true;
+                        pom++;
+                    }
+                    this.automechanics.Add(mechanic);
+                }
+            }
+            
         }
         public int getAvailableTechniciansCount()
         {

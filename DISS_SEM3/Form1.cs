@@ -17,7 +17,7 @@ using System.Windows.Forms;
 
 namespace DISS_SEM3
 {
-    
+
     public partial class Form1 : Form, ISimDelegate
     {
         private DataTable dataTechnicians = new DataTable();
@@ -31,7 +31,7 @@ namespace DISS_SEM3
         DataGridViewCellStyle busyStyle = new DataGridViewCellStyle();
         DataGridViewCellStyle freeStyle = new DataGridViewCellStyle();
         DataGridViewCellStyle obedujeStyle = new DataGridViewCellStyle();
-        
+
 
 
         private bool slow = true;
@@ -95,25 +95,31 @@ namespace DISS_SEM3
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.simulation.AgentSTK.createAutomechanics((int)numericUpDown3.Value);
-            this.simulation.AgentSTK.createTechnicians((int)numericUpDown2.Value);
+            if (validation_checkbox_slow.Checked)
+            {
+                this.simulation.validationMode = true;
+            }
+            validation_checkbox_slow.Hide();
+            this.simulation.AgentSTK.createAutomechanics((int)certification_numericUpDown_slow.Value + (int)nonCertification_numericUpDown_slow.Value, (int)certification_numericUpDown_slow.Value);
+            this.simulation.AgentSTK.createTechnicians((int)technicians_numericUpDown_slow.Value);
             //technicians and automechanics set - creating a datagrids
-           
+
             foreach (Technician technician in this.simulation.AgentSTK.technicians)
             {
-                dataGridTechnicians.Rows.Add(technician._id, " ", " " , "Free");
+                dataGridTechnicians.Rows.Add(technician._id, " ", " ", "Free");
             }
 
-            foreach (Automechanic automechanic in this.simulation.AgentSTK.automechanics) 
+            foreach (Automechanic automechanic in this.simulation.AgentSTK.automechanics)
             {
-                dataGridAutomechanics.Rows.Add(automechanic._id, " ", " " , "Free");
+                dataGridAutomechanics.Rows.Add(automechanic._id, " ", " ", "Free");
             }
 
             for (int i = 0; i < 5; i++)
             {
-                dataGridGarage.Rows.Add(i," ");
+                dataGridGarage.Rows.Add(i, " ");
             }
 
+            
 
             this.slow = true;
 
@@ -157,8 +163,8 @@ namespace DISS_SEM3
                     customers_in_line_label.Text = (this.simulation.AgentSTK.waitingForTakeOverAssigned.Count() +
                     this.simulation.AgentService.waitingForAssigningFront.Count()).ToString();
                     customers_in_paymentline_label.Text = this.simulation.AgentSTK.paymentLine.Count.ToString();
-                    free_technicians_label.Text = (numericUpDown2.Value - this.simulation.AgentSTK.getAvailableTechniciansCount()).ToString() + "/" + numericUpDown2.Value.ToString();
-                    free_automechanics_label.Text = (numericUpDown3.Value - this.simulation.AgentSTK.getAvailableAutomechanicsCount()).ToString() + "/" + numericUpDown3.Value.ToString();
+                    free_technicians_label.Text = (technicians_numericUpDown_slow.Value - this.simulation.AgentSTK.getAvailableTechniciansCount()).ToString() + "/" + technicians_numericUpDown_slow.Value.ToString();
+                    free_automechanics_label.Text = (certification_numericUpDown_slow.Value - this.simulation.AgentSTK.getAvailableAutomechanicsCount()).ToString() + "/" + certification_numericUpDown_slow.Value.ToString();
                     reserved_garage_parking_label.Text = this.simulation.AgentService.getReservedParkingSpace().ToString() + "/5";
                     cars_parked_in_garage_label.Text = this.simulation.AgentService.getCarsCountInGarage().ToString();
                     label20.Text = this.simulation.AgentOkolia.customersThatLeft.Count.ToString();
@@ -168,7 +174,7 @@ namespace DISS_SEM3
                     foreach (DataGridViewRow row in dataGridTechnicians.Rows)
                     {
                         if (row.Index == this.simulation.AgentSTK.technicians.Count) continue;
-                        
+
                         var technician = this.simulation.AgentSTK.technicians.ElementAt(j);
 
                         if (technician.customer_car != null)
@@ -219,13 +225,22 @@ namespace DISS_SEM3
 
                         var automechanic = this.simulation.AgentSTK.automechanics.ElementAt(k);
 
-                        if (automechanic.customer_car != null)
+                        if (automechanic.certificate)
                         {
-                            row.Cells[1].Value = automechanic.customer_car._id;
+                            row.Cells[1].Value = "✔";
                         }
                         else
                         {
-                            row.Cells[1].Value = " "; //ziadny zakaznik
+                            row.Cells[1].Value = "✘";
+                        }
+
+                        if (automechanic.customer_car != null)
+                        {
+                            row.Cells[2].Value = automechanic.customer_car._id;
+                        }
+                        else
+                        {
+                            row.Cells[2].Value = " "; //ziadny zakaznik
                         }
 
 
@@ -343,10 +358,10 @@ namespace DISS_SEM3
                     }
                     else
                     {
-                        
+
                         //write in datagrid  - blocked ?
                     }
-                    
+
 
                     //DATAGRID GARAGE
                     dataGarage.Clear();
@@ -354,8 +369,8 @@ namespace DISS_SEM3
                     foreach (DataGridViewRow row in dataGridGarage.Rows)
                     {
                         if (row.Index == 5) continue;
-                        row.Cells[0].Value = i+1;
-                        
+                        row.Cells[0].Value = i + 1;
+
                         if (i < this.simulation.AgentService.garageParkingSpace.Count)
                         {
                             if (this.simulation.AgentService.garageParkingSpace.ElementAt(i) != null)
@@ -366,8 +381,8 @@ namespace DISS_SEM3
                         else
                         {
                             row.Cells[1].Value = " ";
-                        }                   
-                       
+                        }
+
                         i++;
                     }
 
@@ -380,13 +395,14 @@ namespace DISS_SEM3
                 {
                     var pom = this.simulation.replicationNum;
                     num_of_repl_label.Text = pom.ToString();
-                    avg_cust_time_in_stk_label.Text = (this.simulation.globalAverageCustomerTimeInSTK.getMean()/60).ToString("0.0000");
+                    avg_cust_time_in_stk_label.Text = (this.simulation.globalAverageCustomerTimeInSTK.getMean() / 60).ToString("0.0000");
                     avg_wait_time_to_take_over_label.Text = (this.simulation.globalAverageTimeToTakeOverCar.getMean() / 60).ToString("0.0000");
                     label35.Text = this.simulation.globalAverageFreeTechnicianCount.getMean().ToString("0.0000");
                     label34.Text = this.simulation.globalAverageFreeAutomechanicCount.getMean().ToString("0.0000");
                     label23.Text = this.simulation.globalAverageCustomerCountEndOfDay.getMean().ToString("0.0000");
                     label16.Text = this.simulation.globalAverageCustomerCountInSTK.getMean().ToString("0.0000");
                     label41.Text = this.simulation.globalAverageCustomerCountInLineToTakeOver.getMean().ToString("0.0000");
+                    label58.Text = this.simulation.globalCustomersCount.getMean().ToString("0.0000");
                 });
             }
 
@@ -404,24 +420,30 @@ namespace DISS_SEM3
 
         public void SimStateChanged(Simulation sim, SimState state)
         {
-            
+
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
             this.slow = false;
 
-            this.simulation.AgentSTK.createAutomechanics((int)numericUpDown5.Value);
+            if (validation_check_box.Checked)
+            {
+                this.simulation.validationMode = true;
+            }
+            this.simulation.AgentSTK.createAutomechanics((int)certification_numericUpDown_fast.Value +
+                    (int)nonCertification_numericUpDown_fast.Value, (int)certification_numericUpDown_fast.Value);
             this.simulation.AgentSTK.createTechnicians((int)numericUpDown6.Value);
-           
+
+
+
+
             //int numberOfReplications = (int)this.numericUpDown7.Value;
             //this.simulation.SimulateAsync(numberOfReplications, 8 * 3600);
 
             threadFastMode = new Thread(new ThreadStart(this.startSimulationFast));
             threadFastMode.IsBackground = true;
             threadFastMode.Start();
-
-
 
         }
 
@@ -430,8 +452,8 @@ namespace DISS_SEM3
             int numberOfReplications = (int)this.numericUpDown7.Value;
             this.simulation.SetMaxSimSpeed();
             //this.simulation.SetSimSpeed(1, 0.001);
-            
-            this.simulation.Simulate(numberOfReplications, 8*3600);
+
+            this.simulation.Simulate(numberOfReplications, 8 * 3600);
 
         }
 

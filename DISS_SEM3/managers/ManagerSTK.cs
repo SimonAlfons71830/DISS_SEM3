@@ -33,7 +33,7 @@ namespace managers
 		{
             //pride novy zakaznik
             //posle sa na obsadenie parkovacieho miesta
-
+            this.MyAgent.totalCustomers++;
 
             //STAT
             this.MyAgent.localAverageCustomerCountToTakeOver.addValues(this.MyAgent.takeoverqueue.Count, MySim.CurrentTime - this.MyAgent.localAverageCustomerCountToTakeOver.timeOfLastChange);
@@ -355,6 +355,8 @@ namespace managers
 		//meta! sender="AgentModelu", id="55", type="Notice"
 		public void ProcessInicialization(MessageForm message)
 		{
+            //o 2 hodiny nastavit obednu prestavku
+
 		}
 
 		//meta! userInfo="Process messages defined in code", id="0"
