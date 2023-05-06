@@ -19,34 +19,51 @@ namespace simulation
         public Statistics globalAverageCustomerCountEndOfDay { get; set; }
         public Statistics globalAverageCustomerCountInSTK { get; set; }
         public Statistics globalAverageCustomerCountInSTKII { get; set; }
+		public Statistics globalCustomersCount { get; set; }
 
         public int replicationNum { get; set; }
+
+		public bool validationMode { get; set; }
 
         public MySimulation()
 		{
 			Init();
-		}
+            this.globalAverageCustomerTimeInSTK = new Statistics();
+            this.globalAverageTimeToTakeOverCar = new Statistics();
+            this.globalAverageCustomerCountInLineToTakeOver = new Statistics();
+            this.globalAverageFreeTechnicianCount = new Statistics();
+            this.globalAverageFreeAutomechanicCount = new Statistics();
+            this.globalAverageCustomerCountEndOfDay = new Statistics();
+            this.globalAverageCustomerCountInSTK = new Statistics();
+            this.globalAverageCustomerCountInSTKII = new Statistics();
+			this.globalCustomersCount = new Statistics();
+			
+			this.validationMode = false;
+            this.replicationNum = 0;
+        }
 
 		override protected void PrepareSimulation()
 		{
 			base.PrepareSimulation();
-			// Create global statistcis
-			this.globalAverageCustomerTimeInSTK = new Statistics();
-			this.globalAverageTimeToTakeOverCar = new Statistics();
-			this.globalAverageCustomerCountInLineToTakeOver = new Statistics();
-			this.globalAverageFreeTechnicianCount = new Statistics();
-			this.globalAverageFreeAutomechanicCount = new Statistics();
-			this.globalAverageCustomerCountEndOfDay = new Statistics();
-			this.globalAverageCustomerCountInSTK = new Statistics();
-            this.globalAverageCustomerCountInSTKII = new Statistics();
+            // Create global statistcis
 
-            this.replicationNum = 0;
-		}
+            this.globalAverageCustomerTimeInSTK.resetStatistic();
+			this.globalAverageTimeToTakeOverCar.resetStatistic();
+			this.globalAverageCustomerCountInLineToTakeOver.resetStatistic();
+			this.globalAverageFreeAutomechanicCount.resetStatistic();
+			this.globalAverageFreeTechnicianCount.resetStatistic();
+			this.globalAverageCustomerCountEndOfDay.resetStatistic();
+            this.globalAverageCustomerCountInSTK.resetStatistic();
+            this.globalAverageCustomerCountInSTKII.resetStatistic();
+			this.globalCustomersCount.resetStatistic();
+			this.replicationNum = 0;
+        }
 
 		override protected void PrepareReplication()
 		{
 			base.PrepareReplication();
 			// Reset entities, queues, local statistics, etc...
+			this.CurrentTime = 0;
 		}
 
 		override protected void ReplicationFinished()
@@ -72,6 +89,8 @@ namespace simulation
 
 			this.AgentSTK.localAverageCustomerCountToTakeOver.setFinalTimeOfLastChange(this.CurrentTime);
 			this.globalAverageCustomerCountInLineToTakeOver.addValues(this.AgentSTK.localAverageCustomerCountToTakeOver.getMean());
+
+			this.globalCustomersCount.addValues(this.AgentOkolia.customersThatLeft.Count);
 
 			// Collect local statistics into global, update UI, etc...
 			base.ReplicationFinished();

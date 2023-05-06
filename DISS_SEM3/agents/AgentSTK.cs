@@ -35,8 +35,8 @@ namespace agents
 			base(id, mySim, parent)
 		{
 			Init();
-			customersLine = new SimplePriorityQueue<MyMessage, double>();
-			paymentLine = new SimplePriorityQueue<MyMessage, double>();
+			this.customersLine = new SimplePriorityQueue<MyMessage, double>();
+			this.paymentLine = new SimplePriorityQueue<MyMessage, double>();
             this.technicians = new List<Technician>();
 			this.automechanics = new List<Automechanic>();
             this.waitingForInspection = new SimplePriorityQueue<MyMessage, double>();
@@ -49,7 +49,7 @@ namespace agents
             this.takeoverqueueQ = new SimQueue<MyMessage>(new OSPStat.WStat(MySim));
             this.takeoverqueue = new SimplePriorityQueue<MyMessage, double>();
 
-            this.technicians_queue = new SimQueue<Technician>(new OSPStat.WStat(MySim));
+            //this.technicians_queue = new SimQueue<Technician>(new OSPStat.WStat(MySim));
         }
 
 		override public void PrepareReplication()

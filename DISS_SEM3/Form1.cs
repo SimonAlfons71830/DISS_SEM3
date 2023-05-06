@@ -301,6 +301,8 @@ namespace DISS_SEM3
                             }
                         }
 
+                        //TODO: KED STOPNEM FORNTY POTOM SA ZLE VYPISUJE CAS ZAKAZNIKOM V SYSTEME
+
                         //DATAGRID customers left
                         if (this.simulation.AgentOkolia.customersThatLeft.Count > 0)
                         {
@@ -407,25 +409,20 @@ namespace DISS_SEM3
 
         private void button5_Click(object sender, EventArgs e)
         {
-            if (threadSlowMode != null)
-            {
-                threadSlowMode.Abort(); // stop the thread
-                threadSlowMode = null; // set the thread to null
-            }
-
             this.slow = false;
 
-
-            this.simulation.AgentSTK.createAutomechanics((int)numericUpDown6.Value);
-            this.simulation.AgentSTK.createTechnicians((int)numericUpDown5.Value);
-            this.slow = false;
+            this.simulation.AgentSTK.createAutomechanics((int)numericUpDown5.Value);
+            this.simulation.AgentSTK.createTechnicians((int)numericUpDown6.Value);
+           
+            //int numberOfReplications = (int)this.numericUpDown7.Value;
+            //this.simulation.SimulateAsync(numberOfReplications, 8 * 3600);
 
             threadFastMode = new Thread(new ThreadStart(this.startSimulationFast));
             threadFastMode.IsBackground = true;
             threadFastMode.Start();
 
-            
-       
+
+
         }
 
         private void startSimulationFast()
@@ -433,98 +430,15 @@ namespace DISS_SEM3
             int numberOfReplications = (int)this.numericUpDown7.Value;
             this.simulation.SetMaxSimSpeed();
             //this.simulation.SetSimSpeed(1, 0.001);
-            this.simulation.Simulate(numberOfReplications, 8*3600);
-        }
-
-        
-        private void tabPage2_Click(object sender, EventArgs e)
-        {
             
-        }
-
-        private void numericUpDown6_ValueChanged(object sender, EventArgs e)
-        {
+            this.simulation.Simulate(numberOfReplications, 8*3600);
 
         }
 
-        private void numericUpDown5_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void numericUpDown7_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void button4_Click(object sender, EventArgs e)
         {
             this.simulation.PauseSimulation();
-        }
-
-        private void label50_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void label44_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void average_customer_time_in_stk_label_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void avg_wait_time_to_take_over_label_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label35_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label34_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label23_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label16_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label41_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tabPage1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dataGridWaitingLine_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void dataGridTechnicians_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

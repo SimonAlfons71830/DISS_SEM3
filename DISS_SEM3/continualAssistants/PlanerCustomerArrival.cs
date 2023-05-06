@@ -33,6 +33,7 @@ namespace continualAssistants
 		public void ProcessDefault(MessageForm message)
 		{
             //customer arrival message after hold
+
             AssistantFinished(message);
         }
 

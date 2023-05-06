@@ -185,7 +185,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "TurboMode";
             this.tabPage2.UseVisualStyleBackColor = true;
-            this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
             // 
             // groupBox3
             // 
@@ -268,7 +267,6 @@
             0,
             0,
             0});
-            this.numericUpDown5.ValueChanged += new System.EventHandler(this.numericUpDown5_ValueChanged);
             // 
             // numericUpDown6
             // 
@@ -283,7 +281,6 @@
             0,
             0,
             0});
-            this.numericUpDown6.ValueChanged += new System.EventHandler(this.numericUpDown6_ValueChanged);
             // 
             // numericUpDown7
             // 
@@ -308,7 +305,6 @@
             0,
             0,
             0});
-            this.numericUpDown7.ValueChanged += new System.EventHandler(this.numericUpDown7_ValueChanged);
             // 
             // label32
             // 
@@ -390,7 +386,6 @@
             this.label16.Size = new System.Drawing.Size(51, 16);
             this.label16.TabIndex = 69;
             this.label16.Text = "label16";
-            this.label16.Click += new System.EventHandler(this.label16_Click);
             // 
             // label22
             // 
@@ -418,7 +413,6 @@
             this.label23.Size = new System.Drawing.Size(51, 16);
             this.label23.TabIndex = 64;
             this.label23.Text = "label23";
-            this.label23.Click += new System.EventHandler(this.label23_Click);
             // 
             // label33
             // 
@@ -437,7 +431,6 @@
             this.label34.Size = new System.Drawing.Size(51, 16);
             this.label34.TabIndex = 62;
             this.label34.Text = "label34";
-            this.label34.Click += new System.EventHandler(this.label34_Click);
             // 
             // label35
             // 
@@ -447,7 +440,6 @@
             this.label35.Size = new System.Drawing.Size(51, 16);
             this.label35.TabIndex = 61;
             this.label35.Text = "label35";
-            this.label35.Click += new System.EventHandler(this.label35_Click);
             // 
             // label36
             // 
@@ -502,7 +494,6 @@
             this.label41.Size = new System.Drawing.Size(51, 16);
             this.label41.TabIndex = 55;
             this.label41.Text = "label41";
-            this.label41.Click += new System.EventHandler(this.label41_Click);
             // 
             // label42
             // 
@@ -521,7 +512,6 @@
             this.avg_wait_time_to_take_over_label.Size = new System.Drawing.Size(51, 16);
             this.avg_wait_time_to_take_over_label.TabIndex = 53;
             this.avg_wait_time_to_take_over_label.Text = "label43";
-            this.avg_wait_time_to_take_over_label.Click += new System.EventHandler(this.avg_wait_time_to_take_over_label_Click);
             // 
             // avg_cust_time_in_stk_label
             // 
@@ -531,7 +521,6 @@
             this.avg_cust_time_in_stk_label.Size = new System.Drawing.Size(51, 16);
             this.avg_cust_time_in_stk_label.TabIndex = 52;
             this.avg_cust_time_in_stk_label.Text = "label44";
-            this.avg_cust_time_in_stk_label.Click += new System.EventHandler(this.label44_Click);
             // 
             // label45
             // 
@@ -559,7 +548,6 @@
             this.num_of_repl_label.Size = new System.Drawing.Size(51, 16);
             this.num_of_repl_label.TabIndex = 46;
             this.num_of_repl_label.Text = "label50";
-            this.num_of_repl_label.Click += new System.EventHandler(this.label50_Click);
             // 
             // label51
             // 
@@ -626,7 +614,6 @@
             this.tabPage1.Size = new System.Drawing.Size(1895, 718);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "SlowMode";
-            this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
             // label11
             // 
@@ -714,7 +701,6 @@
             this.dataGridWaitingLine.RowTemplate.Height = 24;
             this.dataGridWaitingLine.Size = new System.Drawing.Size(460, 318);
             this.dataGridWaitingLine.TabIndex = 106;
-            this.dataGridWaitingLine.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridWaitingLine_CellContentClick);
             // 
             // label20
             // 
@@ -1027,7 +1013,6 @@
             this.average_customer_time_in_stk_label.Size = new System.Drawing.Size(31, 16);
             this.average_customer_time_in_stk_label.TabIndex = 90;
             this.average_customer_time_in_stk_label.Text = "XXX";
-            this.average_customer_time_in_stk_label.Click += new System.EventHandler(this.average_customer_time_in_stk_label_Click);
             // 
             // label21
             // 
@@ -1121,7 +1106,6 @@
             this.dataGridTechnicians.RowTemplate.Height = 24;
             this.dataGridTechnicians.Size = new System.Drawing.Size(455, 318);
             this.dataGridTechnicians.TabIndex = 86;
-            this.dataGridTechnicians.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridTechnicians_CellContentClick);
             // 
             // technician_id
             // 
@@ -1243,7 +1227,6 @@
             this.checkBox1.TabIndex = 114;
             this.checkBox1.Text = "stop showing data in  fronts for better performance";
             this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // Form1
             // 

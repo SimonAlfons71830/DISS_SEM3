@@ -10,7 +10,8 @@ namespace managers
 	public class ManagerOkolia : Manager
 	{
 		private int id; //id counter for customer
-        
+		public double prevtime;
+
         public ManagerOkolia(int id, Simulation mySim, Agent myAgent) :
 			base(id, mySim, myAgent)
 		{
@@ -27,19 +28,26 @@ namespace managers
 			{
 				PetriNet.Clear();
 			}
-		}
+            this.prevtime = 2500;
+        }
 
 		//meta! sender="AgentModelu", id="17", type="Notice"
 		public void ProcessCustomerDeparture(MessageForm message)
 		{
 			this.MyAgent.localAverageCustomerCountInSTK.addValues(this.MyAgent.CustomersCount, MySim.CurrentTime - this.MyAgent.localAverageCustomerCountInSTK.timeOfLastChange);
 			this.MyAgent.localAverageCustomerCountInSTK.timeOfLastChange = MySim.CurrentTime;
-			
+
+			var pompom = this.MyAgent.CustomersCount;
 			this.MyAgent.CustomersCount--;
 
-			this.MyAgent.localAverageCustomerTimeInSTK.addValues(MySim.CurrentTime - ((MyMessage)message).customer.arrivalTime);
+			var pom = MySim.CurrentTime - ((MyMessage)message).customer.arrivalTime;
+			var arrivalTime = ((MyMessage)message).customer.arrivalTime;
+            this.MyAgent.localAverageCustomerTimeInSTK.addValues(MySim.CurrentTime - ((MyMessage)message).customer.arrivalTime);
+
+			
 
             this.MyAgent.customersThatLeft.Enqueue(((MyMessage)message), ((MyMessage)message).DeliveryTime);
+
             //ZAKAZNIK ODISIEL
         }
 
