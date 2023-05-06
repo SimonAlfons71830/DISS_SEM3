@@ -54,6 +54,7 @@
     <Compile Include="agents\AgentOkolia.cs" />
     <Compile Include="agents\AgentService.cs" />
     <Compile Include="agents\AgentSTK.cs" />
+    <Compile Include="continualAssistants\Lunch.cs" />
     <Compile Include="continualAssistants\PlanerCustomerArrival.cs" />
     <Compile Include="continualAssistants\ProcessInspection.cs" />
     <Compile Include="continualAssistants\ProcessPayment.cs" />

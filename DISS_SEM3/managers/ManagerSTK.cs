@@ -210,7 +210,7 @@ namespace managers
 		}
 
 		//meta! sender="SchedulerLunchBreak", id="65", type="Finish"
-		public void ProcessFinish(MessageForm message)
+		public void ProcessFinishSchedulerLunchBreak(MessageForm message)
 		{
 		}
 
@@ -367,6 +367,11 @@ namespace managers
 			}
 		}
 
+		//meta! sender="Lunch", id="82", type="Finish"
+		public void ProcessFinishLunch(MessageForm message)
+		{
+		}
+
 		//meta! userInfo="Generated code: do not modify", tag="begin"
 		public void Init()
 		{
@@ -380,28 +385,37 @@ namespace managers
 				ProcessInicialization(message);
 			break;
 
-			case Mc.Inspection:
-				ProcessInspection(message);
+			case Mc.Finish:
+				switch (message.Sender.Id)
+				{
+				case SimId.Lunch:
+					ProcessFinishLunch(message);
+				break;
+
+				case SimId.SchedulerLunchBreak:
+					ProcessFinishSchedulerLunchBreak(message);
+				break;
+				}
 			break;
 
 			case Mc.Payment:
 				ProcessPayment(message);
 			break;
 
+			case Mc.Inspection:
+				ProcessInspection(message);
+			break;
+
 			case Mc.CarTakeover:
 				ProcessCarTakeover(message);
 			break;
 
-			case Mc.Finish:
-				ProcessFinish(message);
+			case Mc.AssignParkingSpace:
+				ProcessAssignParkingSpace(message);
 			break;
 
 			case Mc.CustomerService:
 				ProcessCustomerService(message);
-			break;
-
-			case Mc.AssignParkingSpace:
-				ProcessAssignParkingSpace(message);
 			break;
 
 			default:

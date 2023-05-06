@@ -89,6 +89,7 @@ namespace agents
 		private void Init()
 		{
 			new ManagerSTK(SimId.ManagerSTK, MySim, this);
+			new Lunch(SimId.Lunch, MySim, this);
 			new SchedulerLunchBreak(SimId.SchedulerLunchBreak, MySim, this);
 			AddOwnMessage(Mc.Payment);
 			AddOwnMessage(Mc.CustomerService);

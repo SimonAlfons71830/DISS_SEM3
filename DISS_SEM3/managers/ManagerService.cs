@@ -122,6 +122,22 @@ namespace managers
 		{
 			switch (message.Code)
 			{
+			case Mc.FreeParkingSpace:
+				ProcessFreeParkingSpace(message);
+			break;
+
+			case Mc.Payment:
+				ProcessPayment(message);
+			break;
+
+			case Mc.CarTakeover:
+				ProcessCarTakeover(message);
+			break;
+
+			case Mc.AssignParkingSpace:
+				ProcessAssignParkingSpace(message);
+			break;
+
 			case Mc.Finish:
 				switch (message.Sender.Id)
 				{
@@ -133,22 +149,6 @@ namespace managers
 					ProcessFinishProcessPayment(message);
 				break;
 				}
-			break;
-
-			case Mc.Payment:
-				ProcessPayment(message);
-			break;
-
-			case Mc.FreeParkingSpace:
-				ProcessFreeParkingSpace(message);
-			break;
-
-			case Mc.CarTakeover:
-				ProcessCarTakeover(message);
-			break;
-
-			case Mc.AssignParkingSpace:
-				ProcessAssignParkingSpace(message);
 			break;
 
 			default:
