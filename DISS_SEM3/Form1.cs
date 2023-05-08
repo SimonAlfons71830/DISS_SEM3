@@ -71,7 +71,7 @@ namespace DISS_SEM3
                 dataTechnicians.Columns.Add("Status", typeof(string));
 
                 dataAutomechanics.Columns.Add("Automechanic ID", typeof(int));
-                dataAutomechanics.Columns.Add("Customer ID", typeof(int));
+                dataAutomechanics.Columns.Add("Customer ID", typeof(string));
                 dataAutomechanics.Columns.Add("Status", typeof(string));
 
                 dataGarage.Columns.Add("Parking place ID", typeof(int));
@@ -80,7 +80,7 @@ namespace DISS_SEM3
                 dataInspection.Columns.Add("Customer ID", typeof(int));
 
                 dataWaitingLine.Columns.Add("Place in Line", typeof(int));
-                dataWaitingLine.Columns.Add("Customer ID", typeof(int));
+                dataWaitingLine.Columns.Add("Customer ID", typeof(string));
                 dataWaitingLine.Columns.Add("Waiting time", typeof(string));
 
                 dataPaymentLine.Columns.Add("Place in Line", typeof(int));
@@ -145,7 +145,6 @@ namespace DISS_SEM3
             if (slow)
             {
 
-
                 var time = sim.CurrentTime - oldtime;
                 this.oldtime = sim.CurrentTime;
                 _simtime = _simtime.AddSeconds(time);
@@ -164,7 +163,7 @@ namespace DISS_SEM3
                     this.simulation.AgentService.waitingForAssigningFront.Count()).ToString();
                     customers_in_paymentline_label.Text = this.simulation.AgentSTK.paymentLine.Count.ToString();
                     free_technicians_label.Text = (technicians_numericUpDown_slow.Value - this.simulation.AgentSTK.getAvailableTechniciansCount()).ToString() + "/" + technicians_numericUpDown_slow.Value.ToString();
-                    free_automechanics_label.Text = (certification_numericUpDown_slow.Value - this.simulation.AgentSTK.getAvailableAutomechanicsCount()).ToString() + "/" + certification_numericUpDown_slow.Value.ToString();
+                    free_automechanics_label.Text = ((certification_numericUpDown_slow.Value + nonCertification_numericUpDown_slow.Value) - this.simulation.AgentSTK.getAvailableAutomechanicsCount()).ToString() + "/" + (certification_numericUpDown_slow.Value + nonCertification_numericUpDown_slow.Value).ToString();
                     reserved_garage_parking_label.Text = this.simulation.AgentService.getReservedParkingSpace().ToString() + "/5";
                     cars_parked_in_garage_label.Text = this.simulation.AgentService.getCarsCountInGarage().ToString();
                     label20.Text = this.simulation.AgentOkolia.customersThatLeft.Count.ToString();
@@ -179,7 +178,8 @@ namespace DISS_SEM3
 
                         if (technician.customer_car != null)
                         {
-                            row.Cells[1].Value = technician.customer_car._id;
+                            row.Cells[1].Value = technician.customer_car._id.ToString() +
+                            " - " + technician.customer_car.getCar().type.ToString(); ;
                         }
                         else
                         {
@@ -241,7 +241,8 @@ namespace DISS_SEM3
 
                         if (automechanic.customer_car != null)
                         {
-                            row.Cells[2].Value = automechanic.customer_car._id;
+                            row.Cells[2].Value = automechanic.customer_car._id.ToString() +
+                            " - " + automechanic.customer_car.getCar().type.ToString();
                         }
                         else
                         {
@@ -286,7 +287,7 @@ namespace DISS_SEM3
                                 DataRow row = dataWaitingLine.NewRow();
                                 row["Place in Line"] = y;
                                 y++;
-                                row["Customer ID"] = message.customer._id; //customer id
+                                row["Customer ID"] = message.customer._id.ToString() + " - " + message.customer.getCar().type.ToString(); //customer id
                                 TimeSpan waitingTime = TimeSpan.FromSeconds(this.simulation.CurrentTime - message.customer.arrivalTime);
                                 row["Waiting time"] = string.Format("{0:%h}h {0:%m}m {0:%s}s", waitingTime);
 
@@ -302,7 +303,7 @@ namespace DISS_SEM3
                             dataGridView4.AutoResizeColumns();
                             foreach (DataGridViewColumn column in dataGridWaitingLine.Columns)
                             {
-                                if (column.Index == 0 || column.Index == 1)
+                                if (column.Index == 0 )
                                 {
                                     column.Width = 65;
                                 }
@@ -394,7 +395,8 @@ namespace DISS_SEM3
                         {
                             if (this.simulation.AgentService.garageParkingSpace.ElementAt(i) != null)
                             {
-                                row.Cells[1].Value = this.simulation.AgentService.garageParkingSpace.ElementAt(i)._id;
+                                row.Cells[1].Value = this.simulation.AgentService.garageParkingSpace.ElementAt(i)._id + " - " +
+                                this.simulation.AgentService.garageParkingSpace.ElementAt(i).getCar().type.ToString();
                             }
                         }
                         else

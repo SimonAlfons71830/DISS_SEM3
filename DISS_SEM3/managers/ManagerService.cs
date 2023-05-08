@@ -61,7 +61,14 @@ namespace managers
 		public void ProcessFreeParkingSpace(MessageForm message)
 		{
             this.freeOneParkingSpace();
-            this.MyAgent.garageParkingSpace.Dequeue();
+			if (!((MySimulation)MySim).validationMode)
+			{
+				this.MyAgent.garageParkingSpace.Remove(((MyMessage)message).customer);
+			}
+			else
+			{
+				this.MyAgent.garageParkingSpace.Dequeue();
+			}
             //da vediet o uvolneni - z radu na response o priradeni parkovacieho miesta 
             if (this.MyAgent.waitingForAssigningFront.Count > 0)
 			{

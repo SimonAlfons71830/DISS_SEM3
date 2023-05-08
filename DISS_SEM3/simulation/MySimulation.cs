@@ -64,6 +64,7 @@ namespace simulation
 			base.PrepareReplication();
 			// Reset entities, queues, local statistics, etc...
 			this.CurrentTime = 0;
+		
 		}
 
 		override protected void ReplicationFinished()

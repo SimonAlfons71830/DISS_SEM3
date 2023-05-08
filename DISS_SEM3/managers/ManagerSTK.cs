@@ -6,6 +6,8 @@ using DISS_SEM2;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
+using System.ComponentModel.Design;
+using Priority_Queue;
 
 namespace managers
 {
@@ -29,9 +31,9 @@ namespace managers
 			}
 		}
 
-		//meta! sender="AgentModelu", id="18", type="Request"
-		public void ProcessCustomerService(MessageForm message)
-		{
+        //meta! sender="AgentModelu", id="18", type="Request"
+        public void ProcessCustomerService(MessageForm message)
+        {
             //pride novy zakaznik
             //posle sa na obsadenie parkovacieho miesta
             this.MyAgent.totalCustomers++;
@@ -45,7 +47,8 @@ namespace managers
             message.Addressee = MySim.FindAgent(SimId.AgentService);
             message.Code = Mc.AssignParkingSpace;
             Request(message);
-		}
+
+        }
 
 		//meta! sender="AgentService", id="53", type="Response"
 		public void ProcessPayment(MessageForm message)
@@ -120,7 +123,7 @@ namespace managers
                 }
                 else if (this.MyAgent.waitingForTakeOverAssigned.Count > 0)
                 {
-                    
+
                     var instantTakeOver = this.MyAgent.waitingForTakeOverAssigned.Dequeue();
 
                     //STATS
@@ -144,7 +147,7 @@ namespace managers
                     Request(instantTakeOver);
 
                 }
-                else 
+                else
                 {
                     //nikto necaka v radoch, mozem ziskaneho technika poslat na obed ak este nebol
                     if (!((MySimulation)MySim).validationMode)
@@ -186,7 +189,6 @@ namespace managers
 		{
             //mechanik skoncil - uvolni sa + berie sa dalsie auto z radu cakania na inspection
 
-
             this.MyAgent.localAverageFreeAutomechanicCount.addValues(this.MyAgent.getAvailableAutomechanicsCount(),
                         MySim.CurrentTime - this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange);
             this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange = MySim.CurrentTime;
@@ -219,43 +221,207 @@ namespace managers
                 }
             }
 
-
-
             //automechanik pokracuje v praci vypyta si z garaze
             //az ked mu je auto priradene tak sa posle message na uvolnenie z garaze
-            if (this.MyAgent.waitingForInspection.Count > 0 )
-			{
-				var automechanic = this.getAvailableAutomechanic();
-				if (automechanic != null)
-				{
-					var inspectionMessage = this.MyAgent.waitingForInspection.Dequeue();
+            if (this.MyAgent.waitingForInspection.Count > 0)
+            {
+                //NON VALIDATION MODE
+                //zistim ci je auto cargo
+                //ak nie tak beriem necertifikovaneho , ak nieje tak cert
+                //ak je cargo zistim ci je cert ak nie tak cakam ? alebo skusim dalsie auto??
 
-                    this.MyAgent.localAverageFreeAutomechanicCount.addValues(this.MyAgent.getAvailableAutomechanicsCount(),
-                        MySim.CurrentTime - this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange);
-                    this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange = MySim.CurrentTime;
-
-                    ((MyMessage)inspectionMessage).automechanic = automechanic;
-                    ((MyMessage)inspectionMessage).automechanic.obsluhuje = true;
-                    ((MyMessage)inspectionMessage).automechanic.customer_car = ((MyMessage)inspectionMessage).customer;
-
-                    inspectionMessage.Code = Mc.Inspection;
-					inspectionMessage.Addressee = MySim.FindAgent(SimId.AgentInspection);
-					Request(inspectionMessage);
-
-                    //kopirovat spravu lebo posielam do dvoch agentov
-					var copiedMessage = inspectionMessage.CreateCopy();
-                    //var copiedMessage = new MyMessage(((MyMessage)inspectionMessage));
-                    copiedMessage.Code = Mc.FreeParkingSpace;
-                    copiedMessage.Addressee = MySim.FindAgent(SimId.AgentService);
-                    Request(copiedMessage);
-                }
-                else
+                if (!((MySimulation)MySim).validationMode)
                 {
-                    //stale by mal byt nejaky volny lebo sa predtym uvolni 
-                    //nemusi lebo je na obede
-                    return;
+                    if (this.MyAgent.waitingForInspection.First.customer.getCar().type == DISS_SEM2.Objects.Cars.CarTypes.Cargo)
+                    {
+
+                        var certMechanic = this.getAvailableAutomechanicCert();
+                        if (certMechanic != null)
+                        {
+                            //prebera auto
+                            var cargoMessage = this.MyAgent.waitingForInspection.Dequeue();
+
+                            this.MyAgent.localAverageFreeAutomechanicCount.addValues(this.MyAgent.getAvailableAutomechanicsCount(),
+                                    MySim.CurrentTime - this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange);
+                            this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange = MySim.CurrentTime;
+
+                            ((MyMessage)cargoMessage).automechanic = certMechanic;
+                            ((MyMessage)cargoMessage).automechanic.obsluhuje = true;
+                            ((MyMessage)cargoMessage).automechanic.customer_car = ((MyMessage)cargoMessage).customer;
+
+                            cargoMessage.Code = Mc.Inspection;
+                            cargoMessage.Addressee = MySim.FindAgent(SimId.AgentInspection);
+                            Request(cargoMessage);
+
+                            //kopirovat spravu lebo posielam do dvoch agentov
+                            var copiedMessage = cargoMessage.CreateCopy();
+                            //var copiedMessage = new MyMessage(((MyMessage)inspectionMessage));
+                            ((MyMessage)copiedMessage).customer = ((MyMessage)cargoMessage).customer;
+                            copiedMessage.Code = Mc.FreeParkingSpace;
+                            copiedMessage.Addressee = MySim.FindAgent(SimId.AgentService);
+                            Request(copiedMessage);
+
+                        }
+                        else
+                        {
+                            var nonCertMech = this.getAvailableAutomechanicNonCert();
+                            if (nonCertMech != null) //prve je cargo - musim prehladat queue a vybrat van alebo personal
+                            {
+                                //pomocne queue
+                                var pomQ = new SimplePriorityQueue<MyMessage, double>();
+                                //message ktoru si prevezme necertifikovany mechanik
+                                MyMessage finalMessage = null;
+
+                                while (this.MyAgent.waitingForInspection.Count > 0)
+                                {
+                                    var pomMessage = this.MyAgent.waitingForInspection.Dequeue();
+
+                                    if (pomMessage.customer.getCar().type != DISS_SEM2.Objects.Cars.CarTypes.Cargo)
+                                    {
+                                        // finalna message - nieje to kamion - vyskocim z cyklu
+                                        finalMessage = pomMessage;
+                                        break;
+                                    }
+                                    else //inak prehodim do pom q
+                                    {
+                                        pomQ.Enqueue(pomMessage, pomMessage.DeliveryTime);
+                                    }
+                                }
+
+                                // vsetky messages ktore sa prehodili do pomq vratim naspat 
+                                while (pomQ.Count > 0)
+                                {
+                                    var pomMessage = pomQ.Dequeue();
+                                    this.MyAgent.waitingForInspection.Enqueue(pomMessage, pomMessage.DeliveryTime);
+                                }
+                                //ak sa naslo personal alebo van tak ho vezme na inspection tento mechanik
+                                if (finalMessage != null)
+                                {
+                                    this.MyAgent.localAverageFreeAutomechanicCount.addValues(this.MyAgent.getAvailableAutomechanicsCount(),
+                                        MySim.CurrentTime - this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange);
+                                    this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange = MySim.CurrentTime;
+
+                                    ((MyMessage)finalMessage).automechanic = nonCertMech;
+                                    ((MyMessage)finalMessage).automechanic.obsluhuje = true;
+                                    ((MyMessage)finalMessage).automechanic.customer_car = ((MyMessage)finalMessage).customer;
+
+                                    finalMessage.Code = Mc.Inspection;
+                                    finalMessage.Addressee = MySim.FindAgent(SimId.AgentInspection);
+                                    Request(finalMessage);
+
+                                    //kopirovat spravu lebo posielam do dvoch agentov
+                                    var copiedMessage = finalMessage.CreateCopy();
+                                    //var copiedMessage = new MyMessage(((MyMessage)inspectionMessage));
+                                    ((MyMessage)copiedMessage).customer = ((MyMessage)finalMessage).customer;
+                                    copiedMessage.Code = Mc.FreeParkingSpace;
+                                    copiedMessage.Addressee = MySim.FindAgent(SimId.AgentService);
+                                    Request(copiedMessage);
+                                }
+                            }//nemam ziadneho volneho
+                        }
+                    }
+                    else
+                    {
+                        //beriem necertifikovaneho
+
+                        var noncertMechanic = this.getAvailableAutomechanicNonCert();
+                        if (noncertMechanic != null)
+                        {
+                            var inspectionMessage = this.MyAgent.waitingForInspection.Dequeue();
+                            //prebera auto
+
+                            this.MyAgent.localAverageFreeAutomechanicCount.addValues(this.MyAgent.getAvailableAutomechanicsCount(),
+                                    MySim.CurrentTime - this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange);
+                            this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange = MySim.CurrentTime;
+
+                            ((MyMessage)inspectionMessage).automechanic = noncertMechanic;
+                            ((MyMessage)inspectionMessage).automechanic.obsluhuje = true;
+                            ((MyMessage)inspectionMessage).automechanic.customer_car = ((MyMessage)inspectionMessage).customer;
+
+                            inspectionMessage.Code = Mc.Inspection;
+                            inspectionMessage.Addressee = MySim.FindAgent(SimId.AgentInspection);
+                            Request(inspectionMessage);
+
+                            //kopirovat spravu lebo posielam do dvoch agentov
+                            var copiedMessage = inspectionMessage.CreateCopy();
+                            //var copiedMessage = new MyMessage(((MyMessage)inspectionMessage));
+                            ((MyMessage)copiedMessage).customer = ((MyMessage)inspectionMessage).customer;
+                            copiedMessage.Code = Mc.FreeParkingSpace;
+                            copiedMessage.Addressee = MySim.FindAgent(SimId.AgentService);
+                            Request(copiedMessage);
+                        }
+                        else
+                        {
+                            //zistim ci mam volneho certifikovaneho 
+                            var certMechanic = this.getAvailableAutomechanicCert();
+                            if (certMechanic != null)
+                            {
+                                //prebera auto
+                                var inspectionMessage = this.MyAgent.waitingForInspection.Dequeue();
+
+                                this.MyAgent.localAverageFreeAutomechanicCount.addValues(this.MyAgent.getAvailableAutomechanicsCount(),
+                                        MySim.CurrentTime - this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange);
+                                this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange = MySim.CurrentTime;
+
+                                ((MyMessage)inspectionMessage).automechanic = certMechanic;
+                                ((MyMessage)inspectionMessage).automechanic.obsluhuje = true;
+                                ((MyMessage)inspectionMessage).automechanic.customer_car = ((MyMessage)inspectionMessage).customer;
+
+                                inspectionMessage.Code = Mc.Inspection;
+                                inspectionMessage.Addressee = MySim.FindAgent(SimId.AgentInspection);
+                                Request(inspectionMessage);
+
+                                //kopirovat spravu lebo posielam do dvoch agentov
+                                var copiedMessage = inspectionMessage.CreateCopy();
+                                //var copiedMessage = new MyMessage(((MyMessage)inspectionMessage));
+                                ((MyMessage)copiedMessage).customer = ((MyMessage)inspectionMessage).customer;
+                                copiedMessage.Code = Mc.FreeParkingSpace;
+                                copiedMessage.Addressee = MySim.FindAgent(SimId.AgentService);
+                                Request(copiedMessage);
+                            }
+                            else
+                            {
+                                //nemam volneho mechanika nic sa nerobi
+                                //message ostala v queue
+                            }
+                        }
+                    }
                 }
-			}
+                else //VALID MODE
+                {
+                    var automechanic = this.getAvailableAutomechanic();
+                    if (automechanic != null)
+                    {
+                        var inspectionMessage = this.MyAgent.waitingForInspection.Dequeue();
+
+                        this.MyAgent.localAverageFreeAutomechanicCount.addValues(this.MyAgent.getAvailableAutomechanicsCount(),
+                            MySim.CurrentTime - this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange);
+                        this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange = MySim.CurrentTime;
+
+                        ((MyMessage)inspectionMessage).automechanic = automechanic;
+                        ((MyMessage)inspectionMessage).automechanic.obsluhuje = true;
+                        ((MyMessage)inspectionMessage).automechanic.customer_car = ((MyMessage)inspectionMessage).customer;
+
+                        inspectionMessage.Code = Mc.Inspection;
+                        inspectionMessage.Addressee = MySim.FindAgent(SimId.AgentInspection);
+                        Request(inspectionMessage);
+
+                        //kopirovat spravu lebo posielam do dvoch agentov
+                        var copiedMessage = inspectionMessage.CreateCopy();
+                        //var copiedMessage = new MyMessage(((MyMessage)inspectionMessage));
+                        ((MyMessage)copiedMessage).customer = ((MyMessage)inspectionMessage).customer;
+                        copiedMessage.Code = Mc.FreeParkingSpace;
+                        copiedMessage.Addressee = MySim.FindAgent(SimId.AgentService);
+                        Request(copiedMessage);
+                    }
+                    else
+                    {
+                        //stale by mal byt nejaky volny lebo sa predtym uvolni 
+                        //nemusi lebo je na obede
+                        return;
+                    }
+                }
+            }
 
             //vyhlada volneho technika a zakaznik ktory prisiel z inspection moze ist platit
 			//ak nieje volny technik ide do radu na platenie
@@ -373,32 +539,135 @@ namespace managers
                 }
             }
 
-            //zistit ci je volny automechanik ak ano, tak mozem zacat inspekciu + poslat notice o uvolneni parkovacieho miesta
-            var mechanic = this.getAvailableAutomechanic();
-			if (mechanic != null)
-			{
-                this.MyAgent.localAverageFreeAutomechanicCount.addValues(this.MyAgent.getAvailableAutomechanicsCount(),
-                        MySim.CurrentTime - this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange);
-                this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange = MySim.CurrentTime;
+            if (!((MySimulation)MySim).validationMode)
+            {
+                //je auto cargo ?
+                //ak ano hladam certifikovaneho mechanika 
+                //ak nemam certifikovaneho tak nic auto ostava v garazi
 
-                ((MyMessage)message).automechanic = mechanic;
-                ((MyMessage)message).automechanic.obsluhuje = true;
-                ((MyMessage)message).automechanic.customer_car = ((MyMessage)message).customer;
+                if (((MyMessage)message).customer.getCar().type == DISS_SEM2.Objects.Cars.CarTypes.Cargo)
+                {
+                    var certMechanic = this.getAvailableAutomechanicCert();
+                    if (certMechanic != null)
+                    {
+                        //prebera auto
+                        this.MyAgent.localAverageFreeAutomechanicCount.addValues(this.MyAgent.getAvailableAutomechanicsCount(),
+                            MySim.CurrentTime - this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange);
+                        this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange = MySim.CurrentTime;
 
-                message.Code = Mc.Inspection;
-				message.Addressee = MySim.FindAgent(SimId.AgentInspection);
-				Request(message);
+                        ((MyMessage)message).automechanic = certMechanic;
+                        ((MyMessage)message).automechanic.obsluhuje = true;
+                        ((MyMessage)message).automechanic.customer_car = ((MyMessage)message).customer;
 
-				//kopirovat spravu lebo posielam do dvoch agentov
-				var copiedMessage = message.CreateCopy();
-				//var copiedMessage = new MyMessage(((MyMessage)message));
-				copiedMessage.Code = Mc.FreeParkingSpace;
-				copiedMessage.Addressee = MySim.FindAgent(SimId.AgentService);
-				Request(copiedMessage);
-			}
-			else
-			{
-				this.MyAgent.waitingForInspection.Enqueue(((MyMessage)message), ((MyMessage)message).DeliveryTime);
+                        message.Code = Mc.Inspection;
+                        message.Addressee = MySim.FindAgent(SimId.AgentInspection);
+                        Request(message);
+
+                        //kopirovat spravu lebo posielam do dvoch agentov
+                        var copiedMessage = message.CreateCopy();
+                        //var copiedMessage = new MyMessage(((MyMessage)message));
+                        ((MyMessage)copiedMessage).customer = ((MyMessage)message).customer;
+                        copiedMessage.Code = Mc.FreeParkingSpace;
+                        copiedMessage.Addressee = MySim.FindAgent(SimId.AgentService);
+                        Request(copiedMessage);
+
+                    }
+                    else
+                    {
+                        this.MyAgent.waitingForInspection.Enqueue(((MyMessage)message), ((MyMessage)message).DeliveryTime);
+                    }
+                }
+                else
+                {
+                    //personal alebo van - ak mam necert mechanika davam jemu, ak nieje tak zistijem ci je cert a dam jemu
+                    var nonCertMechanic = this.getAvailableAutomechanicNonCert();
+                    if (nonCertMechanic != null)
+                    {
+                        //prebera auto
+                        this.MyAgent.localAverageFreeAutomechanicCount.addValues(this.MyAgent.getAvailableAutomechanicsCount(),
+                            MySim.CurrentTime - this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange);
+                        this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange = MySim.CurrentTime;
+
+                        ((MyMessage)message).automechanic = nonCertMechanic;
+                        ((MyMessage)message).automechanic.obsluhuje = true;
+                        ((MyMessage)message).automechanic.customer_car = ((MyMessage)message).customer;
+
+                        message.Code = Mc.Inspection;
+                        message.Addressee = MySim.FindAgent(SimId.AgentInspection);
+                        Request(message);
+
+                        //kopirovat spravu lebo posielam do dvoch agentov
+                        var copiedMessage = message.CreateCopy();
+                        //var copiedMessage = new MyMessage(((MyMessage)message));
+                        ((MyMessage)copiedMessage).customer = ((MyMessage)message).customer;
+                        copiedMessage.Code = Mc.FreeParkingSpace;
+                        copiedMessage.Addressee = MySim.FindAgent(SimId.AgentService);
+                        Request(copiedMessage);
+                    }
+                    else // ak mam personal alebo van a nemam volneho necertifikovaneho mozem zobrat aj certifikovaneho
+                    {
+                        var certMechanic = this.getAvailableAutomechanicCert();
+                        if (certMechanic != null)
+                        {
+                            //prebera auto
+                            this.MyAgent.localAverageFreeAutomechanicCount.addValues(this.MyAgent.getAvailableAutomechanicsCount(),
+                                MySim.CurrentTime - this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange);
+                            this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange = MySim.CurrentTime;
+
+                            ((MyMessage)message).automechanic = certMechanic;
+                            ((MyMessage)message).automechanic.obsluhuje = true;
+                            ((MyMessage)message).automechanic.customer_car = ((MyMessage)message).customer;
+
+                            message.Code = Mc.Inspection;
+                            message.Addressee = MySim.FindAgent(SimId.AgentInspection);
+                            Request(message);
+
+                            //kopirovat spravu lebo posielam do dvoch agentov
+                            var copiedMessage = message.CreateCopy();
+                            //var copiedMessage = new MyMessage(((MyMessage)message));
+                            ((MyMessage)copiedMessage).customer = ((MyMessage)message).customer;
+                            copiedMessage.Code = Mc.FreeParkingSpace;
+                            copiedMessage.Addressee = MySim.FindAgent(SimId.AgentService);
+                            Request(copiedMessage);
+                        }
+                        else
+                        {
+                            this.MyAgent.waitingForInspection.Enqueue(((MyMessage)message), ((MyMessage)message).DeliveryTime);
+                        }
+                    }
+
+                }
+            }
+            else //VALIDATION MODE
+            {
+                //zistit ci je volny automechanik ak ano, tak mozem zacat inspekciu + poslat notice o uvolneni parkovacieho miesta
+                var mechanic = this.getAvailableAutomechanic();
+                if (mechanic != null)
+                {
+                    this.MyAgent.localAverageFreeAutomechanicCount.addValues(this.MyAgent.getAvailableAutomechanicsCount(),
+                            MySim.CurrentTime - this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange);
+                    this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange = MySim.CurrentTime;
+
+                    ((MyMessage)message).automechanic = mechanic;
+                    ((MyMessage)message).automechanic.obsluhuje = true;
+                    ((MyMessage)message).automechanic.customer_car = ((MyMessage)message).customer;
+
+                    message.Code = Mc.Inspection;
+                    message.Addressee = MySim.FindAgent(SimId.AgentInspection);
+                    Request(message);
+
+                    //kopirovat spravu lebo posielam do dvoch agentov
+                    var copiedMessage = message.CreateCopy();
+                    //var copiedMessage = new MyMessage(((MyMessage)message));
+                    ((MyMessage)copiedMessage).customer = ((MyMessage)message).customer;
+                    copiedMessage.Code = Mc.FreeParkingSpace;
+                    copiedMessage.Addressee = MySim.FindAgent(SimId.AgentService);
+                    Request(copiedMessage);
+                }
+                else
+                {
+                    this.MyAgent.waitingForInspection.Enqueue(((MyMessage)message), ((MyMessage)message).DeliveryTime);
+                }
             }
 
             //pridelenie roboty technikovi
@@ -422,13 +691,11 @@ namespace managers
                     paymentMessage.Addressee = MySim.FindAgent(SimId.AgentService);
 
                     Request(paymentMessage);
-				}
-				else if (this.MyAgent.waitingForTakeOverAssigned.Count>0)
-				{
-                  
-					//moze ist hned na takeover uz ma miesto
-					var instantTakeOver = this.MyAgent.waitingForTakeOverAssigned.Dequeue();
-
+                }
+                else if (this.MyAgent.waitingForTakeOverAssigned.Count > 0)
+                {
+                    //moze ist hned na takeover uz ma miesto
+                    var instantTakeOver = this.MyAgent.waitingForTakeOverAssigned.Dequeue();
 
                     this.MyAgent.localAverageFreeTechnicianCount.addValues(this.MyAgent.getAvailableTechniciansCount(),
                         MySim.CurrentTime - this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange);
@@ -447,9 +714,8 @@ namespace managers
                     //END STATS
 
                     instantTakeOver.Code = Mc.CarTakeover;
-					instantTakeOver.Addressee = MySim.FindAgent(SimId.AgentService);
-					Request(instantTakeOver);
-
+                    instantTakeOver.Addressee = MySim.FindAgent(SimId.AgentService);
+                    Request(instantTakeOver);
                 }
                 else
                 {
@@ -482,12 +748,11 @@ namespace managers
 		//meta! sender="AgentService", id="19", type="Response"
 		public void ProcessAssignParkingSpace(MessageForm message)
 		{
-			//uz je pridelene parkovacie miesto
-			//priradim technika, ak nieje dam do frontu na cakanie na prevzatie uz assigned
-			var technic = this.getAvailableTechnician();
-			if (technic != null)
-			{
-
+            //uz je pridelene parkovacie miesto
+            //priradim technika, ak nieje dam do frontu na cakanie na prevzatie uz assigned
+            var technic = this.getAvailableTechnician();
+            if (technic != null)
+            {
                 this.MyAgent.localAverageFreeTechnicianCount.addValues(this.MyAgent.getAvailableTechniciansCount(),
                         MySim.CurrentTime - this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange);
                 this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange = MySim.CurrentTime;
@@ -508,12 +773,11 @@ namespace managers
                 message.Addressee = MySim.FindAgent(SimId.AgentService);
                 Request(message);
             }
-			else
-			{
-				this.MyAgent.waitingForTakeOverAssigned.Enqueue(((MyMessage)message), message.DeliveryTime);
-			}
-
-		}
+            else
+            {
+                this.MyAgent.waitingForTakeOverAssigned.Enqueue(((MyMessage)message), message.DeliveryTime);
+            }
+        }
 
 		//meta! sender="AgentModelu", id="55", type="Notice"
 		public void ProcessInicialization(MessageForm message)
@@ -643,11 +907,48 @@ namespace managers
             }
             return null;
         }
+
+        /// <summary>
+        /// vrati automechanikov ktori neobsluhuju
+        /// </summary>
+        /// <returns></returns>
         public Automechanic getAvailableAutomechanic()
         {
             for (int i = 0; i < MyAgent.automechanics.Count; i++)
             {
                 if (!MyAgent.automechanics[i].obsluhuje)
+                {
+                    return MyAgent.automechanics[i];
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// vrati automechanika ktory je volny a nema certifikat
+        /// </summary>
+        /// <returns></returns>
+        public Automechanic getAvailableAutomechanicNonCert()
+        {
+            for (int i = 0; i < MyAgent.automechanics.Count; i++)
+            {
+                if (!MyAgent.automechanics[i].obsluhuje && !MyAgent.automechanics[i].certificate)
+                {
+                    return MyAgent.automechanics[i];
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// vrati automechanika ktory je volny a ma certifikat
+        /// </summary>
+        /// <returns></returns>
+        public Automechanic getAvailableAutomechanicCert()
+        {
+            for (int i = 0; i < MyAgent.automechanics.Count; i++)
+            {
+                if (!MyAgent.automechanics[i].obsluhuje && MyAgent.automechanics[i].certificate)
                 {
                     return MyAgent.automechanics[i];
                 }
@@ -666,7 +967,6 @@ namespace managers
             {
                 return false;
             }
-
         }
 
         public void giveJobToTechnician(Technician technic)
@@ -691,10 +991,8 @@ namespace managers
             }
             else if (this.MyAgent.waitingForTakeOverAssigned.Count > 0)
             {
-
                 //moze ist hned na takeover uz ma miesto
                 var instantTakeOver = this.MyAgent.waitingForTakeOverAssigned.Dequeue();
-
 
                 this.MyAgent.localAverageFreeTechnicianCount.addValues(this.MyAgent.getAvailableTechniciansCount(),
                     MySim.CurrentTime - this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange);
@@ -721,26 +1019,114 @@ namespace managers
 
         public void giveJobToAutomechanic(Automechanic mechanic)
         {
-            var inspectionMessage = this.MyAgent.waitingForInspection.Dequeue();
+            //je cert a je prve cargo
+            if (mechanic.certificate && (this.MyAgent.waitingForInspection.First.customer.getCar().type == DISS_SEM2.Objects.Cars.CarTypes.Cargo))
+            {
+                var cargoMessage = this.MyAgent.waitingForInspection.Dequeue();
 
-            this.MyAgent.localAverageFreeAutomechanicCount.addValues(this.MyAgent.getAvailableAutomechanicsCount(),
-                MySim.CurrentTime - this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange);
-            this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange = MySim.CurrentTime;
+                this.MyAgent.localAverageFreeAutomechanicCount.addValues(this.MyAgent.getAvailableAutomechanicsCount(),
+                        MySim.CurrentTime - this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange);
+                this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange = MySim.CurrentTime;
 
-            ((MyMessage)inspectionMessage).automechanic = mechanic;
-            ((MyMessage)inspectionMessage).automechanic.obsluhuje = true;
-            ((MyMessage)inspectionMessage).automechanic.customer_car = ((MyMessage)inspectionMessage).customer;
 
-            inspectionMessage.Code = Mc.Inspection;
-            inspectionMessage.Addressee = MySim.FindAgent(SimId.AgentInspection);
-            Request(inspectionMessage);
+                ((MyMessage)cargoMessage).automechanic = mechanic;
+                ((MyMessage)cargoMessage).automechanic.obsluhuje = true;
+                ((MyMessage)cargoMessage).automechanic.customer_car = ((MyMessage)cargoMessage).customer;
 
-            //kopirovat spravu lebo posielam do dvoch agentov
-            var copiedMessage = inspectionMessage.CreateCopy();
-            //var copiedMessage = new MyMessage(((MyMessage)inspectionMessage));
-            copiedMessage.Code = Mc.FreeParkingSpace;
-            copiedMessage.Addressee = MySim.FindAgent(SimId.AgentService);
-            Request(copiedMessage);
+                cargoMessage.Code = Mc.Inspection;
+                cargoMessage.Addressee = MySim.FindAgent(SimId.AgentInspection);
+                Request(cargoMessage);
+
+                //kopirovat spravu lebo posielam do dvoch agentov
+                var copiedMessage = cargoMessage.CreateCopy();
+                //var copiedMessage = new MyMessage(((MyMessage)inspectionMessage));
+                ((MyMessage)copiedMessage).customer = ((MyMessage)cargoMessage).customer;
+                copiedMessage.Code = Mc.FreeParkingSpace;
+                copiedMessage.Addressee = MySim.FindAgent(SimId.AgentService);
+                Request(copiedMessage);
+            }
+            //nieje cert a je prve cargo - kukne dalsie
+            else if (!mechanic.certificate && (this.MyAgent.waitingForInspection.First.customer.getCar().type == DISS_SEM2.Objects.Cars.CarTypes.Cargo))
+            {
+                //pomocne queue
+                var pomQ = new SimplePriorityQueue<MyMessage, double>();
+                //message ktoru si prevezme necertifikovany mechanik
+                MyMessage finalMessage = null;
+
+                while (this.MyAgent.waitingForInspection.Count > 0)
+                {
+                    var pomMessage = this.MyAgent.waitingForInspection.Dequeue();
+
+                    if (pomMessage.customer.getCar().type != DISS_SEM2.Objects.Cars.CarTypes.Cargo)
+                    {
+                        // finalna message - nieje to kamion - vyskocim z cyklu
+                        finalMessage = pomMessage;
+                        break;
+                    }
+                    else //inak prehodim do pom q
+                    {
+                        pomQ.Enqueue(pomMessage, pomMessage.DeliveryTime);
+                    }
+                }
+
+                // vsetky messages ktore sa prehodili do pomq vratim naspat 
+                while (pomQ.Count > 0)
+                {
+                    var pomMessage = pomQ.Dequeue();
+                    this.MyAgent.waitingForInspection.Enqueue(pomMessage, pomMessage.DeliveryTime);
+                }
+                //ak sa naslo personal alebo van tak ho vezme na inspection tento mechanik
+                if (finalMessage != null)
+                {
+                    this.MyAgent.localAverageFreeAutomechanicCount.addValues(this.MyAgent.getAvailableAutomechanicsCount(),
+                        MySim.CurrentTime - this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange);
+                    this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange = MySim.CurrentTime;
+
+                    ((MyMessage)finalMessage).automechanic = mechanic;
+                    ((MyMessage)finalMessage).automechanic.obsluhuje = true;
+                    ((MyMessage)finalMessage).automechanic.customer_car = ((MyMessage)finalMessage).customer;
+
+                    finalMessage.Code = Mc.Inspection;
+                    finalMessage.Addressee = MySim.FindAgent(SimId.AgentInspection);
+                    Request(finalMessage);
+
+                    //kopirovat spravu lebo posielam do dvoch agentov
+                    var copiedMessage = finalMessage.CreateCopy();
+                    //var copiedMessage = new MyMessage(((MyMessage)inspectionMessage));
+                    ((MyMessage)copiedMessage).customer = ((MyMessage)finalMessage).customer;
+                    copiedMessage.Code = Mc.FreeParkingSpace;
+                    copiedMessage.Addressee = MySim.FindAgent(SimId.AgentService);
+                    Request(copiedMessage);
+                }
+
+            }
+            //je jedno ci je cert alebo nieje - berie auto - viem ze prve nieje cargo
+            else
+            {
+                var inspectionMessage = this.MyAgent.waitingForInspection.Dequeue();
+
+                this.MyAgent.localAverageFreeAutomechanicCount.addValues(this.MyAgent.getAvailableAutomechanicsCount(),
+                        MySim.CurrentTime - this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange);
+                this.MyAgent.localAverageFreeAutomechanicCount.timeOfLastChange = MySim.CurrentTime;
+
+                ((MyMessage)inspectionMessage).automechanic = mechanic;
+                ((MyMessage)inspectionMessage).automechanic.obsluhuje = true;
+                ((MyMessage)inspectionMessage).automechanic.customer_car = ((MyMessage)inspectionMessage).customer;
+
+                inspectionMessage.Code = Mc.Inspection;
+                inspectionMessage.Addressee = MySim.FindAgent(SimId.AgentInspection);
+                Request(inspectionMessage);
+
+                //kopirovat spravu lebo posielam do dvoch agentov
+                var copiedMessage = inspectionMessage.CreateCopy();
+                //var copiedMessage = new MyMessage(((MyMessage)inspectionMessage));
+                ((MyMessage)copiedMessage).customer = ((MyMessage)inspectionMessage).customer;
+                copiedMessage.Code = Mc.FreeParkingSpace;
+                copiedMessage.Addressee = MySim.FindAgent(SimId.AgentService);
+                Request(copiedMessage);
+
+            }
+            
         }
 
     }

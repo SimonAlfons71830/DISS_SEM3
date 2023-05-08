@@ -14,12 +14,14 @@ namespace DISS_SEM2
         public int _id;
         public bool obeduje;
         public bool obedoval;
+        public bool reserved;
 
         public Automechanic()
         {
             this.obsluhuje = false;
             this.obeduje = false;
             this.obedoval = false;
+            this.reserved = false;
         }
 
         public bool Obsluhuje()
