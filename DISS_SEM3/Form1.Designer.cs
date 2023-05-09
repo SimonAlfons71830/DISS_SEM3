@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.paycheck_label = new System.Windows.Forms.Label();
             this.label60 = new System.Windows.Forms.Label();
@@ -174,6 +174,7 @@
             this.label71 = new System.Windows.Forms.Label();
             this.numericUpDown8 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown9 = new System.Windows.Forms.NumericUpDown();
+            this.button6 = new System.Windows.Forms.Button();
             this.tabPage2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
@@ -824,6 +825,7 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage1.Controls.Add(this.button6);
             this.tabPage1.Controls.Add(this.validation_checkbox_slow);
             this.tabPage1.Controls.Add(this.checkBox1);
             this.tabPage1.Controls.Add(this.label43);
@@ -1670,21 +1672,21 @@
             // chart1
             // 
             this.chart1.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.TopBottom;
-            chartArea1.AxisX.IsStartedFromZero = false;
-            chartArea1.AxisY.IsMarginVisible = false;
-            chartArea1.AxisY.IsStartedFromZero = false;
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            chartArea7.AxisX.IsStartedFromZero = false;
+            chartArea7.AxisY.IsMarginVisible = false;
+            chartArea7.AxisY.IsStartedFromZero = false;
+            chartArea7.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea7);
+            legend7.Name = "Legend1";
+            this.chart1.Legends.Add(legend7);
             this.chart1.Location = new System.Drawing.Point(24, 182);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.EarthTones;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series1.Legend = "Legend1";
-            series1.Name = "Dependance";
-            this.chart1.Series.Add(series1);
+            series7.ChartArea = "ChartArea1";
+            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series7.Legend = "Legend1";
+            series7.Name = "Dependance";
+            this.chart1.Series.Add(series7);
             this.chart1.Size = new System.Drawing.Size(1332, 368);
             this.chart1.TabIndex = 20;
             this.chart1.Text = "chart1";
@@ -1766,7 +1768,7 @@
             this.numericUpDown5.TabIndex = 11;
             this.numericUpDown5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numericUpDown5.Value = new decimal(new int[] {
-            100,
+            10,
             0,
             0,
             0});
@@ -1804,21 +1806,21 @@
             // chart2
             // 
             this.chart2.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.TopBottom;
-            chartArea2.AxisX.IsStartedFromZero = false;
-            chartArea2.AxisY.IsMarginVisible = false;
-            chartArea2.AxisY.IsStartedFromZero = false;
-            chartArea2.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart2.Legends.Add(legend2);
+            chartArea8.AxisX.IsStartedFromZero = false;
+            chartArea8.AxisY.IsMarginVisible = false;
+            chartArea8.AxisY.IsStartedFromZero = false;
+            chartArea8.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea8);
+            legend8.Name = "Legend1";
+            this.chart2.Legends.Add(legend8);
             this.chart2.Location = new System.Drawing.Point(22, 182);
             this.chart2.Name = "chart2";
             this.chart2.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.EarthTones;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series2.Legend = "Legend1";
-            series2.Name = "Dependance";
-            this.chart2.Series.Add(series2);
+            series8.ChartArea = "ChartArea1";
+            series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series8.Legend = "Legend1";
+            series8.Name = "Dependance";
+            this.chart2.Series.Add(series8);
             this.chart2.Size = new System.Drawing.Size(1332, 368);
             this.chart2.TabIndex = 55;
             this.chart2.Text = "chart2";
@@ -1900,10 +1902,20 @@
             this.numericUpDown9.TabIndex = 47;
             this.numericUpDown9.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numericUpDown9.Value = new decimal(new int[] {
-            100,
+            10,
             0,
             0,
             0});
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(1351, 56);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(106, 33);
+            this.button6.TabIndex = 116;
+            this.button6.Text = "END";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // Form1
             // 
@@ -2099,6 +2111,7 @@
         private System.Windows.Forms.NumericUpDown numericUpDown10;
         private System.Windows.Forms.Label label73;
         private System.Windows.Forms.Label label74;
+        private System.Windows.Forms.Button button6;
     }
 }
 

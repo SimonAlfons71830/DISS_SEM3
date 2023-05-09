@@ -30,7 +30,7 @@ namespace DISS_SEM3.statistics
         {
             if (this.count == 0)
             {
-                return -1;
+                return 0;
             }
             else
             {

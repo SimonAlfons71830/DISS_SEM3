@@ -34,13 +34,14 @@ namespace DISS_SEM3
 
         private Thread threadGraph1;
         private Thread threadGraph2;
+        private Thread threadSlowMode;
+        private Thread threadFastMode;
 
-        
+        public ManualResetEvent pauseGraph2 = new ManualResetEvent(true);
+
         private bool slow = true;
         private bool graph = false;
         private DateTime startTime;
-        private Thread threadSlowMode;
-        private Thread threadFastMode;
         private DateTime _simtime;
         private MySimulation simulation;
         private double oldtime;
@@ -98,12 +99,29 @@ namespace DISS_SEM3
             chart1.Series["Dependance"].Points.Clear();
             chart1.DataBind();
 
-            chart1.Series["Dependance"].BorderWidth = 3 ;
-            chart1.DataBind();
+            chart2.Series["Dependance"].BorderWidth = 3 ;
+            chart2.DataBind();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            this.resetThreads();
+            this.resetAll();
+
+            dataGridAutomechanics.Rows.Clear();
+            dataGridTechnicians.Rows.Clear();
+            dataGridGarage.Rows.Clear();
+
+            dataAutomechanics.Rows.Clear();
+            dataTechnicians.Rows.Clear();
+            dataGarage.Rows.Clear();
+            dataPaymentLine.Rows.Clear();
+            dataWaitingLine.Rows.Clear();
+            dataCustomersLeft.Rows.Clear();
+
+            this.slow = true;
+            this.graph = false;
+
             if (validation_checkbox_slow.Checked)
             {
                 this.simulation.validationMode = true;
@@ -128,14 +146,16 @@ namespace DISS_SEM3
                 dataGridGarage.Rows.Add(i, " ");
             }
 
-            
-
             this.slow = true;
 
             threadSlowMode = new Thread(new ThreadStart(this.startSimulation));
             threadSlowMode.IsBackground = true;
             threadSlowMode.Start();
 
+            button1.Enabled = false;
+            button5.Enabled = false;
+            button_start_graph_1.Enabled = false;
+            button_start_graph_2.Enabled = false;
         }
 
         private void startSimulation()
@@ -448,11 +468,13 @@ namespace DISS_SEM3
         private void button2_Click(object sender, EventArgs e)
         {
             this.simulation.PauseSimulation();
+            button6.Enabled = false;
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             this.simulation.ResumeSimulation();
+            button6.Enabled = true;
         }
 
         public void SimStateChanged(Simulation sim, SimState state)
@@ -462,7 +484,11 @@ namespace DISS_SEM3
 
         private void button5_Click(object sender, EventArgs e)
         {
+            this.resetThreads();
+            this.resetAll();
             this.slow = false;
+            this.graph = false;
+
             if (validation_check_box.Checked)
             {
                 this.simulation.validationMode = true;
@@ -480,6 +506,10 @@ namespace DISS_SEM3
             threadFastMode.IsBackground = true;
             threadFastMode.Start();
 
+            button1.Enabled = false;
+            button5.Enabled = false;
+            button_start_graph_1.Enabled = false;
+            button_start_graph_2.Enabled = false;
         }
 
         private void startSimulationFast()
@@ -499,10 +529,13 @@ namespace DISS_SEM3
 
         }
 
-
         private void button4_Click(object sender, EventArgs e)
         {
-            this.simulation.PauseSimulation();
+            this.simulation.StopSimulation();
+            button1.Enabled = true;
+            button5.Enabled = true;
+            button_start_graph_1.Enabled = true;
+            button_start_graph_2.Enabled = true;
         }
 
         private int CountExpenses()
@@ -528,44 +561,65 @@ namespace DISS_SEM3
         private void button_start_graph_1_Click(object sender, EventArgs e)
         {
             this.graph = true;
-            this.simulation.AgentSTK.technicians.Clear();
-            this.simulation.AgentSTK.automechanics.Clear();
-            this.simulation.AgentService.resetGarage();
+            this.resetAll();
+            this.simulation.AgentSTK.localAverageCustomerCountToTakeOver.resetStatistic();
+            /* this.simulation.AgentSTK.technicians.Clear();
+             this.simulation.AgentSTK.automechanics.Clear();
+             this.simulation.AgentService.resetGarage();
 
-            //this.simulation.CurrentTime = 0;
+             //this.simulation.CurrentTime = 0;
+
+             chart1.Series["Dependance"].Points.Clear();
+             this.simulation.replicationNum = 0;
+
+
+             this.simulation.AgentSTK.takeoverqueue.Clear();
+             this.simulation.AgentSTK.waitingForInspection.Clear();
+             this.simulation.AgentSTK.paymentLine.Clear();
+             this.simulation.AgentService.garageParkingSpace.Clear();
+             this.simulation.AgentOkolia.CustomersCount = 0;
+             this.simulation.AgentOkolia.Id = 0;*/
 
             chart1.Series["Dependance"].Points.Clear();
-            this.simulation.replicationNum = 0;
-            this.simulation.AgentSTK.localAverageCustomerCountToTakeOver.resetStatistic();
-
-            this.simulation.AgentSTK.takeoverqueue.Clear();
-            this.simulation.AgentSTK.waitingForInspection.Clear();
-            this.simulation.AgentSTK.paymentLine.Clear();
-            this.simulation.AgentService.garageParkingSpace.Clear();
-            this.simulation.AgentOkolia.CustomersCount = 0;
-            this.simulation.AgentOkolia.Id = 0;
+            chart1.Series["Dependance"].BorderWidth = 3;
+            chart1.DataBind();
 
             threadGraph1 = new Thread(new ThreadStart(this.startSimulationGraph1));
             threadGraph1.IsBackground = true;
             threadGraph1.Start();
+
+            this.button_start_graph_1.Enabled = false;
+            this.button_start_graph_2.Enabled = false;
+            this.button5.Enabled = false;
+            this.button1.Enabled = false;
+
         }
 
         private void startSimulationGraph1()
         {
             for (int i = 1; i <= 15; i++)
             {
-                
+                this.resetAll();
                 this.simulation.AgentSTK.createTechnicians(i);
                 this.simulation.AgentSTK.createAutomechanics((int)numericUpDown3.Value + (int)numericUpDown10.Value, (int)numericUpDown3.Value);
                 this.simulation.Simulate((int)numericUpDown5.Value, 8 * 3600);
                 this.updateChart1(i, this.simulation.AgentSTK.localAverageCustomerCountToTakeOver.getMean());
 
-                
                 this.simulation.AgentSTK.resetAutomechanics();
                 this.simulation.AgentSTK.resetTechnicians();
                 this.simulation.AgentService.resetGarage();
                 this.simulation.AgentSTK.localAverageCustomerCountToTakeOver.resetStatistic();
             }
+            this.Invoke((MethodInvoker)delegate
+            {
+                this.button_start_graph_1.Enabled = true;
+                this.button_start_graph_2.Enabled = true;
+                this.button5.Enabled = true;
+                this.button1.Enabled = true;
+            });
+
+            threadGraph1.Abort();
+            this.graph = false;
         }
 
         public void updateChart1(int numberOfTechnicians, double averageCustomers)
@@ -581,28 +635,46 @@ namespace DISS_SEM3
         private void button_start_graph_2_Click(object sender, EventArgs e)
         {
             this.graph = true;
-            this.simulation.AgentSTK.technicians.Clear();
+            this.resetAll();
+            this.simulation.AgentSTK.localAverageCustomerCountToTakeOver.resetStatistic();
+
+            /*if (this.threadGraph2 != null && this.threadGraph2.IsAlive)
+            {
+                this.threadGraph2.Interrupt();
+                this.threadGraph2.Abort();
+                threadGraph2 = null;
+            }*/
+
+            /*this.simulation.AgentSTK.technicians.Clear();
             this.simulation.AgentSTK.automechanics.Clear();
             this.simulation.AgentService.resetGarage();
-
-            //this.simulation.CurrentTime = 0;
+            
 
             chart2.Series["Dependance"].Points.Clear();
+            chart2.Series["Dependance"].BorderWidth = 3;
+            chart2.DataBind();
 
             this.simulation.replicationNum = 0;
-            this.simulation.AgentSTK.localAverageCustomerCountToTakeOver.resetStatistic();
+            
 
             this.simulation.AgentSTK.takeoverqueue.Clear();
             this.simulation.AgentSTK.waitingForInspection.Clear();
             this.simulation.AgentSTK.paymentLine.Clear();
             this.simulation.AgentService.garageParkingSpace.Clear();
             this.simulation.AgentOkolia.CustomersCount = 0;
-            this.simulation.AgentOkolia.Id = 0;
+            this.simulation.AgentOkolia.Id = 0;*/
 
+            chart2.Series["Dependance"].Points.Clear();
+            chart2.Series["Dependance"].BorderWidth = 3;
+            chart2.DataBind();
 
             threadGraph2 = new Thread(new ThreadStart(this.startSimulationGraph2));
             threadGraph2.IsBackground = true;
             threadGraph2.Start();
+            this.button_start_graph_2.Enabled = false;
+            this.button_start_graph_1.Enabled = false;
+            this.button5.Enabled = false;
+            this.button1.Enabled = false;
 
         }
 
@@ -614,14 +686,32 @@ namespace DISS_SEM3
 
             for (int i = 10; i <= 25; i++)
             {
+                this.resetAll();
                 // vyratanie pomeru technikov z optimalneho riesenia
                 int certified = (int)Math.Round(((double)i / totalAutomechanics) * certifiedAutomechanics);
                 int nonCertified = i - certified;
                 this.simulation.AgentSTK.createAutomechanics(certified+nonCertified, certified);
                 this.simulation.AgentSTK.createTechnicians((int)numericUpDown2.Value);
-                this.simulation.Simulate((int)numericUpDown9.Value);
-                this.updateChart2(i, this.simulation.AgentOkolia.localAverageCustomerTimeInSTK.getMean() / 60);
+                this.simulation.Simulate((int)numericUpDown9.Value,3600*8);
+                this.updateChart2(i, this.simulation.AgentSTK.localAverageCustomerCountToTakeOver.getMean() / 60);
+
+                this.simulation.AgentSTK.resetAutomechanics();
+                this.simulation.AgentSTK.resetTechnicians();
+                this.simulation.AgentService.resetGarage();
+                this.simulation.AgentSTK.localAverageCustomerCountToTakeOver.resetStatistic();
             }
+
+            this.Invoke((MethodInvoker)delegate
+            {
+                this.button_start_graph_2.Enabled = true;
+                this.button_start_graph_1.Enabled = true;
+                this.button5.Enabled = true;
+                this.button1.Enabled = true;
+            });
+            
+            threadGraph2.Abort();
+            this.graph = false;
+
 
         }
         public void updateChart2(int numberOfAutomechanics, double averageTime)
@@ -635,6 +725,60 @@ namespace DISS_SEM3
                     chart2.Update();
                 });
             }
+        }
+
+        public void resetThreads()
+        {
+            if (threadFastMode != null && threadFastMode.IsAlive)
+            {
+                threadFastMode.Abort();
+                threadFastMode = null;
+            }
+            if (threadGraph1 != null && threadGraph1.IsAlive)
+            {
+                threadGraph1.Abort();
+                threadGraph1 = null;
+            }
+            if (threadGraph2 != null && threadGraph2.IsAlive)
+            {
+                threadGraph2.Abort();
+                threadGraph2 = null;
+            }
+            if (this.threadSlowMode != null && this.threadSlowMode.IsAlive)
+            {
+                this.threadSlowMode.Interrupt();
+                this.threadSlowMode.Abort();
+                threadSlowMode = null;
+            }
+        }
+        public void resetAll()
+        {
+
+            
+            this.simulation.AgentSTK.technicians.Clear();
+            this.simulation.AgentSTK.automechanics.Clear();
+            this.simulation.AgentService.resetGarage();
+
+            
+
+
+            this.simulation.replicationNum = 0;
+
+            this.simulation.AgentSTK.takeoverqueue.Clear();
+            this.simulation.AgentSTK.waitingForInspection.Clear();
+            this.simulation.AgentSTK.paymentLine.Clear();
+            this.simulation.AgentService.garageParkingSpace.Clear();
+            this.simulation.AgentOkolia.CustomersCount = 0;
+            this.simulation.AgentOkolia.Id = 0;
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            this.simulation.StopSimulation();
+            button1.Enabled = true;
+            button5.Enabled = true;
+            button_start_graph_1.Enabled = true;
+            button_start_graph_2.Enabled = true;
         }
     }
 }

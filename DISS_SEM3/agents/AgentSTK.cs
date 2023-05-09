@@ -62,7 +62,7 @@ namespace agents
             this.paymentLine.Clear();
             this.takeoverqueue.Clear();
             this.takeoverqueueQ.Clear();
-
+            
             for (int i = 0; i < this.technicians.Count; i++)
             {
                 this.technicians[i].obsluhuje = false;
