@@ -24,6 +24,7 @@ namespace simulation
         public int replicationNum { get; set; }
 
 		public bool validationMode { get; set; }
+		public double increaseInFlow { get;set; }
 
         public MySimulation()
 		{
@@ -40,6 +41,7 @@ namespace simulation
 			
 			this.validationMode = false;
             this.replicationNum = 0;
+			this.increaseInFlow = 0;
         }
 
 		override protected void PrepareSimulation()

@@ -93,7 +93,6 @@ namespace managers
                 }
             }
 
-
             //zakaznik po plateni odchadza
             message.Code = Mc.CustomerService;
 			message.Addressee = MySim.FindAgent(SimId.AgentModelu);
@@ -574,6 +573,7 @@ namespace managers
                     }
                     else
                     {
+                        //ak nemam volneho certifikovaneho mechanika ktory by zobral cargo tak ide do garaze
                         this.MyAgent.waitingForInspection.Enqueue(((MyMessage)message), ((MyMessage)message).DeliveryTime);
                     }
                 }

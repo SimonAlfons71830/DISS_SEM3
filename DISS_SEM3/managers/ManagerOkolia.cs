@@ -10,7 +10,6 @@ namespace managers
 	public class ManagerOkolia : Manager
 	{
 		private int id; //id counter for customer
-		public double prevtime;
 
         public ManagerOkolia(int id, Simulation mySim, Agent myAgent) :
 			base(id, mySim, myAgent)
@@ -28,7 +27,7 @@ namespace managers
 			{
 				PetriNet.Clear();
 			}
-            this.prevtime = 2500;
+            
         }
 
 		//meta! sender="AgentModelu", id="17", type="Notice"

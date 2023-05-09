@@ -2,6 +2,7 @@ using OSPABA;
 using simulation;
 using agents;
 using DISS_SEM2.Generators;
+using System.Runtime.InteropServices;
 
 namespace continualAssistants
 {
@@ -9,17 +10,21 @@ namespace continualAssistants
     public class PlanerCustomerArrival : Scheduler
 	{
 		private Exponential customerArrivalTimeGenerator { get; set; }
+		private double _mi { get; set; }
         public PlanerCustomerArrival(int id, Simulation mySim, CommonAgent myAgent) :
 			base(id, mySim, myAgent)
 		{
-            double _mi = 3600.0 / 23.0;
-            customerArrivalTimeGenerator = new Exponential(((MySimulation)mySim).seedGenerator,_mi);
+
+            this._mi = 3600.0 / 23.0;
+			customerArrivalTimeGenerator = new Exponential(((MySimulation)mySim).seedGenerator,this._mi);
         }
 
 		override public void PrepareReplication()
 		{
 			base.PrepareReplication();
 			// Setup component for the next replication
+			double newMi = (3600 / (23 * (1 + (((MySimulation)MySim).increaseInFlow/100)))); 
+			this.customerArrivalTimeGenerator.UpdateLambda(newMi);
 		}
 
 		//meta! sender="AgentOkolia", id="39", type="Start"
@@ -59,5 +64,7 @@ namespace continualAssistants
 				return (AgentOkolia)base.MyAgent;
 			}
 		}
+
+
 	}
 }

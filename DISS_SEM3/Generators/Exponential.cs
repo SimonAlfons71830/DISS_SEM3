@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,11 +21,17 @@ namespace DISS_SEM2.Generators
 
         }
 
+        public void UpdateLambda(double mi)
+        {
+            this.lambda = 1 / mi;
+        }
+
         //https://www.eg.bucknell.edu/~xmeng/Course/CS6337/Note/master/node50.html
         public override double Next()
         {
             double x = -Math.Log(1 - this.random.NextDouble()) / this.lambda;
             return x;
         }
-    }
+
+     }
 }

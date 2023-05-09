@@ -424,6 +424,9 @@ namespace DISS_SEM3
                     label16.Text = this.simulation.globalAverageCustomerCountInSTK.getMean().ToString("0.0000");
                     label41.Text = this.simulation.globalAverageCustomerCountInLineToTakeOver.getMean().ToString("0.0000");
                     label58.Text = this.simulation.globalCustomersCount.getMean().ToString("0.0000");
+
+
+                    
                 });
             }
 
@@ -447,17 +450,15 @@ namespace DISS_SEM3
         private void button5_Click(object sender, EventArgs e)
         {
             this.slow = false;
-
             if (validation_check_box.Checked)
             {
                 this.simulation.validationMode = true;
+
             }
+            this.simulation.increaseInFlow = (double)this.numericUpDown2.Value;
             this.simulation.AgentSTK.createAutomechanics((int)certification_numericUpDown_fast.Value +
                     (int)nonCertification_numericUpDown_fast.Value, (int)certification_numericUpDown_fast.Value);
             this.simulation.AgentSTK.createTechnicians((int)numericUpDown6.Value);
-
-
-
 
             //int numberOfReplications = (int)this.numericUpDown7.Value;
             //this.simulation.SimulateAsync(numberOfReplications, 8 * 3600);
@@ -476,12 +477,49 @@ namespace DISS_SEM3
 
             this.simulation.Simulate(numberOfReplications, 8 * 3600);
 
+
+            this.Invoke((MethodInvoker)delegate
+            {
+                paycheck_label.Text = this.CountExpenses().ToString() + ",00 €";
+            });
+            
+
         }
 
 
         private void button4_Click(object sender, EventArgs e)
         {
             this.simulation.PauseSimulation();
+        }
+
+        private int CountExpenses()
+        {
+            var expenses = 0;
+
+            expenses += this.simulation.AgentSTK.technicians.Count * 1100;
+
+            for (int i = 0; i < this.simulation.AgentSTK.automechanics.Count; i++)
+            {
+                if (this.simulation.AgentSTK.automechanics[i].certificate)
+                {
+                    expenses += 2000;
+                }
+                else
+                {
+                    expenses += 1500;
+                }
+            }
+            return expenses;
+        }
+
+        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void certification_numericUpDown_fast_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
