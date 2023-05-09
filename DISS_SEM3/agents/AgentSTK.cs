@@ -162,6 +162,22 @@ namespace agents
             }
             return pom;
         }
-        
+
+        public void resetAutomechanics()
+        {
+            for (int i = 0; i < this.automechanics.Count; i++)
+            {
+                this.automechanics[i].obsluhuje = false;
+            }
+        }
+
+        public void resetTechnicians()
+        {
+            for (int i = 0; i < this.technicians.Count; i++)
+            {
+                this.technicians[i].obsluhuje = false;
+            }
+        }
+
     }
 }

@@ -32,9 +32,12 @@ namespace DISS_SEM3
         DataGridViewCellStyle freeStyle = new DataGridViewCellStyle();
         DataGridViewCellStyle obedujeStyle = new DataGridViewCellStyle();
 
+        private Thread threadGraph1;
+        private Thread threadGraph2;
 
-
+        
         private bool slow = true;
+        private bool graph = false;
         private DateTime startTime;
         private Thread threadSlowMode;
         private Thread threadFastMode;
@@ -60,7 +63,7 @@ namespace DISS_SEM3
 
             this.simulation.RegisterDelegate(this);
 
-            if (slow)
+            if (slow && !graph)
             {
 
 
@@ -91,6 +94,12 @@ namespace DISS_SEM3
                 dataCustomersLeft.Columns.Add("Time in STK", typeof(string));
                 dataCustomersLeft.Columns.Add("Car type", typeof(CarTypes));
             }
+
+            chart1.Series["Dependance"].Points.Clear();
+            chart1.DataBind();
+
+            chart1.Series["Dependance"].BorderWidth = 3 ;
+            chart1.DataBind();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -142,7 +151,7 @@ namespace DISS_SEM3
 
         public void Refresh(Simulation sim)
         {
-            if (slow)
+            if (slow && !graph)
             {
 
                 var time = sim.CurrentTime - oldtime;
@@ -409,7 +418,7 @@ namespace DISS_SEM3
 
                 });
             }
-            else
+            else if (!slow && !graph)
             {
                 //fast mode refresh
                 this.Invoke((MethodInvoker)delegate
@@ -428,6 +437,10 @@ namespace DISS_SEM3
 
                     
                 });
+            }
+            else
+            {
+
             }
 
         }
@@ -512,14 +525,116 @@ namespace DISS_SEM3
             return expenses;
         }
 
-        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
+        private void button_start_graph_1_Click(object sender, EventArgs e)
         {
+            this.graph = true;
+            this.simulation.AgentSTK.technicians.Clear();
+            this.simulation.AgentSTK.automechanics.Clear();
+            this.simulation.AgentService.resetGarage();
+
+            //this.simulation.CurrentTime = 0;
+
+            chart1.Series["Dependance"].Points.Clear();
+            this.simulation.replicationNum = 0;
+            this.simulation.AgentSTK.localAverageCustomerCountToTakeOver.resetStatistic();
+
+            this.simulation.AgentSTK.takeoverqueue.Clear();
+            this.simulation.AgentSTK.waitingForInspection.Clear();
+            this.simulation.AgentSTK.paymentLine.Clear();
+            this.simulation.AgentService.garageParkingSpace.Clear();
+            this.simulation.AgentOkolia.CustomersCount = 0;
+            this.simulation.AgentOkolia.Id = 0;
+
+            threadGraph1 = new Thread(new ThreadStart(this.startSimulationGraph1));
+            threadGraph1.IsBackground = true;
+            threadGraph1.Start();
+        }
+
+        private void startSimulationGraph1()
+        {
+            for (int i = 1; i <= 15; i++)
+            {
+                
+                this.simulation.AgentSTK.createTechnicians(i);
+                this.simulation.AgentSTK.createAutomechanics((int)numericUpDown3.Value + (int)numericUpDown10.Value, (int)numericUpDown3.Value);
+                this.simulation.Simulate((int)numericUpDown5.Value, 8 * 3600);
+                this.updateChart1(i, this.simulation.AgentSTK.localAverageCustomerCountToTakeOver.getMean());
+
+                
+                this.simulation.AgentSTK.resetAutomechanics();
+                this.simulation.AgentSTK.resetTechnicians();
+                this.simulation.AgentService.resetGarage();
+                this.simulation.AgentSTK.localAverageCustomerCountToTakeOver.resetStatistic();
+            }
+        }
+
+        public void updateChart1(int numberOfTechnicians, double averageCustomers)
+        {
+            this.Invoke((MethodInvoker)delegate
+            {
+                chart1.Series["Dependance"].Points.AddXY(numberOfTechnicians, averageCustomers);
+                //time_chart.Update();
+                chart1.Update();
+            });
+        }
+
+        private void button_start_graph_2_Click(object sender, EventArgs e)
+        {
+            this.graph = true;
+            this.simulation.AgentSTK.technicians.Clear();
+            this.simulation.AgentSTK.automechanics.Clear();
+            this.simulation.AgentService.resetGarage();
+
+            //this.simulation.CurrentTime = 0;
+
+            chart2.Series["Dependance"].Points.Clear();
+
+            this.simulation.replicationNum = 0;
+            this.simulation.AgentSTK.localAverageCustomerCountToTakeOver.resetStatistic();
+
+            this.simulation.AgentSTK.takeoverqueue.Clear();
+            this.simulation.AgentSTK.waitingForInspection.Clear();
+            this.simulation.AgentSTK.paymentLine.Clear();
+            this.simulation.AgentService.garageParkingSpace.Clear();
+            this.simulation.AgentOkolia.CustomersCount = 0;
+            this.simulation.AgentOkolia.Id = 0;
+
+
+            threadGraph2 = new Thread(new ThreadStart(this.startSimulationGraph2));
+            threadGraph2.IsBackground = true;
+            threadGraph2.Start();
 
         }
 
-        private void certification_numericUpDown_fast_ValueChanged(object sender, EventArgs e)
+        private void startSimulationGraph2()
         {
+            int totalAutomechanics = 19;
+            int certifiedAutomechanics = 7;
+            int nonCertifiedAutomechanics = 12;
 
+            for (int i = 10; i <= 25; i++)
+            {
+                // vyratanie pomeru technikov z optimalneho riesenia
+                int certified = (int)Math.Round(((double)i / totalAutomechanics) * certifiedAutomechanics);
+                int nonCertified = i - certified;
+                this.simulation.AgentSTK.createAutomechanics(certified+nonCertified, certified);
+                this.simulation.AgentSTK.createTechnicians((int)numericUpDown2.Value);
+                this.simulation.Simulate((int)numericUpDown9.Value);
+                this.updateChart2(i, this.simulation.AgentOkolia.localAverageCustomerTimeInSTK.getMean() / 60);
+            }
+
+        }
+        public void updateChart2(int numberOfAutomechanics, double averageTime)
+        {
+            if (this.IsHandleCreated)
+            {
+                this.Invoke((MethodInvoker)delegate
+                {
+                    chart2.Series["Dependance"].Points.AddXY(numberOfAutomechanics, averageTime);
+                    //time_chart.Update();
+                    chart2.Update();
+                });
+            }
         }
     }
 }

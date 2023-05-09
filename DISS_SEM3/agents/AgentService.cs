@@ -84,5 +84,13 @@ namespace agents
             return garageParkingSpace.Count;
         }
 
+
+        public void resetGarage()
+        {
+            for (int i = 0; i < this.garageCounter.Count; i++)
+            {
+                this.garageCounter[i].free = true;
+            }
+        }
     }
 }
