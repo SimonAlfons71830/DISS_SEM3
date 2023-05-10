@@ -525,6 +525,11 @@ namespace DISS_SEM3
             this.Invoke((MethodInvoker)delegate
             {
                 paycheck_label.Text = this.CountExpenses().ToString() + ",00 €";
+                var pom = this.simulation.globalAverageCustomerTimeInSTK.ConfidenceInterval(0.9);
+                label25.Text = "< " + (pom[0] / 60).ToString("0.0000") + " - " + (pom[1] / 60).ToString("0.0000") + " >";
+
+                var pom2 = this.simulation.globalAverageCustomerCountInSTK.ConfidenceInterval(0.95);
+                label24.Text = "< " + pom2[0].ToString("0.0000") + " - " + pom2[1].ToString("0.0000") + " >";
             });
 
            /* var list = new List<double>
@@ -697,9 +702,9 @@ namespace DISS_SEM3
 
         private void startSimulationGraph2()
         {
-            int totalAutomechanics = 19;
-            int certifiedAutomechanics = 7;
-            int nonCertifiedAutomechanics = 12;
+            int totalAutomechanics = (int)numericUpDown12.Value + (int)numericUpDown13.Value;
+            int certifiedAutomechanics = (int)numericUpDown13.Value;
+            int nonCertifiedAutomechanics = (int)numericUpDown12.Value;
             
             for (int i = 10; i <= 25; i++)
             {
@@ -853,9 +858,5 @@ namespace DISS_SEM3
             Marshal.ReleaseComObject(excelApp);
         }
 
-        private void numericUpDown7_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }
