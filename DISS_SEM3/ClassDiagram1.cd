@@ -1,0 +1,283 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="agents.AgentInspection" Collapsed="true">
+    <Position X="14.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>agents\AgentInspection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="agents.AgentModelu" Collapsed="true">
+    <Position X="16" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>agents\AgentModelu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="agents.AgentOkolia" Collapsed="true">
+    <Position X="17.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAQAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAKAgABAAA=</HashCode>
+      <FileName>agents\AgentOkolia.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="agents.AgentService" Collapsed="true">
+    <Position X="19.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAEAFAEAAAACACAAAgA=</HashCode>
+      <FileName>agents\AgentService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="agents.AgentSTK" Collapsed="true">
+    <Position X="21.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QIAAAAABgBAEQARAAgQAAAAAAAEAAAUQAAAWAIAiBAA=</HashCode>
+      <FileName>agents\AgentSTK.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="continualAssistants.Lunch">
+    <Position X="35" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAIAAAAAEEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>continualAssistants\Lunch.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="continualAssistants.PlanerCustomerArrival">
+    <Position X="36.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAQAAAAAAAAAAAAAIAAAAAEUAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>continualAssistants\PlanerCustomerArrival.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="continualAssistants.ProcessInspection">
+    <Position X="40.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAIAAAAAEFAEAAAAAAAAAAACA=</HashCode>
+      <FileName>continualAssistants\ProcessInspection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="continualAssistants.ProcessPayment">
+    <Position X="42" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAIAAAAAEEAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>continualAssistants\ProcessPayment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="continualAssistants.ProcessTakeOver">
+    <Position X="38.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAQAAAAAAAAAAAAAIAAAAAEEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>continualAssistants\ProcessTakeOver.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="continualAssistants.SchedulerLunchBreak">
+    <Position X="33.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAIAAAAAEEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>continualAssistants\SchedulerLunchBreak.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DISS_SEM3.Form1" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="21.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>/wSQBSKR6OJwYBkCVADpBCjCS8E9UUwGAP0OiUXRzTM=</HashCode>
+      <FileName>Form1.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DISS_SEM3.Program" Collapsed="true">
+    <Position X="19.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DISS_SEM2.Generators.CarGenerator">
+    <Position X="9.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAQAAAAAAAIAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Generators\CarGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DISS_SEM2.Generators.ContinuousEven">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAABAAQAAAEAAAIAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Generators\ContinuousEven.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DISS_SEM2.Generators.DiscreteEven">
+    <Position X="2.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAABAAQAAAEAAAIAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Generators\DescreteEven.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DISS_SEM2.Generators.Distribution&lt;T&gt;" Collapsed="true">
+    <Position X="6" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Generators\Distribution.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DISS_SEM2.Generators.EmpiricalDistribution">
+    <Position X="5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgABAgAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Generators\Empirical.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DISS_SEM2.Generators.Exponential">
+    <Position X="7.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAIAAAAAAAAAAAAIAAAAAAAAAAAACQAAAAAAAA=</HashCode>
+      <FileName>Generators\Exponential.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DISS_SEM2.Generators.SeedGenerator">
+    <Position X="1.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Generators\SeedGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DISS_SEM2.Generators.Triangular">
+    <Position X="11.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAEAAIAAAQAAAAAAAAIEAAAAQAAAAgAAYAAAAAAAA=</HashCode>
+      <FileName>Generators\Triangular.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="managers.ManagerInspection" Collapsed="true">
+    <Position X="14.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAASAAAAAAAAAABAAAAAAAAEEAAAAAAACAAAAAAA=</HashCode>
+      <FileName>managers\ManagerInspection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="managers.ManagerModelu" Collapsed="true">
+    <Position X="16" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAQAAAAAAAgAAAAAAAAAAAEEAAAAAAACAAAAAAA=</HashCode>
+      <FileName>managers\ManagerModelu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="managers.ManagerOkolia" Collapsed="true">
+    <Position X="17.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAABAAAAEAAAEEAAAQAAACAAAAAgA=</HashCode>
+      <FileName>managers\ManagerOkolia.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="managers.ManagerService" Collapsed="true">
+    <Position X="19.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAIAwAAQCAAAAAAAAQAAAAAAEEAQAACAACAAAACAA=</HashCode>
+      <FileName>managers\ManagerService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="managers.ManagerSTK" Collapsed="true">
+    <Position X="21.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AALAEAyAIACABAAAiAAQIAFAAAEEAAAAAAACAAAAAAA=</HashCode>
+      <FileName>managers\ManagerSTK.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DISS_SEM2.Car">
+    <Position X="33.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Objects\Cars\Car.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DISS_SEM2.Automechanic">
+    <Position X="27.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAACAAIAAAACAIAABAAAAAAQAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Objects\People\Automechanic.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DISS_SEM2.Customer">
+    <Position X="35.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAEAQAAAAAACBAAAAAABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Objects\People\Customer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DISS_SEM2.Technician">
+    <Position X="25.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAACAAIAAAACAAAABAAAAAAQAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Objects\People\Technician.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DISS_SEM2.Objects.ParkingSpace">
+    <Position X="29.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAABAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Objects\ParkingSpace.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DISS_SEM3.Properties.Resources" Collapsed="true">
+    <Position X="21.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DISS_SEM3.Properties.Settings" Collapsed="true">
+    <Position X="19.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="simulation.Mc" Collapsed="true">
+    <Position X="16" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAACEAAAAAIAAAAAAAAAAAkAAAACAgAAABAA=</HashCode>
+      <FileName>simulation\Mc.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="simulation.MyMessage" Collapsed="true">
+    <Position X="14.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgABAAAAQAAAAAAAAAAAAgAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>simulation\MyMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="simulation.MySimulation" Collapsed="true">
+    <Position X="16" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABgAQAggAAASgAAhIAAIBAABgEBEAAEABACAgAABAA=</HashCode>
+      <FileName>simulation\MySimulation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="simulation.SimId" Collapsed="true">
+    <Position X="14.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAGAQAKACiAAAAAAAAEAAgABAAAQABAAABAAAEA=</HashCode>
+      <FileName>simulation\SimId.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DISS_SEM3.statistics.Statistics">
+    <Position X="21.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAABAIAAAAAAAAEBAAEAAUAAAAAAAAEIAAAAAAAAAA=</HashCode>
+      <FileName>statistics\Statistics.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DISS_SEM3.statistics.WStatistics">
+    <Position X="23" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAEAAAAAAEAAAAAACAAACAAAAAAAAA=</HashCode>
+      <FileName>statistics\WSatistics.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="DISS_SEM2.Objects.Cars.CarTypes">
+    <Position X="32" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAABAABAAAAAAAAAAA=</HashCode>
+      <FileName>Objects\Cars\CarTypes.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

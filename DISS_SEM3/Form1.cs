@@ -527,7 +527,7 @@ namespace DISS_SEM3
                 paycheck_label.Text = this.CountExpenses().ToString() + ",00 €";
             });
 
-            /*var list = new List<double>
+           /* var list = new List<double>
             {
                 (double)this.numericUpDown7.Value,
                 this.simulation.AgentSTK.technicians.Count(),
@@ -541,9 +541,9 @@ namespace DISS_SEM3
                 this.simulation.globalAverageFreeTechnicianCount.getMean(),
                 this.simulation.globalAverageFreeAutomechanicCount.getMean(),
                 this.CountExpenses()
-            };*/
+            };
             //export do csv alebo excel
-            //this.ExportAttributesToExcel(list, "C:\\Users\\Simona\\Desktop\\skola\\Ing_studium\\II\\DISS\\SEM3");
+            this.ExportAttributesToExcel(list, "C:\\Users\\Simona\\Desktop\\skola\\Ing_studium\\II\\DISS\\SEM3");*/
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -818,10 +818,10 @@ namespace DISS_SEM3
 
 
             excelWorksheet.Cells[4, 1] = "Average time customer spent in STK";
-            excelWorksheet.Cells[4, 2] = listOfValues[3].ToString();
+            excelWorksheet.Cells[4, 2] = (listOfValues[3]/60).ToString();
 
             excelWorksheet.Cells[5, 1] = "Average waiting time to takeover car";
-            excelWorksheet.Cells[5, 2] = listOfValues[4].ToString();
+            excelWorksheet.Cells[5, 2] = (listOfValues[4]/60).ToString();
 
             excelWorksheet.Cells[6, 1] = "Average customer count in line to takeover car";
             excelWorksheet.Cells[6, 2] = listOfValues[5].ToString();
