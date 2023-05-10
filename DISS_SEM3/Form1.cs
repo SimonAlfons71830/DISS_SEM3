@@ -585,22 +585,6 @@ namespace DISS_SEM3
             this.graph = true;
             this.resetAll();
             this.simulation.globalAverageCustomerCountInLineToTakeOver.resetStatistic();
-            /* this.simulation.AgentSTK.technicians.Clear();
-             this.simulation.AgentSTK.automechanics.Clear();
-             this.simulation.AgentService.resetGarage();
-
-             //this.simulation.CurrentTime = 0;
-
-             chart1.Series["Dependance"].Points.Clear();
-             this.simulation.replicationNum = 0;
-
-
-             this.simulation.AgentSTK.takeoverqueue.Clear();
-             this.simulation.AgentSTK.waitingForInspection.Clear();
-             this.simulation.AgentSTK.paymentLine.Clear();
-             this.simulation.AgentService.garageParkingSpace.Clear();
-             this.simulation.AgentOkolia.CustomersCount = 0;
-             this.simulation.AgentOkolia.Id = 0;*/
 
             chart1.Series["Dependance"].Points.Clear();
             chart1.Series["Dependance"].BorderWidth = 3;
@@ -659,32 +643,6 @@ namespace DISS_SEM3
             this.graph = true;
             this.resetAll();
             this.simulation.globalAverageCustomerTimeInSTK.resetStatistic();
-
-            /*if (this.threadGraph2 != null && this.threadGraph2.IsAlive)
-            {
-                this.threadGraph2.Interrupt();
-                this.threadGraph2.Abort();
-                threadGraph2 = null;
-            }*/
-
-            /*this.simulation.AgentSTK.technicians.Clear();
-            this.simulation.AgentSTK.automechanics.Clear();
-            this.simulation.AgentService.resetGarage();
-            
-
-            chart2.Series["Dependance"].Points.Clear();
-            chart2.Series["Dependance"].BorderWidth = 3;
-            chart2.DataBind();
-
-            this.simulation.replicationNum = 0;
-            
-
-            this.simulation.AgentSTK.takeoverqueue.Clear();
-            this.simulation.AgentSTK.waitingForInspection.Clear();
-            this.simulation.AgentSTK.paymentLine.Clear();
-            this.simulation.AgentService.garageParkingSpace.Clear();
-            this.simulation.AgentOkolia.CustomersCount = 0;
-            this.simulation.AgentOkolia.Id = 0;*/
 
             chart2.Series["Dependance"].Points.Clear();
             chart2.Series["Dependance"].BorderWidth = 3;
