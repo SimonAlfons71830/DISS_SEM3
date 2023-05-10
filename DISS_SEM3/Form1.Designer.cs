@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea11 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend11 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea12 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend12 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.paycheck_label = new System.Windows.Forms.Label();
             this.label60 = new System.Windows.Forms.Label();
@@ -166,6 +166,13 @@
             this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown5 = new System.Windows.Forms.NumericUpDown();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.label81 = new System.Windows.Forms.Label();
+            this.label77 = new System.Windows.Forms.Label();
+            this.label78 = new System.Windows.Forms.Label();
+            this.label79 = new System.Windows.Forms.Label();
+            this.numericUpDown12 = new System.Windows.Forms.NumericUpDown();
+            this.label80 = new System.Windows.Forms.Label();
+            this.numericUpDown13 = new System.Windows.Forms.NumericUpDown();
             this.label63 = new System.Windows.Forms.Label();
             this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.label68 = new System.Windows.Forms.Label();
@@ -175,13 +182,6 @@
             this.label71 = new System.Windows.Forms.Label();
             this.numericUpDown8 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown9 = new System.Windows.Forms.NumericUpDown();
-            this.label77 = new System.Windows.Forms.Label();
-            this.label78 = new System.Windows.Forms.Label();
-            this.label79 = new System.Windows.Forms.Label();
-            this.numericUpDown12 = new System.Windows.Forms.NumericUpDown();
-            this.label80 = new System.Windows.Forms.Label();
-            this.numericUpDown13 = new System.Windows.Forms.NumericUpDown();
-            this.label81 = new System.Windows.Forms.Label();
             this.tabPage2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
@@ -210,11 +210,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
             this.tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown12)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown13)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown9)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown12)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown13)).BeginInit();
             this.SuspendLayout();
             // 
             // tabPage2
@@ -373,7 +373,7 @@
             this.nonCertification_numericUpDown_fast.TabIndex = 79;
             this.nonCertification_numericUpDown_fast.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.nonCertification_numericUpDown_fast.Value = new decimal(new int[] {
-            5,
+            12,
             0,
             0,
             0});
@@ -483,7 +483,7 @@
             this.certification_numericUpDown_fast.TabIndex = 44;
             this.certification_numericUpDown_fast.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.certification_numericUpDown_fast.Value = new decimal(new int[] {
-            15,
+            7,
             0,
             0,
             0});
@@ -497,7 +497,7 @@
             this.numericUpDown6.TabIndex = 43;
             this.numericUpDown6.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numericUpDown6.Value = new decimal(new int[] {
-            20,
+            5,
             0,
             0,
             0});
@@ -1131,7 +1131,7 @@
             this.nonCertification_numericUpDown_slow.TabIndex = 73;
             this.nonCertification_numericUpDown_slow.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.nonCertification_numericUpDown_slow.Value = new decimal(new int[] {
-            3,
+            12,
             0,
             0,
             0});
@@ -1199,7 +1199,7 @@
             this.certification_numericUpDown_slow.TabIndex = 68;
             this.certification_numericUpDown_slow.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.certification_numericUpDown_slow.Value = new decimal(new int[] {
-            14,
+            7,
             0,
             0,
             0});
@@ -1218,7 +1218,7 @@
             this.technicians_numericUpDown_slow.TabIndex = 67;
             this.technicians_numericUpDown_slow.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.technicians_numericUpDown_slow.Value = new decimal(new int[] {
-            4,
+            5,
             0,
             0,
             0});
@@ -1691,21 +1691,21 @@
             // chart1
             // 
             this.chart1.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.TopBottom;
-            chartArea11.AxisX.IsStartedFromZero = false;
-            chartArea11.AxisY.IsMarginVisible = false;
-            chartArea11.AxisY.IsStartedFromZero = false;
-            chartArea11.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea11);
-            legend11.Name = "Legend1";
-            this.chart1.Legends.Add(legend11);
+            chartArea1.AxisX.IsStartedFromZero = false;
+            chartArea1.AxisY.IsMarginVisible = false;
+            chartArea1.AxisY.IsStartedFromZero = false;
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(24, 182);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.EarthTones;
-            series11.ChartArea = "ChartArea1";
-            series11.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series11.Legend = "Legend1";
-            series11.Name = "Dependance";
-            this.chart1.Series.Add(series11);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Legend = "Legend1";
+            series1.Name = "Dependance";
+            this.chart1.Series.Add(series1);
             this.chart1.Size = new System.Drawing.Size(1332, 368);
             this.chart1.TabIndex = 20;
             this.chart1.Text = "chart1";
@@ -1817,6 +1817,82 @@
             this.tabPage4.Text = "Graph2";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // label81
+            // 
+            this.label81.AutoSize = true;
+            this.label81.Location = new System.Drawing.Point(1062, 58);
+            this.label81.Name = "label81";
+            this.label81.Size = new System.Drawing.Size(146, 13);
+            this.label81.TabIndex = 83;
+            this.label81.Text = "Optimal number of mechanics";
+            // 
+            // label77
+            // 
+            this.label77.AutoSize = true;
+            this.label77.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label77.Location = new System.Drawing.Point(1267, 84);
+            this.label77.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label77.Name = "label77";
+            this.label77.Size = new System.Drawing.Size(19, 17);
+            this.label77.TabIndex = 82;
+            this.label77.Text = "✘";
+            // 
+            // label78
+            // 
+            this.label78.AutoSize = true;
+            this.label78.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label78.Location = new System.Drawing.Point(1198, 84);
+            this.label78.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label78.Name = "label78";
+            this.label78.Size = new System.Drawing.Size(23, 15);
+            this.label78.TabIndex = 81;
+            this.label78.Text = "✔";
+            // 
+            // label79
+            // 
+            this.label79.AutoSize = true;
+            this.label79.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label79.Location = new System.Drawing.Point(1080, 88);
+            this.label79.Name = "label79";
+            this.label79.Size = new System.Drawing.Size(62, 13);
+            this.label79.TabIndex = 80;
+            this.label79.Text = "Certification";
+            // 
+            // numericUpDown12
+            // 
+            this.numericUpDown12.Location = new System.Drawing.Point(1246, 104);
+            this.numericUpDown12.Name = "numericUpDown12";
+            this.numericUpDown12.Size = new System.Drawing.Size(61, 20);
+            this.numericUpDown12.TabIndex = 79;
+            this.numericUpDown12.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.numericUpDown12.Value = new decimal(new int[] {
+            12,
+            0,
+            0,
+            0});
+            // 
+            // label80
+            // 
+            this.label80.AutoSize = true;
+            this.label80.Location = new System.Drawing.Point(1062, 110);
+            this.label80.Name = "label80";
+            this.label80.Size = new System.Drawing.Size(80, 13);
+            this.label80.TabIndex = 78;
+            this.label80.Text = "Automechanics";
+            // 
+            // numericUpDown13
+            // 
+            this.numericUpDown13.Location = new System.Drawing.Point(1179, 104);
+            this.numericUpDown13.Name = "numericUpDown13";
+            this.numericUpDown13.Size = new System.Drawing.Size(61, 20);
+            this.numericUpDown13.TabIndex = 77;
+            this.numericUpDown13.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.numericUpDown13.Value = new decimal(new int[] {
+            7,
+            0,
+            0,
+            0});
+            // 
             // label63
             // 
             this.label63.AutoSize = true;
@@ -1832,21 +1908,21 @@
             // chart2
             // 
             this.chart2.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.TopBottom;
-            chartArea12.AxisX.IsStartedFromZero = false;
-            chartArea12.AxisY.IsMarginVisible = false;
-            chartArea12.AxisY.IsStartedFromZero = false;
-            chartArea12.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea12);
-            legend12.Name = "Legend1";
-            this.chart2.Legends.Add(legend12);
+            chartArea2.AxisX.IsStartedFromZero = false;
+            chartArea2.AxisY.IsMarginVisible = false;
+            chartArea2.AxisY.IsStartedFromZero = false;
+            chartArea2.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart2.Legends.Add(legend2);
             this.chart2.Location = new System.Drawing.Point(22, 182);
             this.chart2.Name = "chart2";
             this.chart2.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.EarthTones;
-            series12.ChartArea = "ChartArea1";
-            series12.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series12.Legend = "Legend1";
-            series12.Name = "Dependance";
-            this.chart2.Series.Add(series12);
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.Legend = "Legend1";
+            series2.Name = "Dependance";
+            this.chart2.Series.Add(series2);
             this.chart2.Size = new System.Drawing.Size(1332, 368);
             this.chart2.TabIndex = 55;
             this.chart2.Text = "chart2";
@@ -1933,82 +2009,6 @@
             0,
             0});
             // 
-            // label77
-            // 
-            this.label77.AutoSize = true;
-            this.label77.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label77.Location = new System.Drawing.Point(1267, 84);
-            this.label77.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label77.Name = "label77";
-            this.label77.Size = new System.Drawing.Size(19, 17);
-            this.label77.TabIndex = 82;
-            this.label77.Text = "✘";
-            // 
-            // label78
-            // 
-            this.label78.AutoSize = true;
-            this.label78.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label78.Location = new System.Drawing.Point(1198, 84);
-            this.label78.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label78.Name = "label78";
-            this.label78.Size = new System.Drawing.Size(23, 15);
-            this.label78.TabIndex = 81;
-            this.label78.Text = "✔";
-            // 
-            // label79
-            // 
-            this.label79.AutoSize = true;
-            this.label79.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label79.Location = new System.Drawing.Point(1080, 88);
-            this.label79.Name = "label79";
-            this.label79.Size = new System.Drawing.Size(62, 13);
-            this.label79.TabIndex = 80;
-            this.label79.Text = "Certification";
-            // 
-            // numericUpDown12
-            // 
-            this.numericUpDown12.Location = new System.Drawing.Point(1246, 104);
-            this.numericUpDown12.Name = "numericUpDown12";
-            this.numericUpDown12.Size = new System.Drawing.Size(61, 20);
-            this.numericUpDown12.TabIndex = 79;
-            this.numericUpDown12.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.numericUpDown12.Value = new decimal(new int[] {
-            12,
-            0,
-            0,
-            0});
-            // 
-            // label80
-            // 
-            this.label80.AutoSize = true;
-            this.label80.Location = new System.Drawing.Point(1062, 110);
-            this.label80.Name = "label80";
-            this.label80.Size = new System.Drawing.Size(80, 13);
-            this.label80.TabIndex = 78;
-            this.label80.Text = "Automechanics";
-            // 
-            // numericUpDown13
-            // 
-            this.numericUpDown13.Location = new System.Drawing.Point(1179, 104);
-            this.numericUpDown13.Name = "numericUpDown13";
-            this.numericUpDown13.Size = new System.Drawing.Size(61, 20);
-            this.numericUpDown13.TabIndex = 77;
-            this.numericUpDown13.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.numericUpDown13.Value = new decimal(new int[] {
-            7,
-            0,
-            0,
-            0});
-            // 
-            // label81
-            // 
-            this.label81.AutoSize = true;
-            this.label81.Location = new System.Drawing.Point(1062, 58);
-            this.label81.Name = "label81";
-            this.label81.Size = new System.Drawing.Size(146, 13);
-            this.label81.TabIndex = 83;
-            this.label81.Text = "Optimal number of mechanics";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2054,11 +2054,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown12)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown13)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown9)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown12)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown13)).EndInit();
             this.ResumeLayout(false);
 
         }
