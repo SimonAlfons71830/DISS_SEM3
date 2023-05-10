@@ -52,13 +52,13 @@ namespace managers
 
 			if (!((MySimulation)MySim).validationMode)
 			{
-                var copiedMessage = message.CreateCopy();
+				var copiedMessage = message.CreateCopy();
 				copiedMessage.Code = Mc.Inicialization;
-                copiedMessage.Addressee = MySim.FindAgent(SimId.AgentSTK);
-                Notice(copiedMessage);
-            }
-			
-        }
+				copiedMessage.Addressee = MySim.FindAgent(SimId.AgentSTK);
+				Notice(copiedMessage);
+			}
+
+		}
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"
 		public void Init()

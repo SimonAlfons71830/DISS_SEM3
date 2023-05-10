@@ -32,12 +32,7 @@ namespace continualAssistants
 		//meta! userInfo="Process messages defined in code", id="0"
 		public void ProcessDefault(MessageForm message)
 		{
-            switch (message.Code)
-            {
-                default:
-                    AssistantFinished(message);
-                    break;
-            }
+            AssistantFinished(message);
         }
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"

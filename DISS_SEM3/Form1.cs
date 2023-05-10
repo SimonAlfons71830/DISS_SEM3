@@ -1,6 +1,7 @@
 ﻿using DISS_SEM2;
 using DISS_SEM2.Objects;
 using DISS_SEM2.Objects.Cars;
+using Microsoft.Office.Interop.Excel;
 using OSPABA;
 using simulation;
 using System;
@@ -14,19 +15,20 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Office.Interop.Excel;
 
 namespace DISS_SEM3
 {
 
     public partial class Form1 : Form, ISimDelegate
     {
-        private DataTable dataTechnicians = new DataTable();
-        private DataTable dataAutomechanics = new DataTable();
-        private DataTable dataGarage = new DataTable();
-        private DataTable dataWaitingLine = new DataTable();
-        private DataTable dataPaymentLine = new DataTable();
-        private DataTable dataInspection = new DataTable();
-        private DataTable dataCustomersLeft = new DataTable();
+        private System.Data.DataTable dataTechnicians = new System.Data.DataTable();
+        private System.Data.DataTable dataAutomechanics = new System.Data.DataTable();
+        private System.Data.DataTable dataGarage = new System.Data.DataTable();
+        private System.Data.DataTable dataWaitingLine = new System.Data.DataTable();
+        private System.Data.DataTable dataPaymentLine = new System.Data.DataTable();
+        private System.Data.DataTable dataInspection = new System.Data.DataTable();
+        private System.Data.DataTable dataCustomersLeft = new System.Data.DataTable();
 
         DataGridViewCellStyle busyStyle = new DataGridViewCellStyle();
         DataGridViewCellStyle freeStyle = new DataGridViewCellStyle();
@@ -337,7 +339,6 @@ namespace DISS_SEM3
                                     column.Width = 65;
                                 }
                             }
-
                         }
 
                         //DATAGRID PAYMENTLINE
@@ -525,8 +526,24 @@ namespace DISS_SEM3
             {
                 paycheck_label.Text = this.CountExpenses().ToString() + ",00 €";
             });
-            
 
+            /*var list = new List<double>
+            {
+                (double)this.numericUpDown7.Value,
+                this.simulation.AgentSTK.technicians.Count(),
+                this.simulation.AgentSTK.automechanics.Count(),
+                this.simulation.globalAverageCustomerTimeInSTK.getMean(),
+                this.simulation.globalAverageTimeToTakeOverCar.getMean(),
+                this.simulation.globalAverageCustomerCountInLineToTakeOver.getMean(),
+                this.simulation.globalAverageCustomerCountEndOfDay.getMean(),
+                this.simulation.globalAverageCustomerCountInSTK.getMean(),
+                this.simulation.globalCustomersCount.getMean(),
+                this.simulation.globalAverageFreeTechnicianCount.getMean(),
+                this.simulation.globalAverageFreeAutomechanicCount.getMean(),
+                this.CountExpenses()
+            };*/
+            //export do csv alebo excel
+            //this.ExportAttributesToExcel(list, "C:\\Users\\Simona\\Desktop\\skola\\Ing_studium\\II\\DISS\\SEM3");
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -562,7 +579,7 @@ namespace DISS_SEM3
         {
             this.graph = true;
             this.resetAll();
-            this.simulation.AgentSTK.localAverageCustomerCountToTakeOver.resetStatistic();
+            this.simulation.globalAverageCustomerCountInLineToTakeOver.resetStatistic();
             /* this.simulation.AgentSTK.technicians.Clear();
              this.simulation.AgentSTK.automechanics.Clear();
              this.simulation.AgentService.resetGarage();
@@ -603,12 +620,12 @@ namespace DISS_SEM3
                 this.simulation.AgentSTK.createTechnicians(i);
                 this.simulation.AgentSTK.createAutomechanics((int)numericUpDown3.Value + (int)numericUpDown10.Value, (int)numericUpDown3.Value);
                 this.simulation.Simulate((int)numericUpDown5.Value, 8 * 3600);
-                this.updateChart1(i, this.simulation.AgentSTK.localAverageCustomerCountToTakeOver.getMean());
+                this.updateChart1(i, this.simulation.globalAverageCustomerCountInLineToTakeOver.getMean());
 
                 this.simulation.AgentSTK.resetAutomechanics();
                 this.simulation.AgentSTK.resetTechnicians();
                 this.simulation.AgentService.resetGarage();
-                this.simulation.AgentSTK.localAverageCustomerCountToTakeOver.resetStatistic();
+                this.simulation.globalAverageCustomerCountInLineToTakeOver.resetStatistic();
             }
             this.Invoke((MethodInvoker)delegate
             {
@@ -636,7 +653,7 @@ namespace DISS_SEM3
         {
             this.graph = true;
             this.resetAll();
-            this.simulation.AgentSTK.localAverageCustomerCountToTakeOver.resetStatistic();
+            this.simulation.globalAverageCustomerTimeInSTK.resetStatistic();
 
             /*if (this.threadGraph2 != null && this.threadGraph2.IsAlive)
             {
@@ -683,22 +700,24 @@ namespace DISS_SEM3
             int totalAutomechanics = 19;
             int certifiedAutomechanics = 7;
             int nonCertifiedAutomechanics = 12;
-
+            
             for (int i = 10; i <= 25; i++)
             {
                 this.resetAll();
+                var percent = ((double)certifiedAutomechanics / totalAutomechanics) * 100.0; //37 percent
+                var certifiedd = (int)Math.Round(i * (percent/100.0), 0);
                 // vyratanie pomeru technikov z optimalneho riesenia
-                int certified = (int)Math.Round(((double)i / totalAutomechanics) * certifiedAutomechanics);
-                int nonCertified = i - certified;
-                this.simulation.AgentSTK.createAutomechanics(certified+nonCertified, certified);
+                //int certified = (int)Math.Round(((double)i / totalAutomechanics) * certifiedAutomechanics);
+                int nonCertified = i - certifiedd;
+                this.simulation.AgentSTK.createAutomechanics(certifiedd+nonCertified, certifiedd);
                 this.simulation.AgentSTK.createTechnicians((int)numericUpDown2.Value);
                 this.simulation.Simulate((int)numericUpDown9.Value,3600*8);
-                this.updateChart2(i, this.simulation.AgentSTK.localAverageCustomerCountToTakeOver.getMean() / 60);
+                this.updateChart2(i, this.simulation.globalAverageCustomerTimeInSTK.getMean()/60);
 
                 this.simulation.AgentSTK.resetAutomechanics();
                 this.simulation.AgentSTK.resetTechnicians();
                 this.simulation.AgentService.resetGarage();
-                this.simulation.AgentSTK.localAverageCustomerCountToTakeOver.resetStatistic();
+                this.simulation.globalAverageCustomerTimeInSTK.resetStatistic();
             }
 
             this.Invoke((MethodInvoker)delegate
@@ -779,6 +798,64 @@ namespace DISS_SEM3
             button5.Enabled = true;
             button_start_graph_1.Enabled = true;
             button_start_graph_2.Enabled = true;
+        }
+
+
+        public void ExportAttributesToExcel(List<double> listOfValues, string filePath)
+        {
+            Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
+            Workbook excelWorkbook = excelApp.Workbooks.Add();
+            Worksheet excelWorksheet = (Worksheet)excelWorkbook.Sheets[1];
+
+            excelWorksheet.Cells[1, 1] = "Replication count";
+            excelWorksheet.Cells[1, 2] = listOfValues[0].ToString();
+
+            excelWorksheet.Cells[2, 1] = "Technicians count";
+            excelWorksheet.Cells[2, 2] = listOfValues[1].ToString();
+
+            excelWorksheet.Cells[3, 1] = "Automechanics count";
+            excelWorksheet.Cells[3, 2] = listOfValues[2].ToString();
+
+
+            excelWorksheet.Cells[4, 1] = "Average time customer spent in STK";
+            excelWorksheet.Cells[4, 2] = listOfValues[3].ToString();
+
+            excelWorksheet.Cells[5, 1] = "Average waiting time to takeover car";
+            excelWorksheet.Cells[5, 2] = listOfValues[4].ToString();
+
+            excelWorksheet.Cells[6, 1] = "Average customer count in line to takeover car";
+            excelWorksheet.Cells[6, 2] = listOfValues[5].ToString();
+
+            excelWorksheet.Cells[7, 1] = "Average customer count at the end of the day";
+            excelWorksheet.Cells[7, 2] = listOfValues[6].ToString();
+
+            excelWorksheet.Cells[8, 1] = "Average customer count in STK";
+            excelWorksheet.Cells[8, 2] = listOfValues[7].ToString();
+
+            excelWorksheet.Cells[9, 1] = "Average total customer count in STK";
+            excelWorksheet.Cells[9, 2] = listOfValues[8].ToString();
+
+            excelWorksheet.Cells[10, 1] = "Average free technician count";
+            excelWorksheet.Cells[10, 2] = listOfValues[9].ToString();
+
+            excelWorksheet.Cells[11, 1] = "Average free automechanic count";
+            excelWorksheet.Cells[11, 2] = listOfValues[10].ToString();
+
+            excelWorksheet.Cells[12, 1] = "Totoal expenses for paychecks";
+            excelWorksheet.Cells[12, 2] = listOfValues[11].ToString();
+
+
+            Range excelRange = excelWorksheet.Range[excelWorksheet.Cells[1, 1], excelWorksheet.Cells[12, 2]];
+            ListObject excelTable = excelWorksheet.ListObjects.Add(XlListObjectSourceType.xlSrcRange, excelRange, Type.Missing, XlYesNoGuess.xlYes, Type.Missing);
+
+            excelWorkbook.SaveAs(filePath);
+            excelWorkbook.Close();
+            Marshal.ReleaseComObject(excelApp);
+        }
+
+        private void numericUpDown7_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

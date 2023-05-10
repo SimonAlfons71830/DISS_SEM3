@@ -31,12 +31,13 @@ namespace DISS_SEM2.Generators
             }
             else if (genNumber < 0.86)
             {
-                return CarTypes.Van;
+               return CarTypes.Van;
             }
             else
             {
                 return CarTypes.Cargo;
             }
+            
         }
     }
 }

@@ -26,13 +26,13 @@ namespace agents
             };
             MyManager.Notice(sprava);
 
-            if (!((MySimulation)MySim).validationMode)
-            {
-                var copiedMessage = sprava.CreateCopy();
+			if (!((MySimulation)MySim).validationMode)
+			{
+				var copiedMessage = sprava.CreateCopy();
                 copiedMessage.Code = Mc.Inicialization;
                 copiedMessage.Addressee = MySim.FindAgent(SimId.AgentSTK);
                 MyManager.Notice(copiedMessage);
-            }
+           }
         }
 
 		//meta! userInfo="Generated code: do not modify", tag="begin"

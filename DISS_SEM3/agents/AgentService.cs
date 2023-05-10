@@ -90,6 +90,7 @@ namespace agents
             for (int i = 0; i < this.garageCounter.Count; i++)
             {
                 this.garageCounter[i].free = true;
+				this.garageCounter[i].parkedCar = null;
             }
         }
     }

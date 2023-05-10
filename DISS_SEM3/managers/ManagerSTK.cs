@@ -41,7 +41,7 @@ namespace managers
             //STAT
             this.MyAgent.localAverageCustomerCountToTakeOver.addValues(this.MyAgent.takeoverqueue.Count, MySim.CurrentTime - this.MyAgent.localAverageCustomerCountToTakeOver.timeOfLastChange);
             this.MyAgent.localAverageCustomerCountToTakeOver.timeOfLastChange = MySim.CurrentTime;
-            this.MyAgent.takeoverqueue.Enqueue(((MyMessage)message), ((MyMessage)message).DeliveryTime);
+            this.MyAgent.takeoverqueue.Enqueue(((MyMessage)message), ((MyMessage)message).customer.arrivalTime);
             //END STAT
 
             message.Addressee = MySim.FindAgent(SimId.AgentService);
@@ -148,30 +148,7 @@ namespace managers
                 }
                 else
                 {
-                    //nikto necaka v radoch, mozem ziskaneho technika poslat na obed ak este nebol
-                    if (!((MySimulation)MySim).validationMode)
-                    {
-                        if (IsLunchTime())
-                        {
-                            if (!technic.obedoval && !technic.obeduje)
-                            {
-
-                                this.MyAgent.localAverageFreeTechnicianCount.addValues(this.MyAgent.getAvailableTechniciansCount(),
-                                    MySim.CurrentTime - this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange);
-                                this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange = MySim.CurrentTime;
-
-                                technic.obsluhuje = true;
-                                technic.obeduje = true;
-                                var lunchMessage = new MyMessage(MySim)
-                                {
-                                    Addressee = this.MyAgent.FindAssistant(SimId.Lunch),
-                                    technician = technic
-                                };
-                                StartContinualAssistant(lunchMessage);
-                            }
-                        }
-                    }
-                    return;
+                    //nikto necaka v radoch
                 }
             }
             else
@@ -462,7 +439,6 @@ namespace managers
                         Addressee = MyAgent.FindAssistant(SimId.Lunch)
                     };
 
-                    
                     this.MyAgent.localAverageFreeTechnicianCount.addValues(this.MyAgent.getAvailableTechniciansCount(),
                        MySim.CurrentTime - this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange);
                     this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange = MySim.CurrentTime;
@@ -719,28 +695,7 @@ namespace managers
                 }
                 else
                 {
-                    //nikto nieje v radoch mozem ziskaneho technika poslat na obed
-                    if (!((MySimulation)MySim).validationMode)
-                    {
-                        if (IsLunchTime())
-                        {
-                            if (!technic.obedoval && !technic.obeduje)
-                            {
-                                this.MyAgent.localAverageFreeTechnicianCount.addValues(this.MyAgent.getAvailableTechniciansCount(),
-                                    MySim.CurrentTime - this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange);
-                                this.MyAgent.localAverageFreeTechnicianCount.timeOfLastChange = MySim.CurrentTime;
-
-                                technic.obsluhuje = true;
-                                technic.obeduje = true;
-                                var lunchMessage = new MyMessage(MySim)
-                                {
-                                    Addressee = this.MyAgent.FindAssistant(SimId.Lunch),
-                                    technician = technic
-                                };
-                                StartContinualAssistant(lunchMessage);
-                            }
-                        }
-                    }
+                    
                 }
             }
         }
@@ -959,7 +914,7 @@ namespace managers
         //TODO: do schedulera kde sa nastavi true kym neubehnu 2 hodiny potom sa nastavi false
         public bool IsLunchTime()
         {
-            if (MySim.CurrentTime > 7200 && MySim.CurrentTime < 14400)
+            if (MySim.CurrentTime >= 7200 && MySim.CurrentTime < 14400) // 12600 ale ak zacinaju vsetci o 11:00 do  12:30 sa stihnu najest
             {
                 return true;
             }

@@ -66,16 +66,12 @@ namespace simulation
 			base.PrepareReplication();
 			// Reset entities, queues, local statistics, etc...
 			this.CurrentTime = 0;
-		
 		}
 
 		override protected void ReplicationFinished()
 		{
 			this.replicationNum++;
-			if (this.AgentOkolia.localAverageCustomerTimeInSTK.count == 0)
-			{
-				var pocet = this.AgentOkolia.CustomersCount;
-			}
+
 			this.globalAverageCustomerTimeInSTK.addValues(this.AgentOkolia.localAverageCustomerTimeInSTK.getMean());
 			this.globalAverageTimeToTakeOverCar.addValues(this.AgentSTK.localAverageTimeToTakeOverCar.getMean());
 

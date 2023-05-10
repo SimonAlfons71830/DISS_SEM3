@@ -7,6 +7,7 @@ using Priority_Queue;
 using System.Collections.Generic;
 using DISS_SEM3.statistics;
 using OSPDataStruct;
+using System.Text;
 
 namespace agents
 {
@@ -66,11 +67,16 @@ namespace agents
             for (int i = 0; i < this.technicians.Count; i++)
             {
                 this.technicians[i].obsluhuje = false;
+                this.technicians[i].obeduje = false;
+                this.technicians[i].obedoval = false;
                 this.technicians[i].customer_car = null;
+                this.technicians[i].state = 0;
             }
             for (int i = 0; i < this.automechanics.Count; i++)
             {
                 this.automechanics[i].obsluhuje = false;
+                this.automechanics[i].obedoval = false;
+                this.automechanics[i].obeduje = false;
                 this.automechanics[i].customer_car = null;
             }
             this.waitingForInspection.Clear();
@@ -168,6 +174,9 @@ namespace agents
             for (int i = 0; i < this.automechanics.Count; i++)
             {
                 this.automechanics[i].obsluhuje = false;
+                this.automechanics[i].obeduje = false;
+                this.automechanics[i].obedoval = false;
+                this.automechanics[i].customer_car = null;
             }
         }
 
@@ -176,6 +185,10 @@ namespace agents
             for (int i = 0; i < this.technicians.Count; i++)
             {
                 this.technicians[i].obsluhuje = false;
+                this.technicians[i].obeduje = false;
+                this.technicians[i].obedoval = false;
+                this.technicians[i].customer_car = null;
+
             }
         }
 
