@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.paycheck_label = new System.Windows.Forms.Label();
             this.label60 = new System.Windows.Forms.Label();
@@ -1673,21 +1673,21 @@
             // chart1
             // 
             this.chart1.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.TopBottom;
-            chartArea1.AxisX.IsStartedFromZero = false;
-            chartArea1.AxisY.IsMarginVisible = false;
-            chartArea1.AxisY.IsStartedFromZero = false;
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            chartArea3.AxisX.IsStartedFromZero = false;
+            chartArea3.AxisY.IsMarginVisible = false;
+            chartArea3.AxisY.IsStartedFromZero = false;
+            chartArea3.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chart1.Legends.Add(legend3);
             this.chart1.Location = new System.Drawing.Point(24, 182);
             this.chart1.Name = "chart1";
             this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.EarthTones;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Legend = "Legend1";
-            series1.Name = "Dependance";
-            this.chart1.Series.Add(series1);
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Legend = "Legend1";
+            series3.Name = "Dependance";
+            this.chart1.Series.Add(series3);
             this.chart1.Size = new System.Drawing.Size(1332, 368);
             this.chart1.TabIndex = 20;
             this.chart1.Text = "chart1";
@@ -1746,7 +1746,7 @@
             this.numericUpDown3.TabIndex = 12;
             this.numericUpDown3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numericUpDown3.Value = new decimal(new int[] {
-            8,
+            7,
             0,
             0,
             0});
@@ -1769,7 +1769,7 @@
             this.numericUpDown5.TabIndex = 11;
             this.numericUpDown5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numericUpDown5.Value = new decimal(new int[] {
-            10,
+            100,
             0,
             0,
             0});
@@ -1807,21 +1807,21 @@
             // chart2
             // 
             this.chart2.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.TopBottom;
-            chartArea2.AxisX.IsStartedFromZero = false;
-            chartArea2.AxisY.IsMarginVisible = false;
-            chartArea2.AxisY.IsStartedFromZero = false;
-            chartArea2.Name = "ChartArea1";
-            this.chart2.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart2.Legends.Add(legend2);
+            chartArea4.AxisX.IsStartedFromZero = false;
+            chartArea4.AxisY.IsMarginVisible = false;
+            chartArea4.AxisY.IsStartedFromZero = false;
+            chartArea4.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.chart2.Legends.Add(legend4);
             this.chart2.Location = new System.Drawing.Point(22, 182);
             this.chart2.Name = "chart2";
             this.chart2.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.EarthTones;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Legend = "Legend1";
-            series2.Name = "Dependance";
-            this.chart2.Series.Add(series2);
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series4.Legend = "Legend1";
+            series4.Name = "Dependance";
+            this.chart2.Series.Add(series4);
             this.chart2.Size = new System.Drawing.Size(1332, 368);
             this.chart2.TabIndex = 55;
             this.chart2.Text = "chart2";
@@ -1880,7 +1880,7 @@
             this.numericUpDown8.TabIndex = 48;
             this.numericUpDown8.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numericUpDown8.Value = new decimal(new int[] {
-            17,
+            5,
             0,
             0,
             0});
@@ -1903,7 +1903,7 @@
             this.numericUpDown9.TabIndex = 47;
             this.numericUpDown9.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numericUpDown9.Value = new decimal(new int[] {
-            10,
+            100,
             0,
             0,
             0});
